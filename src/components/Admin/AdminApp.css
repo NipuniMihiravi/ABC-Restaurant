@@ -1,6 +1,5 @@
 .container1 {
   max-width: 1000px;
-  margin: 0 auto;
   padding: 20px;
   background-color: #2F4F4F;
   border-radius: 8px;
@@ -43,9 +42,15 @@ button {
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+  margin-bottom: 10px;
   margin-right: 10px;
-   }/* Adds space between buttons */
-
+   }
+.form-name-price{
+width:80px;
+}
+.form-buttons{
+margin-top:10px
+}
   button:last-child {
  margin-right: 0; /* Removes margin from the last button */
   }
@@ -63,8 +68,8 @@ button:hover {
 }
 
 .table-container {
-  max-width: 900px;
-  margin: 30px auto;
+  max-width: 1200px;
+  margin: 100px auto;
   padding: 20px;
   background-color:#B0C4DE;
   border-radius: 8px;

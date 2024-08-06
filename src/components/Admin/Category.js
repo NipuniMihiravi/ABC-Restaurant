@@ -7,6 +7,8 @@ const Category = () => {
         <div>
             <CategoryForm />
             <CategoryTable />
+
+
         </div>
     );
 };

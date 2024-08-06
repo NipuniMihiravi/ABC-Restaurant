@@ -24,7 +24,7 @@ const CategoryTable = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>Category ID</th>
+
                         <th>Category Name</th>
                         <th>Item ID</th>
                         <th>Item Name</th>
@@ -38,7 +38,7 @@ const CategoryTable = () => {
                     {categories.map(category => (
                         category.items.map(item => (
                             <tr key={item.id || `${category.id}-${item.number}`}>
-                                <td>{category.id}</td>
+
                                 <td>{category.name}</td>
                                 <td>{item.id || 'N/A'}</td>
                                 <td>{item.name}</td>
@@ -64,3 +64,5 @@ const CategoryTable = () => {
 };
 
 export default CategoryTable;
+
+

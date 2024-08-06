@@ -74,8 +74,7 @@ margin-top:50px;
   overflow: hidden;
   display: flex; /* Centers content */
   margin-left:-150px;
-    margin-top:150px;
-    border-top-leftc-radius: 20px; /* Adjust the value as needed */
+ border-top-leftc-radius: 20px; /* Adjust the value as needed */
 
 }
 
@@ -151,6 +150,7 @@ margin-top:50px;
     width: 100%; /* Ensure the width is in pixels or another valid unit */
     height: 500px;
     margin-left: 30px;
+    margin-top: 90px;
     animation: fadeIn 2s ease-in-out; /* Animation added */
 }
 
@@ -474,26 +474,45 @@ margin-top:50px;
     left: 50px;
     color: white;
     font-family: "Garamond", sans-serif; /* Font style for h2 */
-    font-size:30px;
+    font-size:25px;
     font-weight:bold;
     padding: 5px;
 }
 
 .category-detail {
     padding: 20px;
+    margin-top:100px;
+    margin-right:30px;
+    margin-left:30px;
 }
-
+.category-detail h1 {
+   text-align: center; /* Centers the text */
+    font-family: "Garamond", sans-serif; /* Font style for h2 */
+    font-size: 30px; /* Font size for h2 */
+    font-weight: bold; /* Normal font weight */
+    color: white;
+    margin-bottom:20px;
+}
+.category-detail h1::after {
+    content: ""; /* Empty content to create the line */
+    display: block; /* Make the pseudo-element a block-level element */
+    width: 8%; /* Adjust the width of the line */
+    height: 3px; /* Thickness of the line */
+    background-color: orange; /* Color of the line */
+    margin: 10px auto 0; /* Center-align the line and add space above it */
+}
 .menu-header h1 {
      color: #87680d;
-       font-size:40px;
+       font-size:35px;
        text-align: center; /* Centers the text */
        font-family: "Lucida Handwriting", sans-serif;
+
 }
 
 .menu-header h2 {
     text-align: center; /* Centers the text */
     font-family: "Garamond", sans-serif; /* Font style for h2 */
-    font-size: 35px; /* Font size for h2 */
+    font-size: 30px; /* Font size for h2 */
     font-weight: bold; /* Normal font weight */
     color: white; /* Darker color for h2 text (or adjust to suit your design) */
 
@@ -510,6 +529,8 @@ margin-top:50px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
+    background-color: #C8C8C8;
+    margin-top:30px;
 }
 
 .item-image {
@@ -521,9 +542,22 @@ margin-top:50px;
 .item-info {
     padding: 10px 0;
 }
+.item-name {
+    margin-top:-20px;
+    height:60px;
+}
+
+.item-description {
+    margin-top:10px;
+    height:150px;
+}
+.item-price {
+    margin-top:10px;
+    height:30px;
+}
 
 .item-button {
-    background-color: orange;
+    background-color: #87680d;
     border: none;
     color: white;
     padding: 10px;
@@ -531,6 +565,7 @@ margin-top:50px;
     cursor: pointer;
     width: 100%;
     font-size: 16px;
+
 }
 
 .item-button:hover {
@@ -542,6 +577,7 @@ margin-top:50px;
 .facility-detail {
     padding: 20px;
     margin-top: 100px;
+    margin-top:-80px;
 }
 
 .facility-grid {
@@ -562,6 +598,7 @@ margin-top:50px;
     width: 600px;
     margin-left:40px;
     margin-right:40px;
+
 }
 
 .facility-card:hover {
@@ -596,12 +633,10 @@ margin-top:50px;
     padding: 10px 50px; /* Padding for the button */
     border-radius: 10px; /* Elliptical shape (adjust the value for more or less rounding) */
     font-family: "Poppins", sans-serif; /* Font style */
-    font-size: 15px; /* Font size */
+    font-size: 20px; /* Font size */
     cursor: pointer; /* Pointer cursor on hover */
     transition: all 0.3s ease; /* Smooth transition for hover effect */
-    margin-top:70px;
-
-
+    margin-top:40px;
 
 }
 

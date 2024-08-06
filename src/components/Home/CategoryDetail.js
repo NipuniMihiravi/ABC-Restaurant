@@ -36,12 +36,18 @@ const CategoryDetail = () => {
                                 className="item-image"
                             />
                         )}
-                        <div className="item-info">
-                            <h2>{item.name}</h2>
-                            <p>{item.description}</p>
-                            <p>${item.price.toFixed(2)}</p>
-                            <button className="item-button">Add to Cart</button>
-                        </div>
+                       <div className="item-info">
+                           <div className="item-name">
+                               <h2>{item.name}</h2>
+                           </div>
+                           <div className="item-description">
+                               <p>{item.description}</p>
+                           </div>
+                           <div className="item-price">
+                               <p>Rs.{item.price.toFixed(2)}</p>
+                           </div>
+                       </div>
+                        <button className="item-button">Add to Cart</button>
                     </div>
                 ))}
             </div>

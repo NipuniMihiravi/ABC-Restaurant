@@ -40,12 +40,14 @@ const CategoryForm = () => {
     };
 
     const handleDeleteCategory = (id) => {
+    if (window.confirm('Are you sure you want to delete this item?')) {
         axios.delete(`/category/${id}`)
             .then(() => {
                 setCategories(categories.filter(category => category.id !== id));
                 alert('Category deleted successfully!');
             })
             .catch(error => console.error('Error deleting category:', error));
+            }
     };
 
     const handleEditCategory = (id) => {
@@ -134,24 +136,26 @@ const CategoryForm = () => {
             .catch(error => console.error('Error updating item:', error));
     };
 
-    const handleDeleteItem = (categoryId, itemId) => {
-        axios.delete(`/category/${categoryId}/item/${itemId}`)
-            .then(() => {
-                const updatedCategories = categories.map(category => {
-                    if (category.id === categoryId) {
-                        return {
-                            ...category,
-                            items: category.items.filter(item => item.id !== itemId)
-                        };
-                    }
-                    return category;
-                });
+   const handleDeleteItem = (categoryId, itemId) => {
+           if (window.confirm('Are you sure you want to delete this item?')) {
+               axios.delete(`/category/${categoryId}/item/${itemId}`)
+                   .then(() => {
+                       const updatedCategories = categories.map(category => {
+                           if (category.id === categoryId) {
+                               return {
+                                   ...category,
+                                   items: category.items.filter(item => item.id !== itemId)
+                               };
+                           }
+                           return category;
+                       });
 
-                setCategories(updatedCategories);
-                alert('Item deleted successfully!');
-            })
-            .catch(error => console.error('Error deleting item:', error));
-    };
+                       setCategories(updatedCategories);
+                       alert('Item deleted successfully!');
+                   })
+                   .catch(error => console.error('Error deleting item:', error));
+           }
+       };
 
     const handleNewItemChange = (e) => {
         const { name, value } = e.target;
@@ -188,7 +192,7 @@ const CategoryForm = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
+
                         <th>Name</th>
                         <th>Items</th>
                         <th>Action</th>
@@ -197,17 +201,21 @@ const CategoryForm = () => {
                 <tbody>
                     {categories.map((category) => (
                         <tr key={category.id}>
-                            <td>{category.id}</td>
+
                             <td>{category.name}</td>
                             <td>
                                 <button onClick={() => handleAddItem(category.id)} className="btn-add-item">Add Item</button>
                                 <ul>
                                     {category.items && category.items.length > 0 ? (
                                         category.items.map(item => (
-                                            <li key={item.id}>
-                                                {item.name} - ${item.price}
-                                                <button onClick={() => handleEditItem(category.id, item.id)} className="btn-edit-item">Edit</button>
-                                                <button onClick={() => handleDeleteItem(category.id, item.id)} className="btn-delete-item">Delete</button>
+                                            <li key={item.id} className="form-container">
+                                                <div className="form-details">
+                                                    <span className="form-name-price">{item.name} - Rs.{item.price}</span>
+                                                    <div className="form-buttons">
+                                                        <button onClick={() => handleEditItem(category.id, item.id)} className="btn-edit-item">Edit</button>
+                                                        <button onClick={() => handleDeleteItem(category.id, item.id)} className="btn-delete-item">Delete</button>
+                                                    </div>
+                                                </div>
                                             </li>
                                         ))
                                     ) : (
