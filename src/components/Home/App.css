@@ -1,0 +1,630 @@
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #333; /* Change this color to your desired background color */
+}
+
+.coverr-image {
+  width: 100%;
+  height: 80vh; /* 120% of the viewport height */
+}
+
+.image-containerr {
+  position: relative;
+  width: 100%;
+  height: 110%; /* Make sure it takes the full height of the carousel-inner */
+  overflow: hidden;
+  display: flex; /* Centers content */
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
+
+
+}
+
+.image-containerr img {
+  width: 100%;
+  height: 110%; /* Make sure it takes the 50% height of the image-container */
+
+}
+.coverr-image1 {
+  width: 140%;
+  height: 140vh; /* 120% of the viewport height */
+
+}
+
+.image1-containerr {
+  position: relative;
+  width: 80%;
+  height: 75%; /* Make sure it takes the full height of the carousel-inner */
+  overflow: hidden;
+  display: flex; /* Centers content */
+  margin-left:10px;
+margin-top:50px;
+
+}
+
+.image1-containerr img {
+  width: 80%;
+  height: 80%; /* Make sure it takes the 50% height of the image-container */
+
+}
+.coverr-image3 {
+  width: 100%;
+  height: 75vh; /* 120% of the viewport height */
+}
+
+
+
+.coverr-image4 {
+  width: 100%;
+  height: 100vh; /* 120% of the viewport height */
+  background-color:white;
+  margin-left:200px;
+   border-top-left-radius: 60px; /* Adjust the value as needed */
+
+
+
+}
+
+.image4-containerr {
+  position: relative;
+  width: 90%;
+  height: 120%; /* Make sure it takes the full height of the carousel-inner */
+  overflow: hidden;
+  display: flex; /* Centers content */
+  margin-left:-150px;
+    margin-top:150px;
+    border-top-leftc-radius: 20px; /* Adjust the value as needed */
+
+}
+
+
+
+.image-text{
+    position: absolute;
+    bottom: 50px; /* Adjust as needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.image-text p {
+    color: white;
+    font-size:25px;
+    font-family: "Georgia", sans-serif;
+    text-align: center;
+}
+.image-text h1 {
+   color: #87680d;
+   font-size:35px;
+   font-family: "Georgia", sans-serif;
+}
+
+.image1-text{
+    position: absolute;
+    bottom: 550px; /* Adjust as needed */
+    left: 650px; /* Adjust as needed */
+    width:700px;
+    height:100px;
+    border-radius: 5px;
+
+}
+
+.image1-text p {
+        font-size: 20px;
+        text-align: left; /* Centers the text */
+        line-height: 1.5; /* Sets the line spacing to 1.5 */
+        font-family: "Garamond", Serif;
+
+}
+.image1-text h1 {
+   color: #A0522D;
+   font-size:40px;
+   text-align: center; /* Centers the text */
+   font-family: "Lucida Handwriting", sans-serif;
+
+}
+.image3-text{
+    position: absolute;
+    bottom: 70px; /* Adjust as needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    padding: 10px;
+    border-radius: 5px;
+}
+.image3-text p {
+    color: white;
+    font-size:30px;
+    font-family: "Georgia", sans-serif;
+    text-align: center;
+}
+.image3-text h1 {
+   color: #87680d;
+   font-size:45px;
+   font-family: "Georgia", sans-serif;
+}
+
+
+.image4-text {
+    position: relative;
+    right: 0;
+    width: 100%; /* Ensure the width is in pixels or another valid unit */
+    height: 500px;
+    margin-left: 30px;
+    animation: fadeIn 2s ease-in-out; /* Animation added */
+}
+
+.image4-text p {
+    color: #707070;
+    font-size: 20px;
+    line-height: 1.5; /* Sets the line spacing to 1.5 */
+    font-family: "Georgia", sans-serif;
+    text-align: center;
+    margin-left: 30px;
+    animation: fadeIn 3s ease-in-out; /* Animation added */
+}
+
+.image4-text h1 {
+    position: relative;
+    color: black;
+    font-size: 50px;
+    font-family: "Georgia", sans-serif;
+    font-weight: bold;
+    margin-left: 200px;
+    animation: fadeIn 1.5s ease-in-out; /* Animation added */
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px); /* Optional: add some movement */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* Optional: add some movement */
+    }
+}
+
+/* Navbar default state */
+.navbar {
+    background-color: transparent; /* Default background color */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+    height: 100px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+}
+
+/* Navbar color when scrolled */
+.navbar.scrolled {
+    background-color: rgba(0, 0, 0, 0.5); /* Change to the desired color */
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.logo-container {
+    flex-shrink: 0;
+    width: 200px;
+    height: 100px;
+}
+
+.logo {
+    width: 100px; /* Set the width of the logo */
+    height: 80px; /* Set the height of the logo */
+    margin-left: 40px;
+    margin-top: 10px;
+    margin-bottom:10px;
+}
+
+.nav-links-container {
+    height: 90px;
+    font-family: "Poppins", sans-serif;
+    color: Orange;
+    display: flex;
+    margin-right: 40px;
+    align-items: center; /* Aligns items vertically in the center */
+}
+
+.nav-links {
+    padding: 0;
+    transform: none;
+    background-color: transparent;
+}
+
+.nav-links li {
+    margin-right: 60px; /* Adjust the value as needed for spacing */
+    display: inline-block; /* Ensures li elements are placed horizontally */
+}
+
+.nav-links a {
+    color: orange;
+    text-decoration: none;
+    padding: 8px 16px;
+    font-weight: bold;
+    font-size: 18px;
+    transition: background-color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #f8f0f0;
+}
+
+.nav-links a.active {
+    text-decoration: underline;
+    color: pink;
+}
+
+.login-form-container {
+    display: block;
+    padding: 20px;
+    border: 1px solid black;
+    width: 300px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.login-form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.login-form-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form-container form div {
+    margin-bottom: 15px;
+}
+
+.login-form-container form label {
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
+}
+
+.login-form-container form input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.login-form-container form button {
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-form-container form button:hover {
+    background-color: #0056b3;
+}
+
+.login-form-container p {
+    color: red;
+    text-align: center;
+}
+
+/*Menu Table*/
+.menu-table-container {
+    margin-left: 40px;
+    margin-right: 40px;
+    margin-top: -300px;
+    background-color:black;
+
+}
+
+.menu-heading {
+    text-align: center;
+    margin-bottom: 20px;
+
+}
+
+.menu-heading h1 {
+    font-family: "Brush Script MT", sans-serif; /* Font style */
+    font-size: 60px; /* Font size for h1 */
+    font-weight: -1000;
+    color: #CD7F32; /* Orange color for h1 text */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+.menu-heading h2 {
+    font-family: "Garamond", sans-serif; /* Font style for h2 */
+    font-size: 45px; /* Font size for h2 */
+    font-weight: bold; /* Normal font weight */
+    color: #8B4000; /* Darker color for h2 text (or adjust to suit your design) */
+
+}
+.menu-heading h2::after {
+    content: ""; /* Empty content to create the line */
+    display: block; /* Make the pseudo-element a block-level element */
+    width: 10%; /* Adjust the width of the line */
+    height: 3px; /* Thickness of the line */
+    background-color: orange; /* Color of the line */
+    margin: 10px auto 0; /* Center-align the line and add space above it */
+}
+
+.menu-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+    gap: 10px; /* Space between cells */
+    width:70%;
+    margin-top:100px;
+    margin-left: 100px;
+
+
+}
+
+.menu-row {
+    display: contents; /* Use contents to avoid creating extra grid rows */
+
+}
+
+.menu-cell {
+    padding: 5px; /* Cell padding */
+    text-align: left; /* Left-aligned text */
+    background-color: transparent; /* Transparent background */
+    border-bottom: 1px solid transparent; /* No borders */
+    position: relative; /* Positioning for pseudo-element */
+    color:white;
+    font-size:20px;
+    font-family: "Papyrus", sans-serif; /* Font style */
+    font-weight:bold;
+
+}
+.menu-cell1 {
+    padding: 5px; /* Cell padding */
+    text-align: left; /* Left-aligned text */
+    background-color: transparent; /* Transparent background */
+    border-bottom: 1px solid transparent; /* No borders */
+    position: relative; /* Positioning for pseudo-element */
+    color:#CD7F32;
+    font-size:20px;
+    font-family: "Poppins", sans-serif; /* Font style */
+
+}
+
+.menu-cell:not(:last-child)::after {
+    content: ''; /* Empty content for pseudo-element */
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 1px; /* Width of the dividing line */
+    background-color: orange; /* Color of the dividing line */
+    transform: translateX(50%); /* Adjusts the line to be exactly between cells */
+}
+
+.menu-button {
+    background-color: black; /* Transparent background */
+    border: 2px solid orange; /* Orange border */
+    color: orange; /* Orange font color */
+    padding: 10px 20px; /* Padding for the button */
+    border-radius: 50px; /* Elliptical shape (adjust the value for more or less rounding) */
+    font-family: "Poppins", sans-serif; /* Font style */
+    font-size: 20px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+    outline: none; /* Remove default button outline */
+    margin-left:400px;
+    margin-top:100px;
+    margin-bottom: 40px;
+
+}
+
+.menu-button:hover {
+    background-color: orange; /* Orange background on hover */
+    color: white; /* White font color on hover */
+    border-color: orange; /* Ensure the border color remains orange on hover */
+}
+
+/*Categorylist and details*/
+/* App.css */
+.category-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    background: linear-gradient(to right, #8B4000 50%, black 50%);
+    height:auto;
+
+
+}
+
+.category-square {
+    width: 300px;
+    height: 300px;
+    background-color: black; /* Dark gray background for better contrast */
+    border: 3px solid #B87333; /* Border color and width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    border-radius: 10px; /* Rounded corners for a nicer shape */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for a better look */
+    transition: transform 0.2s ease; /* Smooth transition for hover effect */
+
+    margin:80px;
+}
+
+.category-square:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover for interactivity */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+}
+
+.category-name {
+    position: center;
+    bottom: 50px;
+    left: 50px;
+    color: white;
+    font-family: "Garamond", sans-serif; /* Font style for h2 */
+    font-size:30px;
+    font-weight:bold;
+    padding: 5px;
+}
+
+.category-detail {
+    padding: 20px;
+}
+
+.menu-header h1 {
+     color: #87680d;
+       font-size:40px;
+       text-align: center; /* Centers the text */
+       font-family: "Lucida Handwriting", sans-serif;
+}
+
+.menu-header h2 {
+    text-align: center; /* Centers the text */
+    font-family: "Garamond", sans-serif; /* Font style for h2 */
+    font-size: 35px; /* Font size for h2 */
+    font-weight: bold; /* Normal font weight */
+    color: white; /* Darker color for h2 text (or adjust to suit your design) */
+
+}
+
+.item-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.item-card {
+    width: 200px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.item-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.item-info {
+    padding: 10px 0;
+}
+
+.item-button {
+    background-color: orange;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+}
+
+.item-button:hover {
+    background-color: darkorange;
+}
+
+/*facility*/
+
+.facility-detail {
+    padding: 20px;
+    margin-top: 100px;
+}
+
+.facility-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns per row */
+    gap: 50px;
+}
+
+.facility-card {
+    background-color: #C8C8C8;
+    border: 3px solid orange;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    padding: 20px;
+    transition: transform 0.2s;
+    height:550px;
+    width: 600px;
+    margin-left:40px;
+    margin-right:40px;
+}
+
+.facility-card:hover {
+    transform: scale(1.05);
+    background-color: #B8860B;
+}
+
+.facility-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.facility-info h2 {
+    color: black;
+    font-size:27px;
+   font-family: "Poppins", sans-serif; /* Font style */
+    margin: 10px 0;
+}
+
+.facility-info p {
+    font-size: 18px;
+    margin: 5px 0;
+    margin-top:20px;
+}
+.facility-button {
+    background-color: black; /* Transparent background */
+    border: 2px solid orange; /* Orange border */
+    color: orange; /* Orange font color */
+    padding: 10px 50px; /* Padding for the button */
+    border-radius: 10px; /* Elliptical shape (adjust the value for more or less rounding) */
+    font-family: "Poppins", sans-serif; /* Font style */
+    font-size: 15px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+    margin-top:70px;
+
+
+
+}
+
+.facility-button:hover {
+    background-color: orange; /* Orange background on hover */
+    color: white; /* White font color on hover */
+    border-color: orange; /* Ensure the border color remains orange on hover */
+}
+.facility-header h2 {
+    text-align: right; /* Centers the text */
+    margin-right:40px;
+    margin-top:100px;
+    margin-left:200px;
+    height:100px;
+    font-family: "Georgia", sans-serif;
+    font-size: 35px; /* Font size for h2 */
+    font-weight: bold; /* Normal font weight */
+    color: white; /* Darker color for h2 text (or adjust to suit your design) */
+    font-style: italic; /* Make text italic */
+    background-color:black;
+
+
+
+}
+
+
