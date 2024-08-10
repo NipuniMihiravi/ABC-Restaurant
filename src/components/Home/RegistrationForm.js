@@ -26,7 +26,7 @@ const RegistrationForm = () => {
     };
 
     return (
-        <div>
+        <div className="login-form-container1">
             <h2>Register</h2>
             <form onSubmit={handleSubmit}>
                 <div>
@@ -48,6 +48,15 @@ const RegistrationForm = () => {
                     />
                 </div>
                 <div>
+                 <div>
+                     <label>Confirm Password:</label>
+                      <input
+                      type="password"
+                      value={password}
+                       onChange={(e) => setPassword(e.target.value)}
+                       required
+                                    />
+                                </div>
                     <label>Full Name:</label>
                     <input
                         type="text"

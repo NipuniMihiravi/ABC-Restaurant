@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate } from 'react-router-dom';
 import './components/Home/App.css'; // Assuming this is your custom CSS file
 import './components/Admin/AdminApp.css'; // Assuming this is your custom CSS file
 
@@ -20,11 +20,12 @@ import RegistrationForm from './components/Home/RegistrationForm';
 import MenuTable from './components/Home/MenuTable';
 import CategoryList from './components/Home/CategoryList';
 import CategoryDetail from './components/Home/CategoryDetail';
-import AdminPanel from './components/Admin/AdminPanel'; // Import AdminPanel
 import AdminRoutes from './components/Admin/AdminRoutes'; // Import AdminRoutes
+import LoginAdmin from './components/Admin/LoginAdmin'; // Import LoginAdmin
 
 const App = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isAdminRoute = location.pathname.startsWith('/admin');
 
   return (
@@ -40,12 +41,13 @@ const App = () => {
                 <li><Link to="/home" className={({ isActive }) => isActive ? 'active' : ''}>Home</Link></li>
                 <li><Link to="/about" className={({ isActive }) => isActive ? 'active' : ''}>About</Link></li>
                 <li><Link to="/menu" className={({ isActive }) => isActive ? 'active' : ''}>Menu</Link></li>
-                <li><Link to="/*" className={({ isActive }) => isActive ? 'active' : ''}>Contact</Link></li>
-                <li><Link to="/login" className={({ isActive }) => isActive ? 'active' : ''}>Login</Link></li>
-                <li><Link to="/register" className={({ isActive }) => isActive ? 'active' : ''}>Register</Link></li>
-                <li><Link to="/admin" className={({ isActive }) => isActive ? 'active' : ''}>AdminPanel</Link></li>
+                <li><Link to="/" className={({ isActive }) => isActive ? 'active' : ''}>Contact</Link></li>
+
               </ul>
-              <button className="nav-button">Click Me</button>
+              <div className="nav-buttons">
+                <button className="nav-button" onClick={() => navigate('/login')}>Sign In</button>
+                <button className="nav-button" onClick={() => navigate('/register')}>Register</button>
+              </div>
             </div>
           </div>
         </nav>
@@ -59,13 +61,14 @@ const App = () => {
           <Route path="/carouse" element={<CoverImage />} />
           <Route path="/category" element={<Category />} />
           <Route path="/cater" element={<CategoryList />} />
-          <Route path="/category/:categoryId"element={<CategoryDetail />} />
+          <Route path="/category/:categoryId" element={<CategoryDetail />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/menutable" element={<MenuTable />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/about" element={<About />} />
           <Route path="/admin/*" element={<AdminRoutes />} />
+          <Route path="/adminlogin" element={<LoginAdmin />} />
         </Routes>
       </main>
     </div>
@@ -79,4 +82,5 @@ const AppWrapper = () => (
 );
 
 export default AppWrapper;
+
 

@@ -94,7 +94,7 @@ const CategoryForm = () => {
                     return category;
                 });
                 setCategories(updatedCategories);
-                setNewItem({ name: '', number: '', price: 0, description: '', image: '' });
+                setNewItem({ id: '',name: '', number: '', price: 0, description: '', image: '' });
                 setIsAddItemModalOpen(false);
             })
             .catch(error => console.error('Error adding item:', error));

@@ -261,61 +261,117 @@ margin-top:50px;
     color: pink;
 }
 
-.login-form-container {
+.login-form-container,
+ .login-form-container1{
     display: block;
     padding: 20px;
     border: 1px solid black;
     width: 300px;
     margin: 0 auto;
+    margin-top:130px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    border-radius: 15px;
     background-color: #f9f9f9;
+    width: 600px;
+    height:800px;
 }
 
-.login-form-container h2 {
+
+
+.login-form-container h2,
+ .login-form-container1 h2{
     text-align: center;
     margin-bottom: 20px;
     color: #333;
+    font-family: "Poppins", sans-serif;
+
+}
+.login-form-container h2::after,
+.login-form-container1 h2::after{
+    content: ""; /* Empty content to create the line */
+    display: block; /* Make the pseudo-element a block-level element */
+    width: 50%; /* Adjust the width of the line */
+    height: 3px; /* Thickness of the line */
+    background-color: #87680d; /* Color of the line */
+    margin: 10px auto 0; /* Center-align the line and add space above it */
 }
 
-.login-form-container form {
+.login-form-container form,
+ .login-form-container1 form{
     display: flex;
     flex-direction: column;
+    margin-left:20px;
+    margin-right:20px;
+    margin-top:50px;
+
 }
 
-.login-form-container form div {
+.login-form-container form div,
+ .login-form-container1 form div{
     margin-bottom: 15px;
 }
 
-.login-form-container form label {
-    margin-bottom: 5px;
+.login-form-container form label,
+.login-form-container1 form label{
+    margin-top:20px;
     color: #555;
     font-weight: bold;
+    font-family: "Poppins", sans-serif;
+    font-size:15px;
 }
 
-.login-form-container form input {
+.login-form-container form input,
+.login-form-container1 form input{
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
+    border: 2px solid #87680d;
     border-radius: 4px;
+    margin-bottom:20px;
+    width:540px;
+    height:30px;
 }
 
-.login-form-container form button {
-    padding: 10px 15px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #007bff;
+.login-form-container1 input[type="email"],
+.login-form-container1 input[type="password"],
+.login-form-container1 input[type="text"] {
+    width: 100%; /* Ensures input fields take up the full width */
+    padding: 10px; /* Adds padding inside the input fields */
+    font-size: 16px; /* Sets the font size */
+    border: 2px solid #87680d; /* Defines the border style and color */
+    border-radius: 4px; /* Rounds the corners of the input fields */
+    box-sizing: border-box; /* Includes padding and border in the width */
+    transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+
+.login-form-container form input:focus,
+ .login-form-container1 form input:focus{
+    border-color: orange; /* Change the border color to orange when the input is focused */
+    outline: none; /* Remove the default outline for a cleaner look */
+}
+.login-form-container form button,
+.login-form-container1 form button{
+   background-color: #87680d;
     border: none;
-    border-radius: 4px;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    width: 100%;
+    height:50px;
+     font-family: "Poppins", sans-serif;
+    font-size: 18px;
+    margin-bottom:50px;
+    margin-top:30px;
 }
 
-.login-form-container form button:hover {
-    background-color: #0056b3;
+.login-form-container form button:hover,
+ .login-form-container1 form button:hover{
+    background-color: #8B4000;
 }
 
-.login-form-container p {
+.login-form-container p,
+.login-form-container1 p {
     color: red;
     text-align: center;
 }

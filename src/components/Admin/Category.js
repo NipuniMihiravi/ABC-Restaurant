@@ -9,6 +9,7 @@ const Category = () => {
             <CategoryTable />
 
 
+
         </div>
     );
 };
