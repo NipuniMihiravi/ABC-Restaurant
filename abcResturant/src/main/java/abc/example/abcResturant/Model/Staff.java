@@ -13,8 +13,8 @@ public class Staff extends User {
     private String designation;
     private String branch;
 
-    public Staff(String id, String email, String password, String fullName, String phoneNumber, String role, String designation, String branch) {
-        super(id, email, password, fullName, phoneNumber, role);
+    public Staff(String id, String username, String password, String fullName, String phoneNumber, String designation, String branch) {
+        super(id, username, password, fullName, phoneNumber);
         this.designation = designation;
         this.branch = branch;
     }

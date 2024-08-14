@@ -12,19 +12,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public abstract class User {
     @Id
     private String id;
-    private String email;
+    private String username;
     private String password;
     private String fullName;
     private String phoneNumber;
-    private String role;
 
-    public User(String id, String email, String password, String fullName, String phoneNumber, String role) {
+    public User(String id, String username, String password, String fullName, String phoneNumber) {
         this.id = id;
-        this.email = email;
+        this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
-        this.role = role;
     }
 
     public String getId() {
@@ -35,12 +33,12 @@ public abstract class User {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -65,13 +63,5 @@ public abstract class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 }

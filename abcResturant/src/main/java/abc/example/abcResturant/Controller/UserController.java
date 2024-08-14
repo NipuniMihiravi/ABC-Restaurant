@@ -119,8 +119,8 @@ public class UserController {
 
     // Authentication endpoints
     @PostMapping("/login/admin")
-    public ResponseEntity<?> loginAdmin(@RequestParam String email, @RequestParam String password) {
-        Optional<Admin> admin = userService.authenticateAdmin(email, password);
+    public ResponseEntity<?> loginAdmin(@RequestParam String username, @RequestParam String password) {
+        Optional<Admin> admin = userService.authenticateAdmin(username, password);
         if (admin.isPresent()) {
             return ResponseEntity.ok(admin.get());
         } else {
@@ -129,8 +129,8 @@ public class UserController {
     }
 
     @PostMapping("/login/staff")
-    public ResponseEntity<?> loginStaff(@RequestParam String email, @RequestParam String password) {
-        Optional<Staff> staff = userService.authenticateStaff(email, password);
+    public ResponseEntity<?> loginStaff(@RequestParam String username, @RequestParam String password) {
+        Optional<Staff> staff = userService.authenticateStaff(username, password);
         if (staff.isPresent()) {
             return ResponseEntity.ok(staff.get());
         } else {
@@ -139,8 +139,8 @@ public class UserController {
     }
 
     @PostMapping("/login/customer")
-    public ResponseEntity<?> loginCustomer(@RequestParam String email, @RequestParam String password) {
-        Optional<Customer> customer = userService.authenticateCustomer(email, password);
+    public ResponseEntity<?> loginCustomer(@RequestParam String username, @RequestParam String password) {
+        Optional<Customer> customer = userService.authenticateCustomer(username, password);
         if (customer.isPresent()) {
             return ResponseEntity.ok(customer.get());
         } else {

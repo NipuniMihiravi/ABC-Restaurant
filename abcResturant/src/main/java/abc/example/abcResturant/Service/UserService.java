@@ -40,11 +40,10 @@ public class UserService {
     public Admin updateAdmin(String id, Admin admin) {
         return adminRepository.findById(id)
                 .map(existingAdmin -> {
-                    existingAdmin.setEmail(admin.getEmail());
+                    existingAdmin.setUsername(admin.getUsername());
                     existingAdmin.setPassword(admin.getPassword());
                     existingAdmin.setFullName(admin.getFullName());
                     existingAdmin.setPhoneNumber(admin.getPhoneNumber());
-                    existingAdmin.setRole(admin.getRole());
                     return adminRepository.save(existingAdmin);
                 })
                 .orElseThrow(() -> new RuntimeException("Admin not found"));
@@ -70,11 +69,10 @@ public class UserService {
     public Staff updateStaff(String id, Staff staff) {
         return staffRepository.findById(id)
                 .map(existingStaff -> {
-                    existingStaff.setEmail(staff.getEmail());
+                    existingStaff.setUsername(staff.getUsername());
                     existingStaff.setPassword(staff.getPassword());
                     existingStaff.setFullName(staff.getFullName());
                     existingStaff.setPhoneNumber(staff.getPhoneNumber());
-                    existingStaff.setRole(staff.getRole());
                     existingStaff.setDesignation(staff.getDesignation());
                     existingStaff.setBranch(staff.getBranch());
                     return staffRepository.save(existingStaff);
@@ -102,11 +100,10 @@ public class UserService {
     public Customer updateCustomer(String id, Customer customer) {
         return customerRepository.findById(id)
                 .map(existingCustomer -> {
-                    existingCustomer.setEmail(customer.getEmail());
+                    existingCustomer.setUsername(customer.getUsername());
                     existingCustomer.setPassword(customer.getPassword());
                     existingCustomer.setFullName(customer.getFullName());
                     existingCustomer.setPhoneNumber(customer.getPhoneNumber());
-                    existingCustomer.setRole(customer.getRole());
                     return customerRepository.save(existingCustomer);
                 })
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
@@ -117,15 +114,15 @@ public class UserService {
     }
 
     // Authentication
-    public Optional<Admin> authenticateAdmin(String email, String password) {
-        return adminRepository.findByEmail(email).filter(admin -> admin.getPassword().equals(password));
+    public Optional<Admin> authenticateAdmin(String username, String password) {
+        return adminRepository.findByUsername(username).filter(admin -> admin.getPassword().equals(password));
     }
 
-    public Optional<Staff> authenticateStaff(String email, String password) {
-        return staffRepository.findByEmail(email).filter(staff -> staff.getPassword().equals(password));
+    public Optional<Staff> authenticateStaff(String username, String password) {
+        return staffRepository.findByUsername(username).filter(staff -> staff.getPassword().equals(password));
     }
 
-    public Optional<Customer> authenticateCustomer(String email, String password) {
-        return customerRepository.findByEmail(email).filter(customer -> customer.getPassword().equals(password));
+    public Optional<Customer> authenticateCustomer(String username, String password) {
+        return customerRepository.findByUsername(username).filter(customer -> customer.getPassword().equals(password));
     }
 }

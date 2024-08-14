@@ -9,9 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document(collection = "admin")
 public class Admin extends User {
-    public Admin(String id, String email, String password, String fullName, String phoneNumber, String role) {
-        super(id, email, password, fullName, phoneNumber, role);
+    public Admin(String id, String username, String password, String fullName, String phoneNumber) {
+        super(id, username, password, fullName, phoneNumber);
     }
-
-
 }
