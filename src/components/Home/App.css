@@ -144,7 +144,7 @@ margin-top:50px;
 }
 
 
-.image4-text {
+.image4-textt {
     position: relative;
     right: 0;
     width: 100%; /* Ensure the width is in pixels or another valid unit */
@@ -154,7 +154,7 @@ margin-top:50px;
     animation: fadeIn 2s ease-in-out; /* Animation added */
 }
 
-.image4-text p {
+.image4-textt p {
     color: #707070;
     font-size: 20px;
     line-height: 1.5; /* Sets the line spacing to 1.5 */
@@ -164,7 +164,7 @@ margin-top:50px;
     animation: fadeIn 3s ease-in-out; /* Animation added */
 }
 
-.image4-text h1 {
+.image4-textt h1 {
     position: relative;
     color: black;
     font-size: 50px;
@@ -213,6 +213,7 @@ margin-top:50px;
     flex-shrink: 0;
     width: 200px;
     height: 100px;
+    margin-left:100px;
 }
 
 .logo {
@@ -259,6 +260,30 @@ margin-top:50px;
 .nav-links a.active {
     text-decoration: underline;
     color: pink;
+}
+.nav-buttons {
+  display: flex;
+  gap: 0; /* Removes space between buttons */
+  margin-right:50px;
+
+}
+
+.nav-button {
+  background-color:#87680d;
+  color: white;
+  padding: 5px 5px;
+  border: 1px solid white; /* White border */
+  margin: 0; /* Ensure no margin between buttons */
+  cursor: pointer;
+  font-size: 13px;
+  font-weight:bold;
+  text-align: center;
+  transition: background-color 0.3s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+.nav-button:hover {
+  background-color: #8B4000; /* Lighter shade of orange on hover */
 }
 
 .login-form-container,
@@ -491,7 +516,7 @@ margin-top:50px;
 }
 
 /*Categorylist and details*/
-/* App.css */
+
 .category-list {
     display: flex;
     flex-wrap: wrap;
@@ -562,6 +587,7 @@ margin-top:50px;
        font-size:35px;
        text-align: center; /* Centers the text */
        font-family: "Lucida Handwriting", sans-serif;
+       margin-top:50px;
 
 }
 
@@ -569,9 +595,18 @@ margin-top:50px;
     text-align: center; /* Centers the text */
     font-family: "Garamond", sans-serif; /* Font style for h2 */
     font-size: 30px; /* Font size for h2 */
-    font-weight: bold; /* Normal font weight */
-    color: white; /* Darker color for h2 text (or adjust to suit your design) */
+    font-weight: bold; /* Font weight for h2 text */
+    color: white; /* Color for h2 text */
+    margin-bottom: 10px; /* Add space below the heading to separate from the line */
+}
 
+.menu-header h2::after {
+    content: ""; /* Empty content to create the line */
+    display: block; /* Make the pseudo-element a block-level element */
+    width: 90%; /* Adjust the width of the line */
+    height: 10px; /* Thickness of the line */
+    background-color: #CD7F32; /* Color of the line */
+    margin: 40px 50px 0;  /* Center-align the line */
 }
 
 .item-list {
@@ -593,39 +628,6 @@ margin-top:50px;
     width: 100%;
     height: 150px;
     object-fit: cover;
-}
-
-.item-info {
-    padding: 10px 0;
-}
-.item-name {
-    margin-top:-20px;
-    height:60px;
-}
-
-.item-description {
-    margin-top:10px;
-    height:150px;
-}
-.item-price {
-    margin-top:10px;
-    height:30px;
-}
-
-.item-button {
-    background-color: #87680d;
-    border: none;
-    color: white;
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
-    font-size: 16px;
-
-}
-
-.item-button:hover {
-    background-color: darkorange;
 }
 
 /*facility*/
@@ -717,5 +719,66 @@ margin-top:50px;
 
 
 }
+
+/*Category Page*/
+.category-page {
+    padding: 20px;
+}
+
+.category-section {
+    margin-bottom: 40px;
+}
+
+.category-name {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-top:20px;
+    margin-left:20px;
+}
+
+.items-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px; /* Adjust spacing between boxes */
+    margin-left:200px;
+    margin-right:200px;
+}
+
+.items-cards {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    width:150px;
+}
+
+.items-image {
+    width: 100%;
+    height: 100px; /* Set a fixed height to ensure square shape */
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.items-name {
+    margin-top:20px;
+    height:60px;
+}
+
+.items-description {
+    margin-top:-10px;
+    height:150px;
+}
+.items-price {
+    margin-top:15px;
+    height:30px;
+    font-weight:bold;
+}
+
 
 

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import './App.css';
 
 const LoginForm = () => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -13,7 +13,7 @@ const LoginForm = () => {
         e.preventDefault();
 
         axios.post('/user/login/customer', null, {
-            params: { email, password }
+            params: { username, password }
         })
         .then(response => {
             console.log('Login successful:', response.data);
@@ -29,11 +29,11 @@ const LoginForm = () => {
             <h2>SIGN IN OR REGISTER</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Email *</label><br/>
+                    <label>UserName *</label><br/>
                     <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        type="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         required
                         placeholder="Enter Your Registered Email"
                     />

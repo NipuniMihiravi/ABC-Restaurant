@@ -1,9 +1,9 @@
-
+// CoverImageFour.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './App.css'; // Assuming your CSS file
+import './OrderApp.css'; // Assuming your CSS file
 
-const CoverImageFour = () => {
+const CoverImageFive = () => {
     const [cover, setCover] = useState(null);
 
     useEffect(() => {
@@ -14,8 +14,8 @@ const CoverImageFour = () => {
         axios.get('/cover')
             .then(response => {
                 console.log('Fetched items:', response.data);
-                if (response.data.length > 3) {
-                    setCover(response.data[3]); // Set the fourth item
+                if (response.data.length > 4) {
+                    setCover(response.data[4]); // Set the fourth item
                 }
             })
             .catch(error => console.error('Error fetching items:', error));
@@ -23,18 +23,18 @@ const CoverImageFour = () => {
 
     return (
 
-        <div className="coverr-image4">
+        <div className="coverr-image5">
             {cover && (
-                <div key={cover.id} className="image4-containerr">
+                <div key={cover.id} className="image5-containerr">
                     <img
                         src={`data:image/jpeg;base64,${cover.image}`} // Assuming cover.image is base64 encoded
-                        className="image4-containerr img" // Class for the image styling
+                        className="image5-containerr img" // Class for the image styling
                         alt="Cover Image" // Accessibility with a descriptive alt text
                     />
-                    <div className="image4-textt reveal">
-                        <h1>Why <br /> ABC <br /> RESTAURANT ?</h1>
-                        <p>{cover.description}</p>
-                    </div>
+                     <div className="image5-text reveal">
+                                            <h1>{cover.heading}</h1>
+                                            <p>{cover.description}</p>
+                                        </div>
                 </div>
             )}
         </div>
@@ -42,5 +42,4 @@ const CoverImageFour = () => {
     );
 };
 
-export default CoverImageFour;
-
+export default CoverImageFive;

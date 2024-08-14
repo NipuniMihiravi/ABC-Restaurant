@@ -1,14 +1,14 @@
 import React from 'react';
 import CoverImageThird from './CoverImageThird';
-import CategoryList from './CategoryList';
-import CategoryDetail from './CategoryDetail';
+import CategoryPage from './CategoryPage';
+
 
 const Menu = () => {
     return (
         <div>
             <CoverImageThird />
-            <CategoryDetail />
-            <CategoryList/>
+            <CategoryPage />
+
         </div>
     );
 };

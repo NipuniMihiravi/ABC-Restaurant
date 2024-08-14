@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate } from 'react-router-dom';
-import './components/Home/App.css'; // Assuming this is your custom CSS file
-import './components/Admin/AdminApp.css'; // Assuming this is your custom CSS file
+import './components/Home/App.css';
+import './components/Admin/AdminApp.css';
+import './components/Order/OrderApp.css';
 
 import CoverImageList from './components/Admin/CoverImageList';
 import FacilityList from './components/Admin/FacilityList';
@@ -9,28 +10,36 @@ import CategoryForm from './components/Admin/CategoryForm';
 import CategoryTable from './components/Admin/CategoryTable';
 import Category from './components/Admin/Category';
 import CoverImage from './components/Home/CoverImage';
-import CoverImageSecond from './components/Home/CoverImageSecond';
-import CoverImageThird from './components/Home/CoverImageThird';
-import CoverImageFour from './components/Home/CoverImageFour';
 import Home from './components/Home/Home';
 import Menu from './components/Home/Menu';
 import About from './components/Home/About';
 import LoginForm from './components/Home/LoginForm';
 import RegistrationForm from './components/Home/RegistrationForm';
 import MenuTable from './components/Home/MenuTable';
-import CategoryList from './components/Home/CategoryList';
-import CategoryDetail from './components/Home/CategoryDetail';
-import AdminRoutes from './components/Admin/AdminRoutes'; // Import AdminRoutes
-import LoginAdmin from './components/Admin/LoginAdmin'; // Import LoginAdmin
+import AdminRoutes from './components/Admin/AdminRoutes';
+import OrderRoutes from './components/Order/OrderRoutes';
+import LoginAdmin from './components/Admin/LoginAdmin';
+import CategoryDetail from './components/Order/CategoryDetail';
+import CartPage from './components/Order/CartPage';
+import OrderPanel from './components/Order/OrderPanel'; // Import OrderPanel
+import CoverImageFive from './components/Order/CoverImageFive';
+import OrderHome from './components/Order/OrderHome';
+import TempCartSummary from './components/Order/TempCartSummary';
 
 const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isAdminRoute = location.pathname.startsWith('/admin');
+
+  // Check if the current route is for admin, order management, category details or show order panel
+const isSpecialRoute = location.pathname.startsWith('/admin') ||
+                       location.pathname.startsWith('/order');
+
+const showOrderPanel = location.pathname.startsWith('/category/') ||
+                       location.pathname.startsWith('/cart/');
 
   return (
     <div>
-      {!isAdminRoute && (
+      {!isSpecialRoute && !showOrderPanel && (
         <nav className="navbar">
           <div className="navbar-container">
             <div className="logo-container">
@@ -41,27 +50,27 @@ const App = () => {
                 <li><Link to="/home" className={({ isActive }) => isActive ? 'active' : ''}>Home</Link></li>
                 <li><Link to="/about" className={({ isActive }) => isActive ? 'active' : ''}>About</Link></li>
                 <li><Link to="/menu" className={({ isActive }) => isActive ? 'active' : ''}>Menu</Link></li>
+                <li><Link to="/menu" className={({ isActive }) => isActive ? 'active' : ''}>Gallery</Link></li>
                 <li><Link to="/" className={({ isActive }) => isActive ? 'active' : ''}>Contact</Link></li>
-
               </ul>
               <div className="nav-buttons">
-                <button className="nav-button" onClick={() => navigate('/login')}>Sign In</button>
-                <button className="nav-button" onClick={() => navigate('/register')}>Register</button>
+                <button className="nav-button" onClick={() => navigate('/cart/orderhome')}>ORDER ONLINE</button>
+                <button className="nav-button" onClick={() => navigate('/register')}>RESERVE SHEET</button>
               </div>
             </div>
           </div>
         </nav>
       )}
 
+      {showOrderPanel && <OrderPanel />} {/* Render OrderPanel if in category details */}
+
       <main className="container mt-4">
         <Routes>
           <Route path="/home" element={<Home />} />
-          <Route path="/addmimage" element={<CoverImageList />} />
+          <Route path="/addimage" element={<CoverImageList />} />
           <Route path="/facility" element={<FacilityList />} />
           <Route path="/carouse" element={<CoverImage />} />
           <Route path="/category" element={<Category />} />
-          <Route path="/cater" element={<CategoryList />} />
-          <Route path="/category/:categoryId" element={<CategoryDetail />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/menutable" element={<MenuTable />} />
@@ -69,6 +78,12 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/admin/*" element={<AdminRoutes />} />
           <Route path="/adminlogin" element={<LoginAdmin />} />
+          <Route path="/order/*" element={<OrderRoutes />} />
+          <Route path="/category/:categoryId" element={<CategoryDetail />} />
+          <Route path="/cart/page" element={<CartPage/>} />
+          <Route path="/cart/addimage5" element={<CoverImageFive />} />
+          <Route path="/cart/orderhome" element={<OrderHome />} />
+          <Route path="/cart/temp" component={TempCartSummary} />
         </Routes>
       </main>
     </div>
@@ -82,5 +97,3 @@ const AppWrapper = () => (
 );
 
 export default AppWrapper;
-
-

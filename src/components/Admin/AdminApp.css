@@ -338,7 +338,7 @@ nav ul li a:hover, .dropdown:hover > a {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top:300px;
+    margin-top:250px;
 }
 
 /* Individual button styling */
