@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate 
 import './components/Home/App.css';
 import './components/Admin/AdminApp.css';
 import './components/Order/OrderApp.css';
+import './components/Reservation/Reservation.css';
 
 import CoverImageList from './components/Admin/CoverImageList';
 import FacilityList from './components/Admin/FacilityList';
@@ -26,20 +27,24 @@ import CoverImageFive from './components/Order/CoverImageFive';
 import OrderHome from './components/Order/OrderHome';
 import TempCartSummary from './components/Order/TempCartSummary';
 
+import ReservationPage from './components/Reservation/ReservationPage';
+
 const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Check if the current route is for admin, order management, category details or show order panel
-const isSpecialRoute = location.pathname.startsWith('/admin') ||
-                       location.pathname.startsWith('/order');
+  // Check if the current route is for admin, order management, or reservation
+  const isSpecialRoute = location.pathname.startsWith('/admin') ||
+                         location.pathname.startsWith('/order');
 
-const showOrderPanel = location.pathname.startsWith('/category/') ||
-                       location.pathname.startsWith('/cart/');
+  const showOrderPanel = location.pathname.startsWith('/category/') ||
+                         location.pathname.startsWith('/cart/');
+
+  const showReservationPage = location.pathname.startsWith('/reservation/page');
 
   return (
     <div>
-      {!isSpecialRoute && !showOrderPanel && (
+      {!isSpecialRoute && !showOrderPanel && !showReservationPage && (
         <nav className="navbar">
           <div className="navbar-container">
             <div className="logo-container">
@@ -51,11 +56,11 @@ const showOrderPanel = location.pathname.startsWith('/category/') ||
                 <li><Link to="/about" className={({ isActive }) => isActive ? 'active' : ''}>About</Link></li>
                 <li><Link to="/menu" className={({ isActive }) => isActive ? 'active' : ''}>Menu</Link></li>
                 <li><Link to="/menu" className={({ isActive }) => isActive ? 'active' : ''}>Gallery</Link></li>
-                <li><Link to="/" className={({ isActive }) => isActive ? 'active' : ''}>Contact</Link></li>
+                <li><Link to="/reservation" className={({ isActive }) => isActive ? 'active' : ''}>Contact</Link></li>
               </ul>
               <div className="nav-buttons">
                 <button className="nav-button" onClick={() => navigate('/cart/orderhome')}>ORDER ONLINE</button>
-                <button className="nav-button" onClick={() => navigate('/register')}>RESERVE SHEET</button>
+                <button className="nav-button" onClick={() => navigate('/login')}>RESERVATION</button>
               </div>
             </div>
           </div>
@@ -80,10 +85,10 @@ const showOrderPanel = location.pathname.startsWith('/category/') ||
           <Route path="/adminlogin" element={<LoginAdmin />} />
           <Route path="/order/*" element={<OrderRoutes />} />
           <Route path="/category/:categoryId" element={<CategoryDetail />} />
-          <Route path="/cart/page" element={<CartPage/>} />
+          <Route path="/cart/page" element={<CartPage />} />
           <Route path="/cart/addimage5" element={<CoverImageFive />} />
           <Route path="/cart/orderhome" element={<OrderHome />} />
-          <Route path="/cart/temp" component={TempCartSummary} />
+          <Route path="/reservation/page" element={<ReservationPage />} />
         </Routes>
       </main>
     </div>

@@ -17,7 +17,7 @@ const LoginForm = () => {
         })
         .then(response => {
             console.log('Login successful:', response.data);
-            navigate('/home'); // Redirect to home page after successful login
+            navigate('/reservation/page'); // Redirect to home page after successful login
         })
         .catch(error => {
             setError('Invalid credentials');

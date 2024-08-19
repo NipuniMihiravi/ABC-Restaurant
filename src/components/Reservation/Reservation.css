@@ -1,0 +1,368 @@
+/* Container styling */
+/* Full-width container */
+.full-reservation-container {
+  width: 1600px; /* Full viewport width */
+  height: auto;
+  background: linear-gradient(to bottom, #87680d 50%, black 50%);
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  margin-top:300px;
+}
+
+/* Centered reservation container */
+.reservation-container {
+  padding: 20px;
+  border: 1px solid black;
+  width: 1200px; /* Adjust as needed */
+  background-color: white;
+  font-family: "Poppins", sans-serif;
+  /* Ensure it's centered within the full-width container */
+  margin-top: 130px; /* Adjust as needed for vertical spacing */
+}
+
+.reservation-form h1 {
+  font-size: 45px; /* Font size */
+  color: black; /* Text color */
+  text-align: center; /* Center the text */
+  margin-bottom: 50px; /* Space below the heading */
+  font-family: "Garamond", Serif;
+  font-weight: bold; /* Bold text */
+}
+.reservation-form h1::after {
+    content: ""; /* Empty content to create the line */
+    display: block; /* Make the pseudo-element a block-level element */
+    width: 10%; /* Adjust the width of the line */
+    height: 3px; /* Thickness of the line */
+    background-color: orange; /* Color of the line */
+    margin: 10px auto 0; /* Center-align the line and add space above it */
+}
+
+
+
+/* Button group styling */
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* Button styling */
+.form-toggle-button {
+  background-color: #BDB76B;
+  border: 1px solid black;
+  color: white;
+  font-weight:bold;
+  padding: 10px 20px;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  width:200px;
+  height:60px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  font-family: "Poppins", sans-serif; /* Font family */
+
+}
+
+.form-toggle-button:hover {
+  background-color: #708090;
+}
+
+.form-toggle-button.active {
+  background-color: #708090;
+}
+
+.reservation-form {
+  max-width: 900px;
+  margin: auto;
+
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  max-width: 850px;
+}
+
+.form-group {
+  flex: 1;
+  margin-right: 20px;
+  margin-bottom: 15px; /* Add space between form groups (and hence between labels) */
+}
+
+.form-group:last-child {
+  margin-right: 0;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  width: 200px;
+  color: brown;
+  margin-bottom: 10px; /* Add space between the label and the input/textarea */
+}
+
+textarea {
+  height: 80px;
+  resize: none;
+}
+
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  background-color: dark orange;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: orange;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="time"],
+.form-group input[type="number"],
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.form-group input[type="text"]::placeholder,
+.form-group input[type="date"]::placeholder,
+.form-group input[type="time"]::placeholder,
+.form-group input[type="number"]::placeholder,
+.form-group textarea::placeholder {
+  color: #888;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="date"]:focus,
+.form-group input[type="time"]:focus,
+.form-group input[type="number"]:focus,
+.form-group textarea:focus {
+  border-color: #B8860B;
+  outline: none;
+  box-shadow: 0 0 5px rgba(184, 134, 11, 0.5);
+}
+/*error msg*/
+p {
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* ConfirmationDialog.css */
+.confirmation-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmation-dialog {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.confirmation-dialog-buttons {
+  margin-top: 20px;
+}
+
+.confirmation-dialog-buttons button {
+  margin: 0 10px;
+}
+
+
+
+/*navbar*/
+.logout-button {
+  background-color: #f44336; /* Red background color */
+  color: white; /* White text color */
+  padding: 8px 16px; /* Padding around the button */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+}
+
+/* Hover effect for the logout button */
+.logout-button:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}
+.order-navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  background-color: black; /* Adjust the color as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.order-navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.order-logo-container img.logo {
+  height: 60px; /* Adjust the size of the logo */
+}
+
+.order-nav-links-container {
+  display: flex;
+  margin-right:500px;
+
+}
+
+/*CoverImageSix*/
+.cover-image-six {
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+  padding: 20px; /* Add some padding around the container */
+  margin-top:100px;
+}
+
+.image-six-container {
+  display: flex;
+  flex-direction: row; /* Arrange children (image and text) in a row */
+  max-width: 1400px; /* Set a max width for the container */
+  height:800px;
+  opacity: 0; /* Initially invisible */
+  animation: fadeInUp 1s ease-in-out forwards; /* Apply the fade-in effect */
+}
+
+.image-six-image {
+  flex: 1; /* Image takes up one part of the row */
+}
+
+.image-six-img {
+  width: 80%;
+  height: 800px; /* Ensure the image maintains its aspect ratio */
+  object-fit: cover; /* Cover the entire space of the image container */
+  border-right: 1px solid #ccc; /* Optional: Add a border between the image and text */
+}
+
+.image-six-text {
+  flex: 1; /* Text takes up the other part of the row */
+  padding: 20px; /* Add padding around the text content */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center text vertically */
+  margin-top:-500px;
+}
+
+.image-six-text h2 {
+   color: #A0522D;
+     font-size:40px;
+     text-align: center; /* Centers the text */
+     font-family: "Lucida Handwriting", sans-serif;
+}
+
+.image-six-text h1 {
+  margin: 0;
+   color: white;
+   font-size:40px;
+   font-family: "Georgia", sans-serif;
+}
+.image-six-text h1::after {
+    content: ""; /* Empty content to create the line */
+    display: block; /* Make the pseudo-element a block-level element */
+    width: 10%; /* Adjust the width of the line */
+    height: 3px; /* Thickness of the line */
+    background-color: orange; /* Color of the line */
+    margin: 10px auto 0; /* Center-align the line and add space above it */
+}
+
+.image-six-text p {
+  margin-top:60px;
+  font-size: 18px;
+  line-height: 1.5; /* Sets the line spacing to 1.5 */
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+/*CoverImageSeven*/
+.cover-image-seven {
+  display: flex;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center; /* Center the content vertically */
+  padding: 20px; /* Add some padding around the container */
+  margin-top:-600px;
+  margin-bottom:-500px;
+}
+
+.image-seven-container {
+  display: flex;
+  flex-direction: row; /* Arrange children (image and text) in a row */
+  max-width: 1400px; /* Set a max width for the container */
+  height:800px;
+  opacity: 0; /* Initially invisible */
+  animation: fadeInUp 1s ease-in-out forwards; /* Apply the fade-in effect */
+}
+
+.image-seven-image {
+  flex: 1; /* Image takes up one part of the row */
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px); /* Start slightly below the final position */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); /* End at the final position */
+  }
+}
+
+.image-seven-img {
+  width: 100%;
+  height: 300px; /* Set the height for the image */
+  object-fit: cover; /* Ensure the image covers the entire container */
+  border-right: 1px solid #ccc; /* Optional: Border between image and text */
+  margin-left: 400px;
+  margin-top: 230px;
+ }
+
+.image-seven-text {
+  flex: 1; /* Text takes up the other part of the row */
+  padding: 20px; /* Add padding around the text content */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center text vertically */
+  margin-top:-600px;
+}
+
+.image-seven-text p {
+  margin-top:60px;
+  font-size: 18px;
+  line-height: 1.5; /* Sets the line spacing to 1.5 */
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+
