@@ -1,39 +1,39 @@
 package abc.example.abcResturant.Model;
 
+
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "table")
 
-@Document(collection = "reservation")
-public class Reservation {
+public class Table {
     @Id
-    private String id;
+    private ObjectId id;
     private String name;
     private String contactNo;
     private String email;
     private String date;
     private String time;
-    private int guests;
-    private String specialNote;
+    private Integer guests;
     private String status;
 
-    public Reservation(String id, String name, String contactNo, String email, String date, int guests, String time, String specialNote, String status) {
+    public Table(ObjectId id, String name, String contactNo, String email, String date, String time, Integer guests, String status) {
         this.id = id;
         this.name = name;
         this.contactNo = contactNo;
         this.email = email;
         this.date = date;
-        this.guests = guests;
         this.time = time;
-        this.specialNote = specialNote;
+        this.guests = guests;
         this.status = status;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 
@@ -77,20 +77,12 @@ public class Reservation {
         this.time = time;
     }
 
-    public int getGuests() {
+    public Integer getGuests() {
         return guests;
     }
 
-    public void setGuests(int guests) {
+    public void setGuests(Integer guests) {
         this.guests = guests;
-    }
-
-    public String getSpecialNote() {
-        return specialNote;
-    }
-
-    public void setSpecialNote(String specialNote) {
-        this.specialNote = specialNote;
     }
 
     public String getStatus() {
@@ -101,5 +93,6 @@ public class Reservation {
         this.status = status;
     }
 }
+
 
 
