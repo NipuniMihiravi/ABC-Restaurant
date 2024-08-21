@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const UserDetails = () => {
+const CustomerDetails = () => {
     const [reservations, setReservations] = useState([]);
     const [editingReservationId, setEditingReservationId] = useState(null);
     const [editingReservationData, setEditingReservationData] = useState({
