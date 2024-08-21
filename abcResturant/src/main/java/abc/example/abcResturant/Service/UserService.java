@@ -37,6 +37,7 @@ public class UserService {
         return adminRepository.save(admin);
     }
 
+
     public Admin updateAdmin(String id, Admin admin) {
         return adminRepository.findById(id)
                 .map(existingAdmin -> {
@@ -124,5 +125,8 @@ public class UserService {
 
     public Optional<Customer> authenticateCustomer(String username, String password) {
         return customerRepository.findByUsername(username).filter(customer -> customer.getPassword().equals(password));
+    }
+    public boolean existsByUsername(String username) {
+        return customerRepository.existsByUsername(username);
     }
 }

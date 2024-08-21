@@ -14,6 +14,7 @@ public class ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
 
+
     // Get all reservations
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
@@ -36,7 +37,7 @@ public class ReservationService {
             Reservation existingReservation = optionalReservation.get();
             existingReservation.setName(updatedReservation.getName());
             existingReservation.setContactNo(updatedReservation.getContactNo());
-            existingReservation.setEmail(updatedReservation.getEmail());
+            existingReservation.setUsername(updatedReservation.getUsername());
             existingReservation.setDate(updatedReservation.getDate());
             existingReservation.setTime(updatedReservation.getTime());
             existingReservation.setGuests(updatedReservation.getGuests());

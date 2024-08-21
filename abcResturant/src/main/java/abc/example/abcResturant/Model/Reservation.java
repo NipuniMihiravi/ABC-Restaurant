@@ -10,7 +10,7 @@ public class Reservation {
     private String id;
     private String name;
     private String contactNo;
-    private String email;
+    private String username;
     private String date;
     private String time;
     private int guests;
@@ -18,11 +18,11 @@ public class Reservation {
     private String specialNote;
     private String status;
 
-    public Reservation(String id, String name, String contactNo, String email, String date, String time, int guests, String outlet, String specialNote, String status) {
+    public Reservation(String id, String name, String contactNo, String username, String date, String time, int guests, String outlet, String specialNote, String status) {
         this.id = id;
         this.name = name;
         this.contactNo = contactNo;
-        this.email = email;
+        this.username = username;
         this.date = date;
         this.time = time;
         this.guests = guests;
@@ -56,12 +56,12 @@ public class Reservation {
         this.contactNo = contactNo;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getDate() {
