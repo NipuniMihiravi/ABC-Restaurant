@@ -12,11 +12,19 @@ const ReservationForm = () => {
   const [submitHandler, setSubmitHandler] = useState(() => () => {});
   const [dialogMessage, setDialogMessage] = useState('');
 
-  const { register: registerReservation, handleSubmit: handleReservationSubmit, formState: { errors: reservationErrors } } = useForm({
+  const {
+    register: registerReservation,
+    handleSubmit: handleReservationSubmit,
+    formState: { errors: reservationErrors },
+  } = useForm({
     resolver: yupResolver(reservationSchema),
   });
 
-  const { register: registerTable, handleSubmit: handleTableSubmit, formState: { errors: tableErrors } } = useForm({
+  const {
+    register: registerTable,
+    handleSubmit: handleTableSubmit,
+    formState: { errors: tableErrors },
+  } = useForm({
     resolver: yupResolver(tableSchema),
   });
 
@@ -58,6 +66,12 @@ const ReservationForm = () => {
   const handleCancel = () => {
     setShowDialog(false);
   };
+
+  const outlets = [
+    { value: 'kollupitiya', label: 'Kollupitiya' },
+    { value: 'maharagama', label: 'Maharagama' },
+    { value: 'nugegoda', label: 'Nugegoda' },
+  ];
 
   return (
     <div className="full-reservation-container">
@@ -106,10 +120,24 @@ const ReservationForm = () => {
               </div>
             </div>
 
-            <div className="form-group">
-              <label>Guests:</label>
-              <input type="number" {...registerReservation('guests')} placeholder="Number of guests" />
-              {reservationErrors.guests && <p>{reservationErrors.guests.message}</p>}
+            <div className="form-row">
+              <div className="form-group">
+                <label>Guests:</label>
+                <input type="number" {...registerReservation('guests')} placeholder="Number of guests" />
+                {reservationErrors.guests && <p>{reservationErrors.guests.message}</p>}
+              </div>
+              <div className="form-group">
+                <label htmlFor="outlet">Outlet:</label>
+                <select id="outlet" {...registerReservation('outlet')}>
+                  <option value="">Select Your Outlet</option>
+                  {outlets.map((outlet) => (
+                    <option key={outlet.value} value={outlet.value}>
+                      {outlet.label}
+                    </option>
+                  ))}
+                </select>
+                {reservationErrors.outlet && <p>{reservationErrors.outlet.message}</p>}
+              </div>
             </div>
 
             <div className="form-group">
@@ -124,12 +152,26 @@ const ReservationForm = () => {
         {activeForm === 'table' && (
           <form className="reservation-form" onSubmit={handleTableSubmit(onTableSubmit)}>
             <h1>RESERVE TABLE</h1>
-            <div className="form-row">
-              <div className="form-group">
+
+             <div className="form-row">
+                 <div className="form-group">
                               <label>Name:</label>
                               <input type="text" {...registerTable('name')} placeholder="Enter your name" />
                               {tableErrors.name && <p>{tableErrors.name.message}</p>}
-                            </div>
+                </div>
+
+                 <div className="form-group">
+                               <label htmlFor="outlet">Outlet:</label>
+                               <select id="outlet" {...registerTable('outlet')}>
+                                 <option value="">Select Your Outlet</option>
+                                 {outlets.map((outlet) => (
+                                   <option key={outlet.value} value={outlet.value}>
+                                     {outlet.label}
+                                   </option>
+                                 ))}
+                               </select>
+                               {tableErrors.outlet && <p>{tableErrors.outlet.message}</p>}
+                 </div>
             </div>
 
             <div className="form-row">
@@ -146,11 +188,11 @@ const ReservationForm = () => {
             </div>
 
             <div className="form-row">
-            <div className="form-group">
-                            <label>Number of Guests:</label>
-                            <input type="number" {...registerTable('guests')} placeholder="Number of guests" />
-                            {tableErrors.guests && <p>{tableErrors.guests.message}</p>}
-                          </div>
+              <div className="form-group">
+                <label>Number of Guests:</label>
+                <input type="number" {...registerTable('guests')} placeholder="Number of guests" />
+                {tableErrors.guests && <p>{tableErrors.guests.message}</p>}
+              </div>
 
               <div className="form-group">
                 <label>Contact Number:</label>
