@@ -5,12 +5,16 @@ import './components/Admin/AdminApp.css';
 import './components/Order/OrderApp.css';
 import './components/Reservation/Reservation.css';
 
+
 import CoverImageList from './components/Admin/CoverImageList';
 import FacilityList from './components/Admin/FacilityList';
 import CategoryForm from './components/Admin/CategoryForm';
+import GalleryForm from './components/Admin/GalleryForm';
 import CategoryTable from './components/Admin/CategoryTable';
 import Category from './components/Admin/Category';
 import CoverImage from './components/Home/CoverImage';
+import Gallery from './components/Home/Gallery';
+import Footer from './components/Home/Footer';
 import Home from './components/Home/Home';
 import Menu from './components/Home/Menu';
 import About from './components/Home/About';
@@ -55,7 +59,7 @@ const App = () => {
                 <li><Link to="/home" className={({ isActive }) => isActive ? 'active' : ''}>Home</Link></li>
                 <li><Link to="/about" className={({ isActive }) => isActive ? 'active' : ''}>About</Link></li>
                 <li><Link to="/menu" className={({ isActive }) => isActive ? 'active' : ''}>Menu</Link></li>
-                <li><Link to="/menu" className={({ isActive }) => isActive ? 'active' : ''}>Gallery</Link></li>
+                <li><Link to="/galleries" className={({ isActive }) => isActive ? 'active' : ''}>Gallery</Link></li>
                 <li><Link to="/reservation" className={({ isActive }) => isActive ? 'active' : ''}>Contact</Link></li>
               </ul>
               <div className="nav-buttons">
@@ -74,6 +78,9 @@ const App = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/addimage" element={<CoverImageList />} />
           <Route path="/facility" element={<FacilityList />} />
+          <Route path="/gallery" element={<GalleryForm />} />
+          <Route path="/galleries" element={<Gallery/>} />
+          <Route path="/footer" element={<Footer/>} />
           <Route path="/carouse" element={<CoverImage />} />
           <Route path="/category" element={<Category />} />
           <Route path="/login" element={<LoginForm />} />

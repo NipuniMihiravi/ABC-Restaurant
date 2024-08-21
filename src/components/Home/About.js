@@ -1,6 +1,7 @@
 import React from 'react';
 import CoverImageFour from './CoverImageFour';
 import Facility  from './Facility';
+import Footer from './Footer';
 
 
 
@@ -9,6 +10,7 @@ const About = () => {
         <div>
             <CoverImageFour />
             <Facility />
+            <Footer/>
 
         </div>
     );

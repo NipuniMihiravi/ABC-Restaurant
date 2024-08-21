@@ -1,6 +1,7 @@
 import React from 'react';
 import CoverImageThird from './CoverImageThird';
 import CategoryPage from './CategoryPage';
+import Footer from './Footer';
 
 
 const Menu = () => {
@@ -8,6 +9,7 @@ const Menu = () => {
         <div>
             <CoverImageThird />
             <CategoryPage />
+            <Footer/>
 
         </div>
     );

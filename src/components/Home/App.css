@@ -8,6 +8,7 @@ body {
 .coverr-image {
   width: 100%;
   height: 80vh; /* 120% of the viewport height */
+
 }
 
 .image-containerr {
@@ -18,6 +19,7 @@ body {
   display: flex; /* Centers content */
   justify-content: center; /* Centers content horizontally */
   align-items: center; /* Centers content vertically */
+  background-color:red;
 
 
 }
@@ -28,8 +30,9 @@ body {
 
 }
 .coverr-image1 {
-  width: 140%;
+  width: 100%;
   height: 140vh; /* 120% of the viewport height */
+
 
 }
 
@@ -45,8 +48,9 @@ margin-top:50px;
 }
 
 .image1-containerr img {
-  width: 80%;
+  width: 100%;
   height: 80%; /* Make sure it takes the 50% height of the image-container */
+  margin-left:50px;
 
 }
 .coverr-image3 {
@@ -104,9 +108,10 @@ margin-top:50px;
     position: absolute;
     bottom: 550px; /* Adjust as needed */
     left: 650px; /* Adjust as needed */
-    width:700px;
+    width:600px;
     height:100px;
     border-radius: 5px;
+    margin-left:-30px;
 
 }
 
@@ -191,7 +196,7 @@ margin-top:50px;
     transition: background-color 0.3s ease; /* Smooth transition effect */
     height: 100px;
     position: fixed;
-    width: 100%;
+    width: 1500px;
     top: 0;
     z-index: 10;
 }
@@ -682,7 +687,8 @@ margin-top:50px;
 .facility-info p {
     font-size: 18px;
     margin: 5px 0;
-    margin-top:20px;
+    margin-top:17px;
+    color:black;
 }
 .facility-button {
     background-color: black; /* Transparent background */
@@ -773,12 +779,230 @@ margin-top:50px;
 .items-description {
     margin-top:-10px;
     height:150px;
+    color:black;
 }
 .items-price {
     margin-top:15px;
     height:30px;
     font-weight:bold;
+    color:brown;
 }
+
+/*Gallery*/
+/* Reservation.css */
+
+.full-gallery-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  background-color: black;
+
+}
+
+.galleries-container {
+  width: 100%;
+  background-color: black;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+}
+
+.galleries-button-group {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+}
+
+.galleries-form-toggle-button {
+  padding: 10px 20px;
+  margin-right:30px;
+  cursor: pointer;
+  border: none;
+  background-color: black;
+  color:white;
+  font-size: 18px;
+  border-radius: 5px;
+  font-weight:bold;
+  transition: background-color 0.3s ease;
+}
+
+.galleries-form-toggle-button:hover {
+  background-color: brown;
+}
+
+.galleries-form-toggle-button.active {
+  background-color: brown;
+  color: orange;
+}
+
+.galleries-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  margin-top:100px;
+
+}
+
+/* Individual item in the gallery *
+
+/* Style for images */
+.galleries-image {
+  width: 300px; /* Ensure image fills the container */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 8px; /* Optional: Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+  object-fit: cover; /* Ensure the image covers the container */
+}
+
+.galleries-image:hover {
+  transform: scale(1.05);
+  border-color: #007bff;
+}
+
+p {
+  font-size: 18px;
+  color: #555;
+  text-align: center;
+}
+
+.heading-gallery{
+width:100%;
+height:400px;
+background-color:#87680d;
+margin-top:100px;
+}
+.heading-gallery h1{
+ font-family: "Georgia", sans-serif;
+    font-size: 80px; /* Font size for h2 */
+    font-weight: bold; /* Normal font weight */
+    color: white; /* Darker color for h2 text (or adjust to suit your design) */
+    margin-left:200px;
+    margin-top:50px;
+}
+.heading-gallery h2{
+ font-family: "Poppins", sans-serif; /* Font style */
+    font-size: 20px; /* Font size for h2 */
+    font-weight: bold; /* Normal font weight */
+    color: white; /* Darker color for h2 text (or adjust to suit your design) */
+    margin-left:200px;
+}
+
+/*Footer*/
+/* Footer Container */
+.footer {
+  background-color: black;
+  width:100%;
+  margin-top:30px;
+
+}
+
+.section__container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.footer__col {
+  flex: 1;
+  margin-left:50px;
+  min-width: 200px;
+}
+.footer__col h4{
+  color:white;
+  font-size:20px;
+  margin-left:40px;
+}
+
+
+.section__header {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.section__description {
+  font-size: 1rem;
+  color: white;
+  line-height: 1.5;
+  margin-top:40px;
+}
+.section__description1 {
+  font-size: 1rem;
+  color: white;
+  line-height: 1.5;
+  margin-left:-100px;
+
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: brown;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  text-align: center;
+  margin-top:40px;
+}
+
+.btn a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer__links {
+  list-style-type: none;
+  padding: 0;
+  margin-left:40px;
+
+}
+
+.footer__links li {
+  margin-bottom: 0.5rem;
+}
+
+.footer__links a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer__links a:hover {
+  text-decoration: underline;
+}
+
+.footer__socials {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer__socials a img {
+  width: 24px;
+  height: 24px;
+}
+
+.footer__bar {
+  background-color: #343a40;
+  color: #fff;
+  text-align: center;
+  padding: 0.5rem;
+  margin-top: 50px;
+  font-size: 0.875rem;
+}
+
+
+
+
 
 
 

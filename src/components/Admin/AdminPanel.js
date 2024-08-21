@@ -27,7 +27,7 @@ const AdminPanel = ({ children }) => {
           </div>
 
         </div>
-        <h1> Hello Admin, Welcome ABC Restaurant Management System</h1>
+
       </nav>
 
       <main className="container mt-4">
