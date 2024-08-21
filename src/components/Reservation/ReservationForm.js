@@ -12,6 +12,16 @@ const ReservationForm = () => {
   const [submitHandler, setSubmitHandler] = useState(() => () => {});
   const [dialogMessage, setDialogMessage] = useState('');
 
+  const validateUsername = async (username) => {
+    try {
+      const response = await axios.get(`/user/customer/validate-username/${encodeURIComponent(username)}`);
+      return response.data; // Assuming response.data is a boolean indicating existence
+    } catch (error) {
+      console.error('Error validating username:', error);
+      return false; // Assume username does not exist if there's an error
+    }
+  };
+
   const {
     register: registerReservation,
     handleSubmit: handleReservationSubmit,
@@ -28,13 +38,21 @@ const ReservationForm = () => {
     resolver: yupResolver(tableSchema),
   });
 
-  const onReservationSubmit = (data) => {
+  const onReservationSubmit = async (data) => {
+    const isUsernameValid = await validateUsername(data.username);
+    if (!isUsernameValid) {
+      console.log('Username does not exist');
+      // Handle invalid username
+      return;
+    }
+
+    const reservationData = { ...data, status: 'pending' };
     setDialogMessage('Are you sure you want to submit the party reservation?');
     setSubmitHandler(() => async () => {
       try {
-        await axios.post('/reservation', data);
+        await axios.post('/reservation', reservationData);
         alert('Party reservation submitted successfully!');
-        window.location.reload(); // Refresh the page after successful submission
+        window.location.reload();
       } catch (error) {
         console.error('Error submitting party reservation:', error);
       }
@@ -42,13 +60,21 @@ const ReservationForm = () => {
     setShowDialog(true);
   };
 
-  const onTableSubmit = (data) => {
+  const onTableSubmit = async (data) => {
+    const isUsernameValid = await validateUsername(data.username);
+    if (!isUsernameValid) {
+      console.log('Username does not exist');
+      // Handle invalid username
+      return;
+    }
+
+    const tableData = { ...data, status: 'pending' };
     setDialogMessage('Are you sure you want to submit the table reservation?');
     setSubmitHandler(() => async () => {
       try {
-        await axios.post('/table', data);
+        await axios.post('/table', tableData);
         alert('Table reservation submitted successfully!');
-        window.location.reload(); // Refresh the page after successful submission
+        window.location.reload();
       } catch (error) {
         console.error('Error submitting table reservation:', error);
       }
@@ -109,6 +135,14 @@ const ReservationForm = () => {
 
             <div className="form-row">
               <div className="form-group">
+                <label>User Name:</label>
+                <input type="text" {...registerReservation('username')} placeholder="Enter your Registered Email" />
+                {reservationErrors.username && <p>{reservationErrors.username.message}</p>}
+              </div>
+            </div>
+
+            <div className="form-row">
+              <div className="form-group">
                 <label>Date:</label>
                 <input type="date" {...registerReservation('date')} />
                 {reservationErrors.date && <p>{reservationErrors.date.message}</p>}
@@ -153,25 +187,33 @@ const ReservationForm = () => {
           <form className="reservation-form" onSubmit={handleTableSubmit(onTableSubmit)}>
             <h1>RESERVE TABLE</h1>
 
-             <div className="form-row">
-                 <div className="form-group">
-                              <label>Name:</label>
-                              <input type="text" {...registerTable('name')} placeholder="Enter your name" />
-                              {tableErrors.name && <p>{tableErrors.name.message}</p>}
-                </div>
+            <div className="form-row">
+              <div className="form-group">
+                <label>Name:</label>
+                <input type="text" {...registerTable('name')} placeholder="Enter your name" />
+                {tableErrors.name && <p>{tableErrors.name.message}</p>}
+              </div>
 
-                 <div className="form-group">
-                               <label htmlFor="outlet">Outlet:</label>
-                               <select id="outlet" {...registerTable('outlet')}>
-                                 <option value="">Select Your Outlet</option>
-                                 {outlets.map((outlet) => (
-                                   <option key={outlet.value} value={outlet.value}>
-                                     {outlet.label}
-                                   </option>
-                                 ))}
-                               </select>
-                               {tableErrors.outlet && <p>{tableErrors.outlet.message}</p>}
-                 </div>
+              <div className="form-group">
+                <label htmlFor="outlet">Outlet:</label>
+                <select id="outlet" {...registerTable('outlet')}>
+                  <option value="">Select Your Outlet</option>
+                  {outlets.map((outlet) => (
+                    <option key={outlet.value} value={outlet.value}>
+                      {outlet.label}
+                    </option>
+                  ))}
+                </select>
+                {tableErrors.outlet && <p>{tableErrors.outlet.message}</p>}
+              </div>
+            </div>
+
+            <div className="form-row">
+              <div className="form-group">
+                <label>User Name:</label>
+                <input type="text" {...registerTable('username')} placeholder="Enter your Registered username" />
+                {tableErrors.username && <p>{tableErrors.username.message}</p>}
+              </div>
             </div>
 
             <div className="form-row">
