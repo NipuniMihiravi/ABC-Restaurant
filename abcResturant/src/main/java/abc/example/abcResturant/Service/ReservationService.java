@@ -40,6 +40,7 @@ public class ReservationService {
             existingReservation.setDate(updatedReservation.getDate());
             existingReservation.setTime(updatedReservation.getTime());
             existingReservation.setGuests(updatedReservation.getGuests());
+            existingReservation.setOutlet(updatedReservation.getOutlet());
             existingReservation.setSpecialNote(updatedReservation.getSpecialNote());
             existingReservation.setStatus(updatedReservation.getStatus());
             return reservationRepository.save(existingReservation);

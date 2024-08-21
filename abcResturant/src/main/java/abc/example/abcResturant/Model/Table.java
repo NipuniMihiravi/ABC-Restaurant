@@ -16,9 +16,10 @@ public class Table {
     private String date;
     private String time;
     private Integer guests;
+    private String outlet;
     private String status;
 
-    public Table(ObjectId id, String name, String contactNo, String email, String date, String time, Integer guests, String status) {
+    public Table(ObjectId id, String name, String contactNo, String email, String date, String time, Integer guests, String outlet, String status) {
         this.id = id;
         this.name = name;
         this.contactNo = contactNo;
@@ -26,6 +27,7 @@ public class Table {
         this.date = date;
         this.time = time;
         this.guests = guests;
+        this.outlet = outlet;
         this.status = status;
     }
 
@@ -83,6 +85,14 @@ public class Table {
 
     public void setGuests(Integer guests) {
         this.guests = guests;
+    }
+
+    public String getOutlet() {
+        return outlet;
+    }
+
+    public void setOutlet(String outlet) {
+        this.outlet = outlet;
     }
 
     public String getStatus() {

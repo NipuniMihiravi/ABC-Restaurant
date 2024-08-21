@@ -14,20 +14,23 @@ public class Reservation {
     private String date;
     private String time;
     private int guests;
+    private String outlet;
     private String specialNote;
     private String status;
 
-    public Reservation(String id, String name, String contactNo, String email, String date, int guests, String time, String specialNote, String status) {
+    public Reservation(String id, String name, String contactNo, String email, String date, String time, int guests, String outlet, String specialNote, String status) {
         this.id = id;
         this.name = name;
         this.contactNo = contactNo;
         this.email = email;
         this.date = date;
-        this.guests = guests;
         this.time = time;
+        this.guests = guests;
+        this.outlet = outlet;
         this.specialNote = specialNote;
         this.status = status;
-    }
+
+}
 
     public String getId() {
         return id;
@@ -83,6 +86,14 @@ public class Reservation {
 
     public void setGuests(int guests) {
         this.guests = guests;
+    }
+
+    public String getOutlet() {
+        return outlet;
+    }
+
+    public void setOutlet(String outlet) {
+        this.outlet = outlet;
     }
 
     public String getSpecialNote() {
