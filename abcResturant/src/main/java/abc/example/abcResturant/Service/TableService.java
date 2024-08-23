@@ -1,5 +1,6 @@
 package abc.example.abcResturant.Service;
 
+import abc.example.abcResturant.Model.Reservation;
 import abc.example.abcResturant.Model.Table;
 import abc.example.abcResturant.Repository.TableRepository;
 import org.bson.types.ObjectId;
@@ -19,7 +20,7 @@ public class TableService {
         return tableRepository.findAll();
     }
 
-    public Optional<Table> getTableById(ObjectId id) {
+    public Optional<Table> getTableById(String id) {
         return tableRepository.findById(id);
     }
 
@@ -27,16 +28,38 @@ public class TableService {
         return tableRepository.save(table);
     }
 
-    public Table updateTable(ObjectId id, Table table) {
-        if (tableRepository.existsById(id)) {
-            table.setId(id);
-            return tableRepository.save(table);
+    public Table updateTable(String id, Table updatedTable) {
+        Optional<Table> optionalTable = tableRepository.findById(id);
+        if (optionalTable.isPresent()) {
+            Table existingTable = optionalTable.get();
+
+            // Update the fields of the existingTable with the new values
+            existingTable.setName(updatedTable.getName());
+            existingTable.setContactNo(updatedTable.getContactNo());
+            existingTable.setUsername(updatedTable.getUsername());
+            existingTable.setDate(updatedTable.getDate());
+            existingTable.setTime(updatedTable.getTime());
+            existingTable.setGuests(updatedTable.getGuests());
+            existingTable.setOutlet(updatedTable.getOutlet());
+            existingTable.setTableNo(updatedTable.getTableNo());
+            existingTable.setStatus(updatedTable.getStatus());
+
+            // Save the updated existingTable back to the repository
+            return tableRepository.save(existingTable);
         } else {
-            throw new RuntimeException("Table not found");
+            return null; // Or throw an exception
         }
     }
 
-    public void deleteTable(ObjectId id) {
-        tableRepository.deleteById(id);
+
+    public boolean deleteTable(String id) {
+        if (tableRepository.existsById(id)) {
+            tableRepository.deleteById(id);
+            return true;
+        } else {
+            return false;
+        }
     }
+
+
 }

@@ -1,6 +1,7 @@
 package abc.example.abcResturant.Service;
 
 import abc.example.abcResturant.Model.Reservation;
+import abc.example.abcResturant.Model.Table;
 import abc.example.abcResturant.Repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,9 @@ public class ReservationService {
     public Reservation updateReservation(String id, Reservation updatedReservation) {
         Optional<Reservation> optionalReservation = reservationRepository.findById(id);
         if (optionalReservation.isPresent()) {
+
             Reservation existingReservation = optionalReservation.get();
+
             existingReservation.setName(updatedReservation.getName());
             existingReservation.setContactNo(updatedReservation.getContactNo());
             existingReservation.setUsername(updatedReservation.getUsername());
