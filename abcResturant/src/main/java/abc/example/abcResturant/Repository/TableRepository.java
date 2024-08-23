@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface TableRepository extends MongoRepository<Table, ObjectId> {
+public interface TableRepository extends MongoRepository<Table, String> {
 
 }
 

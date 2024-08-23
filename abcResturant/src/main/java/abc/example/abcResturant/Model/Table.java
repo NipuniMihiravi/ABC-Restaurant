@@ -9,33 +9,35 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 public class Table {
     @Id
-    private ObjectId id;
+    private String id;
     private String name;
     private String contactNo;
-    private String email;
+    private String username;
     private String date;
     private String time;
     private Integer guests;
     private String outlet;
+    private Integer tableNo;
     private String status;
 
-    public Table(ObjectId id, String name, String contactNo, String email, String date, String time, Integer guests, String outlet, String status) {
+    public Table(String id, String name, String contactNo, String username, String date, String time, Integer guests, String outlet, Integer tableNo, String status) {
         this.id = id;
         this.name = name;
         this.contactNo = contactNo;
-        this.email = email;
+        this.username = username;
         this.date = date;
         this.time = time;
         this.guests = guests;
         this.outlet = outlet;
+        this.tableNo = tableNo;
         this.status = status;
     }
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -55,12 +57,12 @@ public class Table {
         this.contactNo = contactNo;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getDate() {
@@ -93,6 +95,14 @@ public class Table {
 
     public void setOutlet(String outlet) {
         this.outlet = outlet;
+    }
+
+    public Integer getTableNo() {
+        return tableNo;
+    }
+
+    public void setTableNo(Integer tableNo) {
+        this.tableNo = tableNo;
     }
 
     public String getStatus() {
