@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const TableKollupitiya = () => {
+const TableMaharagama = () => {
     const [tables, setTables] = useState([]);
     const [editingTableId, setEditingTableId] = useState(null);
     const [editingTableData, setEditingTableData] = useState({
@@ -24,7 +24,7 @@ const TableKollupitiya = () => {
     const fetchTables = () => {
         axios.get('/table')
             .then(response => {
-                const filteredTables = response.data.filter(table => table.outlet === 'kollupitiya');
+                const filteredTables = response.data.filter(table => table.outlet === 'Maharagama');
                 const sortedTables = filteredTables.sort((a, b) => new Date(b.date) - new Date(a.date));
                 setTables(sortedTables);
             })
@@ -98,7 +98,7 @@ const TableKollupitiya = () => {
 
     return (
         <div className="staff-table-container">
-            <h1>Table Reservation - Kollupitiya Outlet</h1>
+            <h1>Table Reservation - Maharagama Outlet</h1>
 
             <input
                 type="text"
@@ -173,4 +173,4 @@ const TableKollupitiya = () => {
     );
 };
 
-export default TableKollupitiya;
+export default TableMaharagama;

@@ -17,8 +17,8 @@ const StaffRoutes = () => {
     <StaffPanel>
       <Routes>
 
-        <Route path="/staff/reservationkollu" element={<ReservationKollupitiya />} />
-        <Route path="/staff/tablekollu" element={<TableKollupitiya />} />
+        <Route path="reservationkollu" element={<ReservationKollupitiya />} />
+        <Route path="tablekollu" element={<TableKollupitiya />} />
 
 
 
