@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import StaffPanel from './StaffPanel';
 
 const ReservationKollupitiya = () => {
     const [reservations, setReservations] = useState([]);
@@ -99,7 +99,7 @@ const ReservationKollupitiya = () => {
     );
 
     return (
-        <div className="table-container">
+        <div className="staff-table-container">
             <h1>Party Reservation - Kollupitiya Outlet</h1>
 
             {/* Search Input */}

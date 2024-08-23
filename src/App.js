@@ -1,16 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import './components/Home/App.css';
 import './components/Admin/AdminApp.css';
 import './components/Order/OrderApp.css';
 import './components/Reservation/Reservation.css';
 
-import CoverImageList from './components/Admin/CoverImageList';
-import FacilityList from './components/Admin/FacilityList';
-import CategoryForm from './components/Admin/CategoryForm';
-import GalleryForm from './components/Admin/GalleryForm';
-import CategoryTable from './components/Admin/CategoryTable';
-import Category from './components/Admin/Category';
 import CoverImage from './components/Home/CoverImage';
 import Gallery from './components/Home/Gallery';
 import Footer from './components/Home/Footer';
@@ -25,17 +19,14 @@ import OrderRoutes from './components/Order/OrderRoutes';
 import LoginAdmin from './components/Admin/LoginAdmin';
 import CategoryDetail from './components/Order/CategoryDetail';
 import CartPage from './components/Order/CartPage';
-import OrderPanel from './components/Order/OrderPanel'; // Import OrderPanel
+import OrderPanel from './components/Order/OrderPanel';
 import CoverImageFive from './components/Order/CoverImageFive';
 import OrderHome from './components/Order/OrderHome';
 import TempCartSummary from './components/Order/TempCartSummary';
-
 import ReservationPage from './components/Reservation/ReservationPage';
-
-import ReservationKollupitiya from './components/Staff/Kollupitiya/ReservationKollupitiya';
-import TableKollupitiya from './components/Staff/Kollupitiya/TableKollupitiya';
-import KollupitiyaPage from './components/Staff/Kollupitiya/KollupitiyaPage';
-import StaffRoutes from './components/Staff/StaffRoutes';
+import StaffRoutes from './components/Staff/Kollupitiya/StaffRoutes';
+import StaffRoutesMaharagama from './components/Staff/Maharagama/StaffRoutesMaharagama';
+import StaffRoutesNugegoda from './components/Staff/Nugegoda/StaffRoutesNugegoda';
 
 const App = () => {
   const location = useLocation();
@@ -44,16 +35,18 @@ const App = () => {
   // Check if the current route is for admin, order management, reservation, or staff
   const isSpecialRoute = location.pathname.startsWith('/admin') ||
                          location.pathname.startsWith('/order') ||
-                         location.pathname.startsWith('/reservation');
+                         location.pathname.startsWith('/reservation') ||
+                         location.pathname.startsWith('/staff/') || // Added this condition
+                         location.pathname.startsWith('/maharagama/')|| // Added this condition for Maharagama
+                         location.pathname.startsWith('/nugegoda/'); // Added this condition for Maharagama
 
   const showOrderPanel = location.pathname.startsWith('/category/') ||
                          location.pathname.startsWith('/cart/');
 
-  const showStaffPanel = location.pathname.startsWith('/staff/');
-
   return (
     <div>
-      {!isSpecialRoute && !showOrderPanel && !showStaffPanel && (
+      {/* Hide the navbar if it's a special route */}
+      {!isSpecialRoute && !showOrderPanel && (
         <nav className="navbar">
           <div className="navbar-container">
             <div className="logo-container">
@@ -80,14 +73,10 @@ const App = () => {
 
       <main className="container mt-4">
         <Routes>
+          <Route path="/" element={<Navigate to="/home" />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/addimage" element={<CoverImageList />} />
-          <Route path="/facility" element={<FacilityList />} />
-          <Route path="/gallery" element={<GalleryForm />} />
           <Route path="/galleries" element={<Gallery />} />
           <Route path="/footer" element={<Footer />} />
-          <Route path="/carouse" element={<CoverImage />} />
-          <Route path="/category" element={<Category />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/menutable" element={<MenuTable />} />
@@ -102,9 +91,8 @@ const App = () => {
           <Route path="/cart/orderhome" element={<OrderHome />} />
           <Route path="/reservation/page" element={<ReservationPage />} />
           <Route path="/staff/*" element={<StaffRoutes />} />
-          <Route path="/staff/kolluPage" element={<KollupitiyaPage />} />
-          <Route path="/staff/reservationkollu" element={<ReservationKollupitiya />} />
-          <Route path="/staff/tablekollu" element={<TableKollupitiya />} />
+          <Route path="/maharagama/*" element={<StaffRoutesMaharagama />} />
+          <Route path="/nugegoda/*" element={<StaffRoutesNugegoda />} />
         </Routes>
       </main>
     </div>

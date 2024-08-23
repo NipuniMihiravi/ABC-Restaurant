@@ -54,7 +54,7 @@ const ReservationForm = () => {
         alert('Party reservation submitted successfully!');
         window.location.reload();
       } catch (error) {
-        console.error('Error submitting party reservation:', error);
+        console.error('Error submitting party reservation: Reservation Confirmation inform you in email', error);
       }
     });
     setShowDialog(true);
@@ -73,7 +73,7 @@ const ReservationForm = () => {
     setSubmitHandler(() => async () => {
       try {
         await axios.post('/table', tableData);
-        alert('Table reservation submitted successfully!');
+        alert('Table reservation submitted successfully, Table No and Reservation Confirmation inform you in email!');
         window.location.reload();
       } catch (error) {
         console.error('Error submitting table reservation:', error);

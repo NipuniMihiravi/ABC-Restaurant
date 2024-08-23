@@ -1,34 +1,34 @@
 import React, { useState } from 'react'; // Add useState here
 import { Routes, Route, useLocation } from 'react-router-dom';
-import StaffPanel from './StaffPanel';
-import ReservationKollupitiya from './ReservationKollupitiya';
-import TableKollupitiya from './TableKollupitiya';
-import OrdersKollupitiya from './OrdersKollupitiya';
+import StaffPanelMaharagama from './StaffPanelMaharagama';
+import ReservationMaharagama from './ReservationMaharagama';
+import TableMaharagama from './TableMaharagama';
+import OrdersMaharagama from './OrdersMaharagama';
 
 
 
-const StaffRoutes = () => {
+const StaffRoutesMaharagama = () => {
   const location = useLocation();
   const [cart, setCart] = useState({}); // useState is now correctly defined
 
   // Check if the current route is for category details
-  const isCategoryDetail = location.pathname.startsWith('/category');
+
 
   return (
-    <StaffPanel>
+    <StaffPanelMaharagama>
       <Routes>
 
-        <Route path="reservationkollu" element={<ReservationKollupitiya />} />
-        <Route path="tablekollu" element={<TableKollupitiya />} />
-        <Route path="orderskollu" element={<OrdersKollupitiya />} />
+        <Route path="reservationmahara" element={<ReservationMaharagama />} />
+        <Route path="tablemahara" element={<TableMaharagama />} />
+        <Route path="ordersmahara" element={<OrdersMaharagama />} />
 
 
 
 
 
       </Routes>
-    </StaffPanel>
+    </StaffPanelMaharagama>
   );
 };
 
-export default StaffRoutes;
+export default StaffRoutesMaharagama;

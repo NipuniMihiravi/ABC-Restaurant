@@ -1,29 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import '../Staff.css';
 
 const StaffPanel = ({ children }) => {
+  const navigate = useNavigate(); // Get navigate function
 
   return (
-    <div >
+    <div className="staff-container">
+      <img src="/images/logo.png" alt="Logo" className="logo" />
+      <h1 className="staff-heading">ABC RESTAURANT MANAGEMENT SYSTEM - KOLLUPITIYA BRANCH</h1>
+      <button className="staff-logout-button">Logout</button>
 
-      <nav className="order-navbar">
-        <div className="order-navbar-container">
-          <div className="order-logo-container">
-            <img src="/images/logo.png" alt="Logo" className="logo" />
-          </div>
+      <hr className="staff-separator" />
 
-          <div className="order-nav-links-container">
-           <ul className="order-nav-links">
-
-                             </ul>
-
-            <button className="logout-button">Logout</button>
-          </div>
-        </div>
-      </nav>
+      <div className="staff-button-row">
+        <button onClick={() => navigate('reservationkollu')}>View Party Reservation</button>
+        <button onClick={() => navigate('tablekollu')}>View Table Reservation</button>
+        <button onClick={() => navigate('orderskollu')}>View Online Orders</button>
+        <button onClick={() => navigate('tablekollu')}>Make Party and Dable reservation</button>
 
 
+      </div>
 
       <main className="container mt-4">
         {children}

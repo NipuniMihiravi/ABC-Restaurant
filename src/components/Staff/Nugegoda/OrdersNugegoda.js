@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const OrdersMaharagama = () => {
+const OrdersNugegoda = () => {
     const [carts, setCarts] = useState([]);
     const [editingCartId, setEditingCartId] = useState(null);
     const [editingCartData, setEditingCartData] = useState({
@@ -21,7 +21,7 @@ const OrdersMaharagama = () => {
     const fetchCarts = () => {
         axios.get('/cart')
             .then(response => {
-                const filteredCarts = response.data.filter(cart => cart.outlet === 'Maharagama');
+                const filteredCarts = response.data.filter(cart => cart.outlet === 'Nugegoda');
                 setCarts(filteredCarts);
             })
             .catch(error => console.error('Error fetching carts:', error));
@@ -78,7 +78,7 @@ const OrdersMaharagama = () => {
 
     return (
         <div className="staff-table-container">
-            <h1>Cart Orders - Maharagama Outlet</h1>
+            <h1>Cart Orders - Nugegoda Outlet</h1>
 
             <input
                 type="text"
@@ -141,4 +141,4 @@ const OrdersMaharagama = () => {
     );
 };
 
-export default OrdersMaharagama;
+export default OrdersNugegoda;

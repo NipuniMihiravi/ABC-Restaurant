@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import StaffPanel from './StaffPanelMaharagama';
+import StaffPanel from './StaffPanelNugegoda';
 
-const ReservationMaharagama = () => {
+const ReservationNugegoda = () => {
     const [reservations, setReservations] = useState([]);
     const [editingReservationId, setEditingReservationId] = useState(null);
     const [editingReservationData, setEditingReservationData] = useState({
@@ -32,7 +32,7 @@ const ReservationMaharagama = () => {
     const fetchReservations = () => {
         axios.get('/reservation')
             .then(response => {
-                const filteredReservations = response.data.filter(reservation => reservation.outlet === 'Maharagama');
+                const filteredReservations = response.data.filter(reservation => reservation.outlet === 'Nugegoda');
                 const sortedReservations = filteredReservations.sort((a, b) => new Date(b.date) - new Date(a.date));
                 setReservations(sortedReservations);
             })
@@ -100,7 +100,7 @@ const ReservationMaharagama = () => {
 
     return (
         <div className="staff-table-container">
-            <h1>Party Reservation - Maharagama Outlet</h1>
+            <h1>Party Reservation - Nugegoda Outlet</h1>
 
             {/* Search Input */}
             <input
@@ -175,4 +175,4 @@ const ReservationMaharagama = () => {
     );
 };
 
-export default ReservationMaharagama;
+export default ReservationNugegoda;

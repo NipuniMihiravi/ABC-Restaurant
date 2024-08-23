@@ -1,13 +1,13 @@
 import React, { useState } from 'react'; // Add useState here
 import { Routes, Route, useLocation } from 'react-router-dom';
-import StaffPanelMaharagama from './StaffPanelMaharagama';
-import ReservationMaharagama from './ReservationMaharagama';
-import TableMaharagama from './TableMaharagama';
-import OrdersMaharagama from './OrdersMaharagama';
+import StaffPanelNugegoda from './StaffPanelNugegoda';
+import ReservationNugegoda from './ReservationNugegoda';
+import TableNugegoda from './TableNugegoda';
+import OrdersNugegoda from './OrdersNugegoda';
 
 
 
-const StaffRoutesMaharagama = () => {
+const StaffRoutesNugegoda = () => {
   const location = useLocation();
   const [cart, setCart] = useState({}); // useState is now correctly defined
 
@@ -15,20 +15,20 @@ const StaffRoutesMaharagama = () => {
 
 
   return (
-    <StaffPanelMaharagama>
+    <StaffPanelNugegoda>
       <Routes>
 
-        <Route path="reservationmahara" element={<ReservationMaharagama />} />
-        <Route path="tablemahara" element={<TableMaharagama />} />
-        <Route path="ordersmahara" element={<OrdersMaharagama />} />
+        <Route path="reservationnuge" element={<ReservationNugegoda />} />
+        <Route path="tablenuge" element={<TableNugegoda />} />
+        <Route path="ordersnuge" element={<OrdersNugegoda />} />
 
 
 
 
 
       </Routes>
-    </StaffPanelMaharagama>
+    </StaffPanelNugegoda>
   );
 };
 
-export default StaffRoutesMaharagama;
+export default StaffRoutesNugegoda;

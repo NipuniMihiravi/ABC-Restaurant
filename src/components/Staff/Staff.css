@@ -1,0 +1,160 @@
+
+
+/* Styles for the main container */
+.staff-container {
+  text-align: center; /* Center text and elements */
+  position: relative; /* Position relative for logout button */
+  padding: 20px; /* Add padding around the container */
+}
+
+/* Style for the logo */
+.logo {
+  display: block;
+  margin: 0 auto; /* Center horizontally */
+  max-width: 150px; /* Adjust size as needed */
+  height: auto;
+}
+
+/* Style for the heading */
+.staff-heading {
+  margin: 20px 0; /* Space above and below the heading */
+  font-size: 1.5em; /* Adjust font size as needed */
+  color: white; /* Dark text color */
+  text-align: center; /* Center the heading text */
+}
+
+/* Style for the logout button */
+.staff-logout-button {
+  position: absolute;
+  top: 20px; /* Space from the top */
+  right: 20px; /* Space from the right */
+  padding: 10px 20px; /* Button padding */
+  background-color: #dc3545; /* Red background color */
+  color: white; /* White text color */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+}
+
+.staff-logout-button:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
+
+/* Style for the horizontal line */
+.staff-separator {
+  margin: 20px auto; /* Space above and below the line */
+  width: 80%; /* Line width */
+  border-top: 2px solid #ccc; /* Line color and thickness */
+}
+
+/* Style for the buttons container */
+.staff-button-row {
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  gap: 20px; /* Space between buttons */
+  margin-top: 20px; /* Space above the buttons */
+}
+
+/* Style for each button */
+.staff-button-row button {
+  width: 200px; /* Width of buttons */
+  height: 50px; /* Height of buttons */
+  font-size: 16px; /* Font size */
+  border: none; /* Remove default border */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #8FBC8F; /* Button background color */
+  color: black; /* Button text color */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth color transition */
+}
+
+.staff-button-row button:hover {
+  background-color: #B8860B; /* Darker blue on hover */
+  color:white;
+}
+
+/*table*/
+.staff-table-container {
+  max-width: 1600px;
+  padding: 20px;
+  background-color:#B0C4DE;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-x: auto; /* Add horizontal scroll if needed */
+  margin-top:40px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+
+}
+
+thead {
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+  top: 0; /* Position the header at the top of the table container */
+  background-color: #f8f9fa; /* Background color for header */
+  z-index: 1; /* Ensure header is above table body */
+  text-align: center;
+}
+
+tbody {
+  display: block;
+  height: 700px; /* Adjust height as needed */
+  overflow-y: auto; /* Vertical scrolling for table body */
+}
+
+
+
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+
+}
+
+th {
+  background-color: #BC8F8F;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed; /* Ensure table rows match header width */
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+th:nth-child(6), td:nth-child(6) {
+  width: 10px; /* Narrow width for No of Guest column */
+  text-align: center; /* Center text for better appearance */
+}
+
+
+
+
+tr:hover {
+  background-color: #ddd;
+}
+
+.cover-image {
+  max-width: 100px;
+  height: auto;
+  border-radius: 4px;
+}
+h1{
+font-size:25px;
+font-weight:bold;
+color: #808000;
+}
