@@ -10,9 +10,9 @@ public class Facility {
     private String id;
     private String heading;
     private String description;
-    private byte[] image; // Ensure this is defined as byte[]
+    private String image; // Ensure this is defined as byte[]
 
-    public Facility(String id, String heading, String description, byte[] image) {
+    public Facility(String id, String heading, String description, String  image) {
         this.id = id;
         this.heading = heading;
         this.description = description;
@@ -43,11 +43,11 @@ public class Facility {
         this.description = description;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

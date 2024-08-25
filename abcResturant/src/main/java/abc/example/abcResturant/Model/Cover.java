@@ -10,7 +10,7 @@ public class Cover {
     private String id;
     private String heading;
     private String description;
-    private byte[] image; // Ensure this is defined as byte[]
+    private String image; // Ensure this is defined as byte[]
 
     public String getId() {
         return id;
@@ -36,11 +36,11 @@ public class Cover {
         this.description = description;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }
