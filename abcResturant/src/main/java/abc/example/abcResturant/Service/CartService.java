@@ -61,6 +61,23 @@ public class CartService {
         }
         return null;
     }
+
+    public Cart updateCart(String id, Cart updatedCart) {
+        Optional<Cart> optionalCart = cartRepository.findById(id);
+        if (optionalCart.isPresent()) {
+            Cart existingCart = optionalCart.get();
+
+            // Update the existingCart with new values
+            existingCart.setStatus(updatedCart.getStatus());
+
+            // Save the updated existingCart back to the repository
+            return cartRepository.save(existingCart);
+        } else {
+            return null; // Or throw an exception
+        }
+    }
+
+
     public Cart saveTempCart(Cart cart) {
         // Logic to save temporary cart data
         return cartRepository.save(cart);
