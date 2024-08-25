@@ -17,8 +17,11 @@ public class Cart {
     private String address;
     private String option;
     private String outlet;
+    private String status;
 
-    public Cart(String id, String orderId, String userName, List<CartItem> items, String phoneNumber, String address, String option, String outlet) {
+
+
+    public Cart(String id, String orderId, String userName, List<CartItem> items, String phoneNumber, String address, String option, String outlet, String status) {
         this.id = id;
         this.orderId = orderId;
         this.userName = userName;
@@ -27,6 +30,7 @@ public class Cart {
         this.address = address;
         this.option = option;
         this.outlet = outlet;
+        this.status = status;
     }
 
     public Cart() {
@@ -92,6 +96,14 @@ public class Cart {
 
     public void setOutlet(String outlet) {
         this.outlet = outlet;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     // Method to calculate the total cost of all items in the cart
