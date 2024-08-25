@@ -3,15 +3,36 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './OrderApp.css'; // Ensure you have styles for buttons and layout
 
+// Modal Component
+const ConfirmationModal = ({ isVisible, onConfirm, onCancel }) => {
+    if (!isVisible) return null;
+
+    return (
+        <div className="modal-overlay">
+            <div className="modal-content">
+                <h2>Order Confirmation</h2>
+                <p>You will received a order confirmation email once order is proceed.Are you sure you want to proceed with the checkout?</p>
+                <div className="modal-buttons">
+                    <button onClick={onConfirm}>Confirm</button>
+                    <button onClick={onCancel}>Cancel</button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const CartPage = ({ cart, updateCart }) => {
     const navigate = useNavigate();
     const [showLogin, setShowLogin] = useState(false);
-    const [username, setUsername] = useState(''); // Full name will be stored here
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [loginError, setLoginError] = useState('');
     const [selectedOutlet, setSelectedOutlet] = useState('');
     const [selectedOptions, setSelectedOptions] = useState('');
     const [address, setAddress] = useState('');
+    const [formError, setFormError] = useState('');
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false); // New state for modal
 
     // Check if cart is empty
     const cartItems = Object.values(cart);
@@ -22,21 +43,21 @@ const CartPage = ({ cart, updateCart }) => {
     };
 
     // Handle quantity change
-  const handleQuantityChange = (item, change) => {
-      updateCart(prevCart => {
-          const updatedCart = { ...prevCart };
-          const updatedItem = { ...item, quantity: item.quantity + change };
+    const handleQuantityChange = (item, change) => {
+        updateCart(prevCart => {
+            const updatedCart = { ...prevCart };
+            const updatedItem = { ...item, quantity: item.quantity + change };
 
-          if (updatedItem.quantity <= 0) {
-              delete updatedCart[item.id || item.number];
-          } else {
-              updatedCart[item.id || item.number] = updatedItem;
-          }
+            if (updatedItem.quantity <= 0) {
+                delete updatedCart[item.id || item.number];
+            } else {
+                updatedCart[item.id || item.number] = updatedItem;
+            }
 
-          return updatedCart;
-      });
-      updateCartInBackend(); // Ensure backend update is triggered
-  };
+            return updatedCart;
+        });
+        updateCartInBackend();
+    };
 
     // Handle removing item from cart
     const handleRemoveItem = (item) => {
@@ -48,17 +69,21 @@ const CartPage = ({ cart, updateCart }) => {
     };
 
     // Save cart to backend
-    const saveCartToBackend = async (fullName) => {
+    const saveCartToBackend = async () => {
         try {
-            const totalAmount = calculateTotal(); // Calculate the total amount
-            const response = await axios.post('/cart', {
-                userName: fullName, // Use full name as userName
+            const totalAmount = calculateTotal();
+            const cartData = {
+                userName: username,
+                phoneNumber: phoneNumber,
                 items: cartItems,
                 outlet: selectedOutlet,
                 option: selectedOptions,
-                address, // Include the address in the request
-                total: totalAmount // Include the total in the request
-            });
+                address,
+                total: totalAmount,
+                status: 'pending'
+            };
+
+            const response = await axios.post('/cart', cartData);
             console.log('Cart saved:', response.data);
         } catch (error) {
             console.error('Error saving cart:', error);
@@ -67,10 +92,10 @@ const CartPage = ({ cart, updateCart }) => {
 
     const updateCartInBackend = async () => {
         try {
-            const totalAmount = calculateTotal(); // Recalculate the total
+            const totalAmount = calculateTotal();
             const response = await axios.put(`/cart/{id}/total`, {
-                ...cart, // Existing cart details
-                total: totalAmount // Updated total
+                ...cart,
+                total: totalAmount
             });
             console.log('Cart updated:', response.data);
         } catch (error) {
@@ -86,13 +111,12 @@ const CartPage = ({ cart, updateCart }) => {
             });
             console.log('Login successful:', response.data);
 
-            const { fullName } = response.data; // Extract full name from response
-            setUsername(fullName); // Set full name on successful login
-            setShowLogin(false); // Hide login form
-            setLoginError(''); // Clear any previous error message
+            setUsername(response.data.username);
+            setShowLogin(false);
+            setLoginError('');
         } catch (error) {
             setLoginError('Invalid credentials');
-            console.error('Login error:', error);
+            console.error('Login error:', error.response || error.message);
         }
     };
 
@@ -105,21 +129,37 @@ const CartPage = ({ cart, updateCart }) => {
     // Handle proceeding to checkout
     const proceedToCheckout = async () => {
         if (!username) {
-            setShowLogin(true); // Show login form if not logged in
+            setShowLogin(true);
             return;
         }
-        await saveCartToBackend(username); // Save cart before proceeding
-        navigate('/order/orderhome', { state: { selectedOutlet, selectedOptions, address } });
+
+        if (!selectedOutlet || !selectedOptions || !address || !phoneNumber) {
+            setFormError('Please fill out all fields.');
+            return;
+        }
+
+        setFormError('');
+
+        setShowConfirmationModal(true); // Show confirmation modal
     };
 
-    // Render the login form if the user is not logged in
+    const handleConfirm = async () => {
+        setShowConfirmationModal(false); // Hide confirmation modal
+        await saveCartToBackend(); // Save cart before proceeding
+        navigate('/cart/orderhome', { state: { selectedOutlet, selectedOptions, address } });
+    };
+
+    const handleCancel = () => {
+        setShowConfirmationModal(false); // Hide confirmation modal
+    };
+
     if (showLogin) {
         return (
             <div className="login-form">
-                <h2>SIGN IN </h2>
+                <h2>SIGN IN</h2>
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label>Username *</label><br/>
+                        <label>Username *</label><br />
                         <input
                             type="text"
                             value={username}
@@ -129,7 +169,7 @@ const CartPage = ({ cart, updateCart }) => {
                         />
                     </div>
                     <div>
-                        <label>Password *</label><br/>
+                        <label>Password *</label><br />
                         <input
                             type="password"
                             value={password}
@@ -146,7 +186,6 @@ const CartPage = ({ cart, updateCart }) => {
         );
     }
 
-    // Render the cart if it contains items
     if (cartItems.length === 0) {
         return <p>Your cart is empty</p>;
     }
@@ -172,13 +211,13 @@ const CartPage = ({ cart, updateCart }) => {
                 <h3>Total: Rs. {calculateTotal()}</h3>
             </div>
             <div className="cart-options">
+                {formError && <p className="error">{formError}</p>}
                 <label htmlFor="outlet">Select Outlet:</label>
                 <select id="outlet" onChange={(e) => setSelectedOutlet(e.target.value)} value={selectedOutlet}>
                     <option value="">Select an outlet</option>
                     <option value="Kollupitiya">Kollupitiya</option>
                     <option value="Maharagama">Maharagama</option>
                     <option value="Nugegoda">Nugegoda</option>
-                    {/* Add more options as needed */}
                 </select>
 
                 <label htmlFor="option">Select Option:</label>
@@ -186,10 +225,9 @@ const CartPage = ({ cart, updateCart }) => {
                     <option value="">Select an Option</option>
                     <option value="Takeaway">Takeaway</option>
                     <option value="Delivery">Delivery</option>
-                    {/* Add more options as needed */}
                 </select>
 
-                <label htmlFor="address">Address:</label> {/* New label for address */}
+                <label htmlFor="address">Address:</label>
                 <input
                     type="text"
                     id="address"
@@ -197,8 +235,23 @@ const CartPage = ({ cart, updateCart }) => {
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                 />
+                <label htmlFor="phoneNumber">Phone Number:</label>
+                <input
+                    type="text"
+                    id="phoneNumber"
+                    placeholder="Enter your phone number"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                />
             </div>
             <button className="checkout-button" onClick={proceedToCheckout}>Proceed to Checkout</button>
+
+            {/* Render the confirmation modal */}
+            <ConfirmationModal
+                isVisible={showConfirmationModal}
+                onConfirm={handleConfirm}
+                onCancel={handleCancel}
+            />
         </div>
     );
 };

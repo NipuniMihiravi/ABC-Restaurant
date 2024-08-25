@@ -194,6 +194,3 @@ const CoverImageList = () => {
 };
 
 export default CoverImageList;
-
-
-

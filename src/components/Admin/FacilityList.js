@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
@@ -26,13 +25,18 @@ const FacilityList = () => {
     };
 
     const handleAddFacility = () => {
-        axios.post('/facility', newFacility)
-            .then(response => {
-                setFacilities([...facilities, response.data]);
-                setNewFacility({ heading: '', description: '', image: '' });
-                setIsAddModalOpen(false);
-            })
-            .catch(error => console.error('Error adding facility:', error));
+        if (newFacility.heading && newFacility.description && newFacility.image) {
+            axios.post('/facility', newFacility)
+                .then(response => {
+                    setFacilities([...facilities, response.data]);
+                    setNewFacility({ heading: '', description: '', image: '' });
+                    setIsAddModalOpen(false);
+                    alert('Facility added successfully!');
+                })
+                .catch(error => console.error('Error adding facility:', error));
+        } else {
+            alert('Please fill out all fields and upload an image.');
+        }
     };
 
     const handleDelete = (id) => {
@@ -51,13 +55,19 @@ const FacilityList = () => {
     };
 
     const handleUpdateFacility = () => {
-        axios.put(`/facility/${editFacility.id}`, editFacility)
-            .then(response => {
-                setFacilities(facilities.map(facility => (facility.id === editFacility.id ? response.data : facility)));
-                setEditFacility(null);
-                setIsEditModalOpen(false);
-            })
-            .catch(error => console.error('Error updating facility:', error));
+        if (editFacility.heading && editFacility.description && editFacility.image) {
+            axios.put(`/facility/${editFacility.id}`, editFacility)
+                .then(response => {
+                    setFacilities(facilities.map(facility =>
+                        (facility.id === editFacility.id ? response.data : facility)));
+                    setEditFacility(null);
+                    setIsEditModalOpen(false);
+                    alert('Facility updated successfully!');
+                })
+                .catch(error => console.error('Error updating facility:', error));
+        } else {
+            alert('Please fill out all fields and upload an image.');
+        }
     };
 
     const handleInputChange = (e) => {
@@ -72,20 +82,26 @@ const FacilityList = () => {
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setNewFacility({ ...newFacility, image: reader.result.split(',')[1] }); // Exclude the data URL prefix
-        };
-        reader.readAsDataURL(file);
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                // Convert image to base64 string
+                setNewFacility({ ...newFacility, image: reader.result.split(',')[1] });
+            };
+            reader.readAsDataURL(file);
+        }
     };
 
     const handleEditImageChange = (e) => {
         const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setEditFacility({ ...editFacility, image: reader.result.split(',')[1] }); // Exclude the data URL prefix
-        };
-        reader.readAsDataURL(file);
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                // Convert image to base64 string
+                setEditFacility({ ...editFacility, image: reader.result.split(',')[1] });
+            };
+            reader.readAsDataURL(file);
+        }
     };
 
     return (
@@ -195,6 +211,3 @@ const FacilityList = () => {
 };
 
 export default FacilityList;
-
-
-

@@ -97,9 +97,7 @@ const CategoryDetail = () => {
                             <span>{cart[item.id || item.number]?.quantity || 0}</span>
                             <button onClick={() => addItemToCart(item)}>+</button>
                         </div>
-                        <button className="item-button" onClick={() => addItemToCartAndSubmit(item)}>
-                            Add to Cart
-                        </button>
+
                     </div>
                 ))}
             </div>

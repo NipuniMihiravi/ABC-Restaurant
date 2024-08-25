@@ -9,6 +9,15 @@ import CategoryTable from './CategoryTable';
 import Category from './Category';
 import LoginAdmin from './LoginAdmin';
 import ManageWeb from './ManageWeb';
+import AdminHome from './AdminHome';
+import UserManagement from './UserManagement';
+import CustomerDetails from './CustomerDetails';
+import StaffDetails from './StaffDetails';
+import ReservationOrder from './ReservationOrder';
+import CartTable from './CartTable';
+import ReservationTable from './ReservationTable';
+import TableTable from './TableTable';
+
 
 const AdminRoutes = () => {
   return (
@@ -21,7 +30,15 @@ const AdminRoutes = () => {
         <Route path="category" element={<Category />} />
         <Route path="login" element={<LoginAdmin />} />
         <Route path="manageweb" element={<ManageWeb />} />
+        <Route path="usermanage" element={<UserManagement />} />
+        <Route path="customerdetails" element={<CustomerDetails />} />
+        <Route path="staffdetails" element={<StaffDetails />} />
+        <Route path="reservationorder" element={<ReservationOrder />} />
+        <Route path="carttable" element={<CartTable />} />
+        <Route path="reservationtable" element={<ReservationTable />} />
+        <Route path="tabletable" element={<TableTable />} />
         <Route path="gallery" element={<GalleryForm />} />
+        <Route path="adminhome" element={<AdminHome />} />
       </Routes>
     </AdminPanel>
   );

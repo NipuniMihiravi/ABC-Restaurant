@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const OrdersMaharagama = () => {
+const OrdersMaharagama= () => {
     const [carts, setCarts] = useState([]);
     const [editingCartId, setEditingCartId] = useState(null);
-    const [editingCartData, setEditingCartData] = useState({
-        userName: '',
-        phoneNumber: '',
-        address: '',
-        option: '',
-        outlet: '',
-        items: []
-    });
+    const [editingCartData, setEditingCartData] = useState({ status: '' });
     const [searchQuery, setSearchQuery] = useState('');
+
 
     useEffect(() => {
         fetchCarts();
@@ -21,22 +15,16 @@ const OrdersMaharagama = () => {
     const fetchCarts = () => {
         axios.get('/cart')
             .then(response => {
-                const filteredCarts = response.data.filter(cart => cart.outlet === 'Maharagama');
-                setCarts(filteredCarts);
+               const filteredCarts = response.data.filter(cart => cart.outlet === 'Maharagama');
+                               const sortedCarts = filteredCarts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                               setCarts(sortedCarts);
             })
-            .catch(error => console.error('Error fetching carts:', error));
+            .catch(error => console.error('There was an error fetching the cart data!', error));
     };
 
     const handleEdit = (cart) => {
         setEditingCartId(cart.id);
-        setEditingCartData({
-            userName: cart.userName || '',
-            phoneNumber: cart.phoneNumber || '',
-            address: cart.address || '',
-            option: cart.option || '',
-            outlet: cart.outlet || '',
-            items: cart.items || []
-        });
+        setEditingCartData({ status: cart.status });
     };
 
     const handleUpdate = (cartId) => {
@@ -45,7 +33,7 @@ const OrdersMaharagama = () => {
                 setCarts(prevCarts =>
                     prevCarts.map(cart =>
                         cart.id === cartId
-                            ? { ...cart, ...editingCartData }
+                            ? { ...cart, status: editingCartData.status }
                             : cart
                     )
                 );
@@ -54,65 +42,88 @@ const OrdersMaharagama = () => {
             .catch(error => console.error('Error updating cart:', error));
     };
 
-    const handleDelete = (cartId) => {
-        const isConfirmed = window.confirm('Are you sure you want to delete this cart?');
-        if (isConfirmed) {
-            axios.delete(`/cart/${cartId}`)
+    const handleDelete = (id) => {
+        if (window.confirm('Are you sure you want to delete this cart?')) {
+            axios.delete(`/cart/${id}`)
                 .then(() => {
-                    setCarts(prevCarts =>
-                        prevCarts.filter(cart => cart.id !== cartId)
-                    );
+                    setCarts(carts.filter(cart => cart.id !== id));
                 })
                 .catch(error => {
-                    console.error('Error deleting cart:', error.response ? error.response.data : error.message);
+                    console.error('There was an error deleting the cart!', error);
                 });
         }
     };
 
-    const filteredCarts = carts.filter(cart =>
-        cart.userName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        cart.phoneNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        cart.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        cart.option.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredCart = carts.filter(cart =>
+            cart.phoneNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            cart.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            cart.outlet.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            cart.status.toLowerCase().includes(searchQuery.toLowerCase())
+        );
 
     return (
         <div className="staff-table-container">
-            <h1>Cart Orders - Maharagama Outlet</h1>
-
-            <input
+            <h1>Online Order - Maharagama Outlet</h1>
+        <input
                 type="text"
-                placeholder="Search by name, phone number, address, or option"
+                placeholder="Search by email, contact no, option or status"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="search-input"
             />
-
             <table>
                 <thead>
                     <tr>
-                        <th>Customer Name</th>
+                        <th>Order ID</th>
+                        <th>Email</th>
                         <th>Phone Number</th>
                         <th>Address</th>
                         <th>Option</th>
-                        <th>Outlet</th>
+                        <th>Total</th>
                         <th>Items</th>
+                        <th>Status</th>
+
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredCarts.map((cart) => (
+                    {carts.map(cart => (
                         <tr key={cart.id}>
                             {editingCartId === cart.id ? (
                                 <>
-                                    <td><input type="text" value={editingCartData.userName} onChange={(e) => setEditingCartData({ ...editingCartData, userName: e.target.value })} /></td>
-                                    <td><input type="text" value={editingCartData.phoneNumber} onChange={(e) => setEditingCartData({ ...editingCartData, phoneNumber: e.target.value })} /></td>
-                                    <td><input type="text" value={editingCartData.address} onChange={(e) => setEditingCartData({ ...editingCartData, address: e.target.value })} /></td>
-                                    <td><input type="text" value={editingCartData.option} onChange={(e) => setEditingCartData({ ...editingCartData, option: e.target.value })} /></td>
-                                    <td><input type="text" value={editingCartData.outlet} onChange={(e) => setEditingCartData({ ...editingCartData, outlet: e.target.value })} /></td>
+                                    <td>{cart.orderId}</td>
+                                    <td>{cart.userName}</td>
+                                    <td>{cart.phoneNumber}</td>
+                                    <td>{cart.address}</td>
+                                    <td>{cart.option}</td>
                                     <td>
-                                        {/* Rendering items could be complex; consider adding a sub-component for item editing */}
-                                        <textarea value={JSON.stringify(editingCartData.items, null, 2)} onChange={(e) => setEditingCartData({ ...editingCartData, items: JSON.parse(e.target.value) })} />
+                                        {(cart.items && cart.items.length > 0)
+                                            ? cart.items.reduce((total, item) => total + item.total, 0).toFixed(2)
+                                            : '0.00'}
+                                    </td>
+                                    <td>
+                                        {cart.items && cart.items.length > 0 ? (
+                                            <ul>
+                                                {cart.items.map(item => (
+                                                    <li key={item.itemId}>
+                                                        {item.name} - Qty.{item.quantity}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        ) : (
+                                            <p>No items</p>
+                                        )}
+                                    </td>
+                                    <td>
+                                        <select
+                                            value={editingCartData.status}
+                                            onChange={(e) => setEditingCartData({ ...editingCartData, status: e.target.value })}
+                                        >
+                                            <option value="Pending">Proceed</option>
+                                            <option value="Proceed">Proceed</option>
+                                            <option value="Ready">Ready</option>
+                                            <option value="Done">Done</option>
+                                        </select>
                                     </td>
                                     <td>
                                         <button onClick={() => handleUpdate(cart.id)}>Save</button>
@@ -121,12 +132,30 @@ const OrdersMaharagama = () => {
                                 </>
                             ) : (
                                 <>
+                                    <td>{cart.orderId}</td>
                                     <td>{cart.userName}</td>
                                     <td>{cart.phoneNumber}</td>
                                     <td>{cart.address}</td>
                                     <td>{cart.option}</td>
-                                    <td>{cart.outlet}</td>
-                                    <td>{cart.items.length} items</td>
+                                    <td>
+                                        {(cart.items && cart.items.length > 0)
+                                            ? cart.items.reduce((total, item) => total + item.total, 0).toFixed(2)
+                                            : '0.00'}
+                                    </td>
+                                    <td>
+                                        {cart.items && cart.items.length > 0 ? (
+                                            <ul>
+                                                {cart.items.map(item => (
+                                                    <li key={item.itemId}>
+                                                        {item.name} - Qty.{item.quantity}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        ) : (
+                                            <p>No items</p>
+                                        )}
+                                    </td>
+                                    <td>{cart.status}</td>
                                     <td>
                                         <button onClick={() => handleEdit(cart)}>Edit</button>
                                         <button onClick={() => handleDelete(cart.id)}>Delete</button>

@@ -4,45 +4,40 @@ import { useNavigate } from 'react-router-dom';
 import './AdminApp.css';
 
 const LoginAdmin = () => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setError(''); // Reset error state before making the request
 
-        axios.post('/user/login/staff', null, {
-            params: { email, password }
+        axios.post('/user/login/admin', null, {
+            params: { username, password }
         })
         .then(response => {
-            const { role } = response.data;
-
-            if (role === 'admin') {
-                navigate('/admin'); // Redirect to admin page if role is admin
-            } else if (role === 'staff') {
-                navigate('/jjj'); // Redirect to staff page if role is staff
-            } else {
-                setError('Unauthorized role');
-            }
+            // Assuming a successful response means the credentials are valid
+            navigate('/admin/adminhome'); // Redirect to admin page upon successful login
         })
         .catch(error => {
             setError('Invalid credentials');
             console.error('Login error:', error);
         });
     };
+
     return (
         <div className="login-form-container">
             <h2>ABC RESTAURANT MANAGEMENT</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Email *</label><br/>
+                    <label>User Name *</label><br/>
                     <input
                         type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         required
-                        placeholder="Enter Your Registered Email"
+                        placeholder="Enter Admin Email"
                     />
                 </div>
                 <div>
@@ -57,7 +52,7 @@ const LoginAdmin = () => {
                 </div>
                 <button type="submit">Login</button>
 
-                {error && <p>{error}</p>}
+                {error && <p className="error-message">{error}</p>}
             </form>
         </div>
     );

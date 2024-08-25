@@ -278,29 +278,49 @@ background-color:white;
     height:60px;
 }
 
-.item-description {
+.item-description p {
     margin-top:10px;
-    height:150px;
+    height:100px;
+    color:black;
+    font-size:14px;
 }
-.item-price {
-    margin-top:10px;
+.item-price p {
+    margin-top:20px;
     height:30px;
+    color:green;
+    weight:bold;
+    font-size:18px;
+
+}
+.item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between buttons and quantity */
+    margin-left:40px;
 }
 
-.item-button {
-    background-color: #87680d;
+.item-quantity button {
+    background-color: brown;
+    color: #fff; /* Button text color */
     border: none;
-    color: white;
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
+    padding: 8px 12px;
     font-size: 16px;
-
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
-.item-button:hover {
-    background-color: darkorange;
+.item-quantity button:hover {
+    background-color: orange; /* Darker shade on hover */
+}
+
+.item-quantity span {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333; /* Text color for quantity */
+    min-width: 30px; /* Ensures consistent width */
+    text-align: center;
 }
 
 .cart-page {
@@ -609,4 +629,35 @@ background-color:white;
     font-style: italic;
     color: #888; /* Lighter grey for loading text */
 }
+
+/*Receipt Page*/
+/* Add styles for the modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+}
+
+.modal-buttons {
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    margin: 0 10px;
+}
+
 

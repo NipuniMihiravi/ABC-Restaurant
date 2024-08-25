@@ -8,12 +8,14 @@ const AdminPanel = ({ children }) => {
       <nav className="navbar">
         <div className="navbar-container">
           <div className="logo-container">
-            <img src="/images/logo.png" alt="Logo" className="logo" />
-          </div>
+                      <Link to="adminhome">
+                        <img src="/images/logo.png" alt="Logo" className="logo" />
+                      </Link>
+                    </div>
 
           <div className="nav-links-container">
             <ul className="nav-links">
-               <li><Link to="/">User Management</Link></li>
+               <li><Link to="usermanage">User Management</Link></li>
                               <li><Link to="manageweb">Manage Website</Link></li>
                               <li className="dropdown">
                                   <Link to="#">Category</Link>

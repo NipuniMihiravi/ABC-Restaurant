@@ -37,7 +37,8 @@ const App = () => {
                          location.pathname.startsWith('/order') ||
                          location.pathname.startsWith('/reservation') ||
                          location.pathname.startsWith('/staff/') || // Added this condition
-                         location.pathname.startsWith('/maharagama/')|| // Added this condition for Maharagama
+                         location.pathname.startsWith('/maharagama/')||
+                          location.pathname === '/adminlogin'||// Added this condition for Maharagama
                          location.pathname.startsWith('/nugegoda/'); // Added this condition for Maharagama
 
   const showOrderPanel = location.pathname.startsWith('/category/') ||

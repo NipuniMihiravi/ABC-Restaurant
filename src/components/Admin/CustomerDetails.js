@@ -1,177 +1,199 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Modal from 'react-modal';
+import './AdminApp.css'; // Ensure you have the appropriate CSS for styling
+
+Modal.setAppElement('#root'); // Set the app root element for accessibility
 
 const CustomerDetails = () => {
-    const [reservations, setReservations] = useState([]);
-    const [editingReservationId, setEditingReservationId] = useState(null);
-    const [editingReservationData, setEditingReservationData] = useState({
-        name: '',
-        contactNo: '',
-        email: '', // Added email field
-        date: '',
-        time: '',
-        guests: '',
-        outlet: '',
-        specialNote: '',
-        status: ''
-    });
-    const [searchQuery, setSearchQuery] = useState(''); // State for search query
-
-    // Assuming you have a method to get the logged-in user's email
-    const [userEmail, setUserEmail] = useState('');
+    const [customers, setCustomers] = useState([]);
+    const [newCustomer, setNewCustomer] = useState({ username: '', password: '', fullName: '', phoneNumber: '' });
+    const [editCustomer, setEditCustomer] = useState(null);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
     useEffect(() => {
-        fetchReservations();
-        // Assuming you have a method to get the logged-in user's email
-        // This should be replaced with actual login logic
-        const loggedInUserEmail = 'user@example.com'; // Replace this with actual email fetching logic
-        setUserEmail(loggedInUserEmail);
+        fetchCustomers();
     }, []);
 
-    const fetchReservations = () => {
-        axios.get('/reservation')
+    const fetchCustomers = () => {
+        axios.get('/user/customer')
             .then(response => {
-                const filteredReservations = response.data.filter(reservation => reservation.outlet === 'kollupitiya');
-                const sortedReservations = filteredReservations.sort((a, b) => new Date(b.date) - new Date(a.date));
-                setReservations(sortedReservations);
+                setCustomers(response.data);
             })
-            .catch(error => console.error('Error fetching reservations:', error));
+            .catch(error => console.error('Error fetching customers:', error));
     };
 
-    const handleEdit = (reservation) => {
-        setEditingReservationId(reservation.id);
-        setEditingReservationData({
-            name: reservation.name,
-            contactNo: reservation.contactNo,
-            email: reservation.email || userEmail, // Set email to user's email if not already set
-            date: reservation.date,
-            time: reservation.time,
-            guests: reservation.guests,
-            outlet: reservation.outlet,
-            specialNote: reservation.specialNote,
-            status: reservation.status
-        });
+    const handleAddCustomer = () => {
+        if (newCustomer.username && newCustomer.password && newCustomer.fullName && newCustomer.phoneNumber) {
+            axios.post('/user/customer', newCustomer)
+                .then(response => {
+                    setCustomers([...customers, response.data]);
+                    setNewCustomer({ username: '', password: '', fullName: '', phoneNumber: '' });
+                    setIsAddModalOpen(false);
+                    alert('Customer added successfully!');
+                })
+                .catch(error => console.error('Error adding customer:', error));
+        } else {
+            alert('Please fill out all fields.');
+        }
     };
 
-    const handleUpdate = (reservationId) => {
-        axios.put(`/reservation/${reservationId}`, editingReservationData)
+    const handleDelete = (id) => {
+        axios.delete(`/user/customer/${id}`)
             .then(() => {
-                setReservations(prevReservations =>
-                    prevReservations.map(reservation =>
-                        reservation.id === reservationId
-                            ? { ...reservation, ...editingReservationData }
-                            : reservation
-                    )
-                );
-                setEditingReservationId(null);
+                setCustomers(customers.filter(customer => customer.id !== id));
+                alert('Customer deleted successfully!');
             })
-            .catch(error => console.error('Error updating reservation:', error));
+            .catch(error => console.error('Error deleting customer:', error));
     };
 
-    const handleDelete = (reservationId) => {
-        axios.delete(`/reservation/${reservationId}`)
-            .then(() => {
-                setReservations(prevReservations =>
-                    prevReservations.filter(reservation => reservation.id !== reservationId)
-                );
-            })
-            .catch(error => console.error('Error deleting reservation:', error));
+    const handleEdit = (id) => {
+        const customerToEdit = customers.find(customer => customer.id === id);
+        setEditCustomer(customerToEdit);
+        setIsEditModalOpen(true);
     };
 
-    const formatDate = (dateString) => {
-        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-        const date = new Date(dateString);
-        return date.toLocaleDateString(undefined, options);
+    const handleUpdateCustomer = () => {
+        if (editCustomer.username && editCustomer.password && editCustomer.fullName && editCustomer.phoneNumber) {
+            axios.put(`/user/customer/${editCustomer.id}`, editCustomer)
+                .then(response => {
+                    setCustomers(customers.map(customer =>
+                        (customer.id === editCustomer.id ? response.data : customer)));
+                    setEditCustomer(null);
+                    setIsEditModalOpen(false);
+                    alert('Customer updated successfully!');
+                })
+                .catch(error => console.error('Error updating customer:', error));
+        } else {
+            alert('Please fill out all fields.');
+        }
     };
 
-    const formatTime = (dateString) => {
-        const options = { hour: '2-digit', minute: '2-digit' };
-        const date = new Date(dateString);
-        return date.toLocaleTimeString(undefined, options);
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setNewCustomer({ ...newCustomer, [name]: value });
     };
 
-    const filteredReservations = reservations.filter(reservation =>
-        reservation.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        reservation.contactNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        reservation.date.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        reservation.status.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const handleEditInputChange = (e) => {
+        const { name, value } = e.target;
+        setEditCustomer({ ...editCustomer, [name]: value });
+    };
 
     return (
         <div className="table-container">
-            <h1>Party Reservation - Kollupitiya Outlet</h1>
-
-            {/* Search Input */}
-            <input
-                type="text"
-                placeholder="Search by name, contact no, date, or status"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="search-input"
-            />
+            <h1>Customer Management</h1>
+            <button onClick={() => setIsAddModalOpen(true)} className="btn-add">Add New Customer</button>
 
             <table>
                 <thead>
                     <tr>
-                        <th>Customer Name</th>
-                        <th>Contact No</th>
-                        <th>Email</th> {/* Added Email Header */}
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>No of Guest</th>
-                        <th>Outlet</th>
-                        <th>Special Note</th>
-                        <th>Status</th>
+                        <th>Username</th>
+                        <th>Full Name</th>
+                        <th>Phone Number</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredReservations.map((reservation) => (
-                        <tr key={reservation.id}>
-                            {editingReservationId === reservation.id ? (
-                                <>
-                                    <td><input type="text" value={editingReservationData.name} onChange={(e) => setEditingReservationData({ ...editingReservationData, name: e.target.value })} /></td>
-                                    <td><input type="text" value={editingReservationData.contactNo} onChange={(e) => setEditingReservationData({ ...editingReservationData, contactNo: e.target.value })} /></td>
-                                    <td><input type="email" value={editingReservationData.email} onChange={(e) => setEditingReservationData({ ...editingReservationData, email: e.target.value })} /></td>
-                                    <td><input type="date" value={editingReservationData.date} onChange={(e) => setEditingReservationData({ ...editingReservationData, date: e.target.value })} /></td>
-                                    <td><input type="time" value={editingReservationData.time} onChange={(e) => setEditingReservationData({ ...editingReservationData, time: e.target.value })} /></td>
-                                    <td><input type="number" value={editingReservationData.guests} onChange={(e) => setEditingReservationData({ ...editingReservationData, guests: e.target.value })} /></td>
-                                    <td><input type="text" value={editingReservationData.outlet} onChange={(e) => setEditingReservationData({ ...editingReservationData, outlet: e.target.value })} /></td>
-                                    <td><input type="text" value={editingReservationData.specialNote} onChange={(e) => setEditingReservationData({ ...editingReservationData, specialNote: e.target.value })} /></td>
-                                    <td><input type="text" value={editingReservationData.status} onChange={(e) => setEditingReservationData({ ...editingReservationData, status: e.target.value })} /></td>
-                                </>
-                            ) : (
-                                <>
-                                    <td>{reservation.name}</td>
-                                    <td>{reservation.contactNo}</td>
-                                    <td>{reservation.username}</td> {/* Added Email Data */}
-                                    <td>{formatDate(reservation.date)}</td>
-                                    <td>{formatTime(reservation.date)}</td>
-                                    <td>{reservation.guests}</td>
-                                    <td>{reservation.outlet}</td>
-                                    <td>{reservation.specialNote}</td>
-                                    <td>{reservation.status}</td>
-                                </>
-                            )}
+                    {customers.map((customer) => (
+                        <tr key={customer.id}>
+                            <td>{customer.username}</td>
+                            <td>{customer.fullName}</td>
+                            <td>{customer.phoneNumber}</td>
                             <td>
-                                {editingReservationId === reservation.id ? (
-                                    <>
-                                        <button onClick={() => handleUpdate(reservation.id)} className="btn-save">Save</button>
-                                        <button onClick={() => setEditingReservationId(null)} className="btn-cancel">Cancel</button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <button onClick={() => handleEdit(reservation)} className="btn-edit">Edit</button>
-                                        <button onClick={() => handleDelete(reservation.id)} className="btn-delete">Delete</button>
-                                    </>
-                                )}
+                                <button onClick={() => handleEdit(customer.id)} className="btn-edit">Edit</button>
+                                <button onClick={() => handleDelete(customer.id)} className="btn-delete">Delete</button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+
+            {/* Add Customer Modal */}
+            <Modal
+                isOpen={isAddModalOpen}
+                onRequestClose={() => setIsAddModalOpen(false)}
+                contentLabel="Add Customer"
+                className="Modal"
+                overlayClassName="Overlay"
+            >
+                <h2>Add New Customer</h2>
+                <input
+                    type="text"
+                    name="username"
+                    placeholder="Username"
+                    value={newCustomer.username}
+                    onChange={handleInputChange}
+                />
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={newCustomer.password}
+                    onChange={handleInputChange}
+                />
+                <input
+                    type="text"
+                    name="fullName"
+                    placeholder="Full Name"
+                    value={newCustomer.fullName}
+                    onChange={handleInputChange}
+                />
+                <input
+                    type="text"
+                    name="phoneNumber"
+                    placeholder="Phone Number"
+                    value={newCustomer.phoneNumber}
+                    onChange={handleInputChange}
+                />
+                <button onClick={handleAddCustomer}>Add Customer</button>
+                <button onClick={() => setIsAddModalOpen(false)}>Cancel</button>
+            </Modal>
+
+            {/* Edit Customer Modal */}
+            {editCustomer && (
+                <Modal
+                    isOpen={isEditModalOpen}
+                    onRequestClose={() => setIsEditModalOpen(false)}
+                    contentLabel="Edit Customer"
+                    className="Modal"
+                    overlayClassName="Overlay"
+                >
+                    <h2>Edit Customer</h2>
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Username"
+                        value={editCustomer.username}
+                        onChange={handleEditInputChange}
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        value={editCustomer.password}
+                        onChange={handleEditInputChange}
+                    />
+                    <input
+                        type="text"
+                        name="fullName"
+                        placeholder="Full Name"
+                        value={editCustomer.fullName}
+                        onChange={handleEditInputChange}
+                    />
+                    <input
+                        type="text"
+                        name="phoneNumber"
+                        placeholder="Phone Number"
+                        value={editCustomer.phoneNumber}
+                        onChange={handleEditInputChange}
+                    />
+                    <button onClick={handleUpdateCustomer}>Update Customer</button>
+                    <button onClick={() => setIsEditModalOpen(false)}>Cancel</button>
+                </Modal>
+            )}
         </div>
     );
 };
 
-export default ReservationKollupitiya;
+export default CustomerDetails;
