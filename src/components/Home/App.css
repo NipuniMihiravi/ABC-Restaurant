@@ -1017,6 +1017,272 @@ margin-top:100px;
   font-size: 0.875rem;
 }
 
+/*Contact Page*/
+.contacts-containers {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: black;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top:150px;
+    height:900px;
+}
+.contacts-containers h1 {
+     text-align: center;
+        margin-bottom: 20px;
+        margin-left:400px;
+        font-size:30px;
+        color: #FF8C00;
+        font-family: "Lucida Handwriting", sans-serif;
+}
+.contacts-containers h2 {
+     text-align: center;
+        margin-left:500px;
+        font-size:50px;
+        color: #556B2F;
+        font-family: "Georgia", sans-serif;
+}
+
+.contact-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-container {
+    flex: 1;
+    padding: 20px;
+    background-color: #B8860B;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    height:650px;
+    margin-top:-250px;
+}
+
+/* Form section heading */
+.form-container h1 {
+    font-size: 40px;
+    margin-bottom: 30px;
+    color: black;
+    text-align: center;
+    margin-left:-200px;
+}
+
+/* Styling for each form group */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+/* Button styling */
+.button-container {
+    text-align: center;
+}
+
+.button-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.button-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Container for the locations section */
+.locations-container {
+    flex: 1;
+    padding: 20px;
+    background-color: #e6e6e6;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    margin-top:-300x;
+    margin-left:30px;
+}
+
+/* Locations section heading */
+.locations-container h2 {
+    font-size: 40px;
+    margin-bottom: 40px;
+    color: black;
+    text-align: center;
+    margin-left:-100px;
+}
+
+/* Each location details */
+.location {
+    margin-bottom: 20px;
+}
+
+.location h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #B8860B;
+}
+
+.location p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #2F4F4F;
+}
+
+/* General styling adjustments */
+@media (max-width: 768px) {
+    .contact-content {
+        flex-direction: column;
+    }
+
+    .form-container, .locations-container {
+        margin: 0;
+    }
+}
+
+/*Home login*/
+
+
+ .login-home-form-container{
+    display: block;
+    padding: 20px;
+    border: 1px solid black;
+    width: 300px;
+    margin: 0 auto;
+    margin-top:130px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    background-color: #f9f9f9;
+    width: 600px;
+    height:550px;
+}
+
+
+
+
+ .login-home-form-container h2{
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-family: "Poppins", sans-serif;
+
+}
+
+.login-home-form-container h2::after{
+    content: ""; /* Empty content to create the line */
+    display: block; /* Make the pseudo-element a block-level element */
+    width: 50%; /* Adjust the width of the line */
+    height: 3px; /* Thickness of the line */
+    background-color: #87680d; /* Color of the line */
+    margin: 10px auto 0; /* Center-align the line and add space above it */
+}
+
+
+ .login-home-form-container form{
+    display: flex;
+    flex-direction: column;
+    margin-left:20px;
+    margin-right:20px;
+    margin-top:50px;
+
+}
+
+.
+ .login-home-form-container form div{
+    margin-bottom: 15px;
+}
+
+
+.login-home-form-container form label{
+    margin-top:20px;
+    color: #555;
+    font-weight: bold;
+    font-family: "Poppins", sans-serif;
+    font-size:15px;
+}
+
+.
+.login-home-form-container form input{
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #87680d;
+    border-radius: 4px;
+    margin-bottom:20px;
+    width:540px;
+    height:30px;
+}
+
+
+.login-home-form-container input[type="username"],
+.login-home-form-container input[type="password"],
+.login-home-form-container input[type="text"] {
+    width: 100%; /* Ensures input fields take up the full width */
+    padding: 10px; /* Adds padding inside the input fields */
+    font-size: 16px; /* Sets the font size */
+    border: 2px solid #87680d; /* Defines the border style and color */
+    border-radius: 4px; /* Rounds the corners of the input fields */
+    box-sizing: border-box; /* Includes padding and border in the width */
+    transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+
+
+ .login-home-form-container form input:focus{
+    border-color: orange; /* Change the border color to orange when the input is focused */
+    outline: none; /* Remove the default outline for a cleaner look */
+}
+
+.login-home-form-container form button{
+   background-color: #87680d;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    height:50px;
+     font-family: "Poppins", sans-serif;
+    font-size: 18px;
+    margin-bottom:30px;
+    margin-top:30px;
+}
+
+
+ .login-home-form-container form button:hover{
+    background-color: #8B4000;
+}
+
+
+.login-home-form-container p {
+    color: red;
+    text-align: center;
+}
+
+
+
 
 
 

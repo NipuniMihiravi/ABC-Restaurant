@@ -24,8 +24,12 @@ const LoginForm = () => {
             console.error('Login error:', error);
         });
     };
+     const handleCreateAccount = () => {
+            navigate('/register'); // Change '/create-account' to the desired path
+        };
+
     return (
-        <div className="login-form-container">
+        <div className="login-home-form-container">
             <h2>SIGN IN OR REGISTER</h2>
             <form onSubmit={handleSubmit}>
                 <div>
@@ -49,7 +53,7 @@ const LoginForm = () => {
                     />
                 </div>
                 <button type="submit">Login with ABC Restaurant</button>
-                <button type="submit">Create an Account</button>
+                <button type="button" onClick={handleCreateAccount}>Create an Account</button>
                 {error && <p>{error}</p>}
             </form>
         </div>

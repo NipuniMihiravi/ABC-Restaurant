@@ -11,6 +11,8 @@ import Footer from './components/Home/Footer';
 import Home from './components/Home/Home';
 import Menu from './components/Home/Menu';
 import About from './components/Home/About';
+import ContactPage from './components/Home/ContactPage';
+import Contact from './components/Home/Contact';
 import LoginForm from './components/Home/LoginForm';
 import RegistrationForm from './components/Home/RegistrationForm';
 import MenuTable from './components/Home/MenuTable';
@@ -27,6 +29,7 @@ import ReservationPage from './components/Reservation/ReservationPage';
 import StaffRoutes from './components/Staff/Kollupitiya/StaffRoutes';
 import StaffRoutesMaharagama from './components/Staff/Maharagama/StaffRoutesMaharagama';
 import StaffRoutesNugegoda from './components/Staff/Nugegoda/StaffRoutesNugegoda';
+import LoginStaff from './components/Staff/LoginStaff';
 
 const App = () => {
   const location = useLocation();
@@ -38,7 +41,8 @@ const App = () => {
                          location.pathname.startsWith('/reservation') ||
                          location.pathname.startsWith('/staff/') || // Added this condition
                          location.pathname.startsWith('/maharagama/')||
-                          location.pathname === '/login'||// Added this condition for Maharagama
+                          location.pathname === '/login'||
+                           location.pathname === '/loginstaff'||
                          location.pathname.startsWith('/nugegoda/'); // Added this condition for Maharagama
 
   const showOrderPanel = location.pathname.startsWith('/category/') ||
@@ -59,11 +63,11 @@ const App = () => {
                 <li><Link to="/about" className={({ isActive }) => isActive ? 'active' : ''}>About</Link></li>
                 <li><Link to="/menu" className={({ isActive }) => isActive ? 'active' : ''}>Menu</Link></li>
                 <li><Link to="/galleries" className={({ isActive }) => isActive ? 'active' : ''}>Gallery</Link></li>
-                <li><Link to="/reservation" className={({ isActive }) => isActive ? 'active' : ''}>Contact</Link></li>
+                <li><Link to="/contactpage" className={({ isActive }) => isActive ? 'active' : ''}>Contact</Link></li>
               </ul>
               <div className="nav-buttons">
                 <button className="nav-button" onClick={() => navigate('/cart/orderhome')}>ORDER ONLINE</button>
-                <button className="nav-button" onClick={() => navigate('/login')}>RESERVATION</button>
+                <button className="nav-button" onClick={() => navigate('/homelogin')}>RESERVATION</button>
               </div>
             </div>
           </div>
@@ -78,17 +82,20 @@ const App = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/galleries" element={<Gallery />} />
           <Route path="/footer" element={<Footer />} />
-          <Route path="/" element={<LoginForm />} />
+          <Route path="/homelogin" element={<LoginForm />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/menutable" element={<MenuTable />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/about" element={<About />} />
           <Route path="/admin/*" element={<AdminRoutes />} />
           <Route path="/login" element={<LoginAdmin />} />
+          <Route path="/loginstaff" element={<LoginStaff />} />
           <Route path="/order/*" element={<OrderRoutes />} />
           <Route path="/category/:categoryId" element={<CategoryDetail />} />
           <Route path="/cart/page" element={<CartPage />} />
           <Route path="/cart/addimage5" element={<CoverImageFive />} />
+          <Route path="/contactpage" element={<Contact />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/cart/orderhome" element={<OrderHome />} />
           <Route path="/reservation/page" element={<ReservationPage />} />
           <Route path="/staff/*" element={<StaffRoutes />} />
