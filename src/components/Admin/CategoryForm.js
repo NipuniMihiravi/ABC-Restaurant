@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './AdminApp.css';
 
 Modal.setAppElement('#root'); // Set the app root element for accessibility
@@ -16,10 +17,17 @@ const CategoryForm = () => {
     const [isAddItemModalOpen, setIsAddItemModalOpen] = useState(false);
     const [isEditItemModalOpen, setIsEditItemModalOpen] = useState(false);
     const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+    const navigate = useNavigate(); // Initialize useNavigate
 
     useEffect(() => {
+        const isAuthenticated = !!localStorage.getItem('adminSession');
+        if (!isAuthenticated) {
+            navigate('/login'); // Redirect to login if not authenticated
+            return;
+        }
+
         fetchCategories();
-    }, []);
+    }, [navigate]);
 
     const fetchCategories = () => {
         axios.get('/category')
@@ -40,14 +48,14 @@ const CategoryForm = () => {
     };
 
     const handleDeleteCategory = (id) => {
-    if (window.confirm('Are you sure you want to delete this item?')) {
-        axios.delete(`/category/${id}`)
-            .then(() => {
-                setCategories(categories.filter(category => category.id !== id));
-                alert('Category deleted successfully!');
-            })
-            .catch(error => console.error('Error deleting category:', error));
-            }
+        if (window.confirm('Are you sure you want to delete this category?')) {
+            axios.delete(`/category/${id}`)
+                .then(() => {
+                    setCategories(categories.filter(category => category.id !== id));
+                    alert('Category deleted successfully!');
+                })
+                .catch(error => console.error('Error deleting category:', error));
+        }
     };
 
     const handleEditCategory = (id) => {
@@ -94,28 +102,27 @@ const CategoryForm = () => {
                     return category;
                 });
                 setCategories(updatedCategories);
-                setNewItem({ id: '',name: '', number: '', price: 0, description: '', image: '' });
+                setNewItem({ name: '', number: '', price: 0, description: '', image: '' });
                 setIsAddItemModalOpen(false);
             })
             .catch(error => console.error('Error adding item:', error));
     };
 
-   const handleEditItem = (categoryId, itemId) => {
-       const category = categories.find(category => category.id === categoryId);
-       if (!category) {
-           console.error('Category not found');
-           return;
-       }
-       const itemToEdit = category.items.find(item => item.id === itemId);
-       if (!itemToEdit) {
-           console.error('Item not found');
-           return;
-       }
-       console.log('Item to edit:', itemToEdit);
-       setEditItem(itemToEdit);
-       setSelectedCategoryId(categoryId);
-       setIsEditItemModalOpen(true);
-   };
+    const handleEditItem = (categoryId, itemId) => {
+        const category = categories.find(category => category.id === categoryId);
+        if (!category) {
+            console.error('Category not found');
+            return;
+        }
+        const itemToEdit = category.items.find(item => item.id === itemId);
+        if (!itemToEdit) {
+            console.error('Item not found');
+            return;
+        }
+        setEditItem(itemToEdit);
+        setSelectedCategoryId(categoryId);
+        setIsEditItemModalOpen(true);
+    };
 
     const handleUpdateItem = () => {
         axios.put(`/category/${selectedCategoryId}/item/${editItem.id}`, editItem)
@@ -136,26 +143,25 @@ const CategoryForm = () => {
             .catch(error => console.error('Error updating item:', error));
     };
 
-   const handleDeleteItem = (categoryId, itemId) => {
-           if (window.confirm('Are you sure you want to delete this item?')) {
-               axios.delete(`/category/${categoryId}/item/${itemId}`)
-                   .then(() => {
-                       const updatedCategories = categories.map(category => {
-                           if (category.id === categoryId) {
-                               return {
-                                   ...category,
-                                   items: category.items.filter(item => item.id !== itemId)
-                               };
-                           }
-                           return category;
-                       });
-
-                       setCategories(updatedCategories);
-                       alert('Item deleted successfully!');
-                   })
-                   .catch(error => console.error('Error deleting item:', error));
-           }
-       };
+    const handleDeleteItem = (categoryId, itemId) => {
+        if (window.confirm('Are you sure you want to delete this item?')) {
+            axios.delete(`/category/${categoryId}/item/${itemId}`)
+                .then(() => {
+                    const updatedCategories = categories.map(category => {
+                        if (category.id === categoryId) {
+                            return {
+                                ...category,
+                                items: category.items.filter(item => item.id !== itemId)
+                            };
+                        }
+                        return category;
+                    });
+                    setCategories(updatedCategories);
+                    alert('Item deleted successfully!');
+                })
+                .catch(error => console.error('Error deleting item:', error));
+        }
+    };
 
     const handleNewItemChange = (e) => {
         const { name, value } = e.target;
@@ -166,23 +172,24 @@ const CategoryForm = () => {
         const { name, value } = e.target;
         setEditItem({ ...editItem, [name]: value });
     };
-     const handleImageChange = (e) => {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setNewItem({ ...newItem, image: reader.result.split(',')[1] }); // Exclude the data URL prefix
-            };
-            reader.readAsDataURL(file);
-        };
 
-        const handleEditImageChange = (e) => {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setEditItem({ ...editItem, image: reader.result.split(',')[1] }); // Exclude the data URL prefix
-            };
-            reader.readAsDataURL(file);
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setNewItem({ ...newItem, image: reader.result.split(',')[1] }); // Exclude the data URL prefix
         };
+        reader.readAsDataURL(file);
+    };
+
+    const handleEditImageChange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setEditItem({ ...editItem, image: reader.result.split(',')[1] }); // Exclude the data URL prefix
+        };
+        reader.readAsDataURL(file);
+    };
 
     return (
         <div className="table-container">
@@ -192,7 +199,6 @@ const CategoryForm = () => {
             <table>
                 <thead>
                     <tr>
-
                         <th>Name</th>
                         <th>Items</th>
                         <th>Action</th>
@@ -201,7 +207,6 @@ const CategoryForm = () => {
                 <tbody>
                     {categories.map((category) => (
                         <tr key={category.id}>
-
                             <td>{category.name}</td>
                             <td>
                                 <button onClick={() => handleAddItem(category.id)} className="btn-add-item">Add Item</button>
@@ -230,155 +235,115 @@ const CategoryForm = () => {
                         </tr>
                     ))}
                 </tbody>
-
             </table>
 
             {/* Add Category Modal */}
-            <Modal
-                isOpen={isAddCategoryModalOpen}
-                onRequestClose={() => setIsAddCategoryModalOpen(false)}
-                contentLabel="Add Category"
-                className="Modal"
-                overlayClassName="Overlay"
-            >
-                <h2>Add New Category</h2>
+            <Modal isOpen={isAddCategoryModalOpen} onRequestClose={() => setIsAddCategoryModalOpen(false)}>
+                <h2>Add Category</h2>
                 <input
                     type="text"
                     name="name"
-                    placeholder="Name"
                     value={newCategory.name}
                     onChange={handleInputChange}
+                    placeholder="Category Name"
                 />
                 <button onClick={handleAddCategory}>Add Category</button>
                 <button onClick={() => setIsAddCategoryModalOpen(false)}>Cancel</button>
             </Modal>
 
             {/* Edit Category Modal */}
-            {editCategory && (
-                <Modal
-                    isOpen={isEditCategoryModalOpen}
-                    onRequestClose={() => setIsEditCategoryModalOpen(false)}
-                    contentLabel="Edit Category"
-                    className="Modal"
-                    overlayClassName="Overlay"
-                >
-                    <h2>Edit Category</h2>
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        value={editCategory.name}
-                        onChange={handleEditInputChange}
-                    />
-                    <button onClick={handleUpdateCategory}>Update Category</button>
-                    <button onClick={() => setIsEditCategoryModalOpen(false)}>Cancel</button>
-                </Modal>
-            )}
-
-            {/* Add Item Modal */}
-            <Modal
-                isOpen={isAddItemModalOpen}
-                onRequestClose={() => setIsAddItemModalOpen(false)}
-                contentLabel="Add Item"
-                className="Modal"
-                overlayClassName="Overlay"
-            >
-                <h2>Add New Item</h2>
-                <input
-                 type="text"
-                  name="id"
-                  placeholder="id"
-                  value={newItem.id}
-                  onChange={handleNewItemChange}
-                                />
+            <Modal isOpen={isEditCategoryModalOpen} onRequestClose={() => setIsEditCategoryModalOpen(false)}>
+                <h2>Edit Category</h2>
                 <input
                     type="text"
                     name="name"
-                    placeholder="Name"
+                    value={editCategory ? editCategory.name : ''}
+                    onChange={handleEditInputChange}
+                    placeholder="Category Name"
+                />
+                <button onClick={handleUpdateCategory}>Update Category</button>
+                <button onClick={() => setIsEditCategoryModalOpen(false)}>Cancel</button>
+            </Modal>
+
+            {/* Add Item Modal */}
+            <Modal isOpen={isAddItemModalOpen} onRequestClose={() => setIsAddItemModalOpen(false)}>
+                <h2>Add Item</h2>
+                <input
+                    type="text"
+                    name="name"
                     value={newItem.name}
                     onChange={handleNewItemChange}
+                    placeholder="Item Name"
                 />
                 <input
                     type="text"
                     name="number"
-                    placeholder="Number"
                     value={newItem.number}
                     onChange={handleNewItemChange}
+                    placeholder="Item Number"
                 />
                 <input
                     type="number"
                     name="price"
-                    placeholder="Price"
                     value={newItem.price}
                     onChange={handleNewItemChange}
+                    placeholder="Price"
                 />
-                <input
-                    type="text"
+                <textarea
                     name="description"
-                    placeholder="Description"
                     value={newItem.description}
                     onChange={handleNewItemChange}
+                    placeholder="Description"
                 />
                 <input
-                 type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                 />
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                />
                 <button onClick={handleSaveItem}>Save Item</button>
                 <button onClick={() => setIsAddItemModalOpen(false)}>Cancel</button>
             </Modal>
 
             {/* Edit Item Modal */}
-            {editItem && (
-                <Modal
-                    isOpen={isEditItemModalOpen}
-                    onRequestClose={() => setIsEditItemModalOpen(false)}
-                    contentLabel="Edit Item"
-                    className="Modal"
-                    overlayClassName="Overlay"
-                >
-                    <h2>Edit Item</h2>
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Name"
-                        value={editItem.name}
-                        onChange={handleEditItemChange}
-                    />
-                    <input
-                        type="text"
-                        name="number"
-                        placeholder="Number"
-                        value={editItem.number}
-                        onChange={handleEditItemChange}
-                    />
-                    <input
-                        type="number"
-                        name="price"
-                        placeholder="Price"
-                        value={editItem.price}
-                        onChange={handleEditItemChange}
-                    />
-                    <input
-                        type="text"
-                        name="description"
-                        placeholder="Description"
-                        value={editItem.description}
-                        onChange={handleEditItemChange}
-                    />
-                     <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleEditImageChange}
-                      />
-                    <button onClick={handleUpdateItem}>Update Item</button>
-                    <button onClick={() => setIsEditItemModalOpen(false)}>Cancel</button>
-                </Modal>
-            )}
+            <Modal isOpen={isEditItemModalOpen} onRequestClose={() => setIsEditItemModalOpen(false)}>
+                <h2>Edit Item</h2>
+                <input
+                    type="text"
+                    name="name"
+                    value={editItem ? editItem.name : ''}
+                    onChange={handleEditItemChange}
+                    placeholder="Item Name"
+                />
+                <input
+                    type="text"
+                    name="number"
+                    value={editItem ? editItem.number : ''}
+                    onChange={handleEditItemChange}
+                    placeholder="Item Number"
+                />
+                <input
+                    type="number"
+                    name="price"
+                    value={editItem ? editItem.price : ''}
+                    onChange={handleEditItemChange}
+                    placeholder="Price"
+                />
+                <textarea
+                    name="description"
+                    value={editItem ? editItem.description : ''}
+                    onChange={handleEditItemChange}
+                    placeholder="Description"
+                />
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleEditImageChange}
+                />
+                <button onClick={handleUpdateItem}>Update Item</button>
+                <button onClick={() => setIsEditItemModalOpen(false)}>Cancel</button>
+            </Modal>
         </div>
     );
 };
 
 export default CategoryForm;
-
-

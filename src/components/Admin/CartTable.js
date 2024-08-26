@@ -2,13 +2,21 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const CartTable = () => {
   const [carts, setCarts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showAllColumns, setShowAllColumns] = useState(false);
+  const navigate = useNavigate(); // Initialize navigate
 
   useEffect(() => {
+    const isAuthenticated = !!localStorage.getItem('adminSession');
+    if (!isAuthenticated) {
+      navigate('/login'); // Redirect to login if not authenticated
+      return;
+    }
+
     // Fetch cart data from the API
     axios.get('/cart')
       .then(response => {
@@ -17,7 +25,7 @@ const CartTable = () => {
       .catch(error => {
         console.error('Error fetching cart data:', error);
       });
-  }, []);
+  }, [navigate]); // Include navigate in the dependency array
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value.toLowerCase());

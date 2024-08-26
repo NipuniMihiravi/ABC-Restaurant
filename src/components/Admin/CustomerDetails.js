@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 import './AdminApp.css'; // Ensure you have the appropriate CSS for styling
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 Modal.setAppElement('#root'); // Set the app root element for accessibility
 
@@ -11,10 +12,16 @@ const CustomerDetails = () => {
     const [editCustomer, setEditCustomer] = useState(null);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const navigate = useNavigate(); // Initialize useNavigate
 
     useEffect(() => {
+     const isAuthenticated = !!localStorage.getItem('adminSession');
+                if (!isAuthenticated) {
+                  navigate('/login'); // Redirect to login if not authenticated
+                  return;
+                }
         fetchCustomers();
-    }, []);
+     }, [navigate]);
 
     const fetchCustomers = () => {
         axios.get('/user/customer')

@@ -17,7 +17,8 @@ const LoginAdmin = () => {
             params: { username, password }
         })
         .then(response => {
-            // Assuming a successful response means the credentials are valid
+            // Assuming the response includes a token or session identifier
+            localStorage.setItem('adminSession', response.data.token); // Save token/session
             navigate('/admin/adminhome'); // Redirect to admin page upon successful login
         })
         .catch(error => {

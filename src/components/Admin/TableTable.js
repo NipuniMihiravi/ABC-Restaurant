@@ -2,14 +2,22 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const TableList = () => {
   const [tables, setTables] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showAllColumns, setShowAllColumns] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
-    // Fetch data from the API
+    const isAuthenticated = !!localStorage.getItem('adminSession');
+            if (!isAuthenticated) {
+              navigate('/login'); // Redirect to login if not authenticated
+              return;
+            }
+
+
     axios.get('/table')
       .then(response => {
         setTables(response.data);
@@ -17,7 +25,7 @@ const TableList = () => {
       .catch(error => {
         console.error('Error fetching table data:', error);
       });
-  }, []);
+  }, [navigate]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value.toLowerCase());

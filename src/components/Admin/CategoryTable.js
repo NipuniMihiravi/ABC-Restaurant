@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './AdminApp.css';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const CategoryTable = () => {
     const [categories, setCategories] = useState([]);
+    const navigate = useNavigate(); // Initialize useNavigate
 
     useEffect(() => {
-        fetchCategories();
-    }, []);
+     const isAuthenticated = !!localStorage.getItem('adminSession');
+        if (!isAuthenticated) {
+          navigate('/login'); // Redirect to login if not authenticated
+          return;
+        }
+
+       fetchCategories();
+           }, [navigate]);
 
     const fetchCategories = () => {
         axios.get('/category')  // Change the endpoint to fetch from 'category' collection

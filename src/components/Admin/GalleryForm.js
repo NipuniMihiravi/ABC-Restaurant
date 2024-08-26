@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
 import './AdminApp.css';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const GalleryForm = () => {
     const [galleryName, setGalleryName] = useState('');
@@ -11,8 +12,17 @@ const GalleryForm = () => {
     const [items, setItems] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const navigate = useNavigate(); // Initialize useNavigate
+
 
     useEffect(() => {
+
+    const isAuthenticated = !!localStorage.getItem('adminSession');
+                if (!isAuthenticated) {
+                  navigate('/login'); // Redirect to login if not authenticated
+                  return;
+                }
+
         const fetchGalleries = async () => {
             try {
                 const response = await axios.get('/gallery');
@@ -23,7 +33,7 @@ const GalleryForm = () => {
         };
 
         fetchGalleries();
-    }, []);
+    }, [navigate]);
 
     useEffect(() => {
         if (selectedGalleryId) {

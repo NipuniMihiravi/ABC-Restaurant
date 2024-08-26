@@ -38,7 +38,7 @@ const App = () => {
                          location.pathname.startsWith('/reservation') ||
                          location.pathname.startsWith('/staff/') || // Added this condition
                          location.pathname.startsWith('/maharagama/')||
-                          location.pathname === '/adminlogin'||// Added this condition for Maharagama
+                          location.pathname === '/login'||// Added this condition for Maharagama
                          location.pathname.startsWith('/nugegoda/'); // Added this condition for Maharagama
 
   const showOrderPanel = location.pathname.startsWith('/category/') ||
@@ -78,13 +78,13 @@ const App = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/galleries" element={<Gallery />} />
           <Route path="/footer" element={<Footer />} />
-          <Route path="/login" element={<LoginForm />} />
+          <Route path="/" element={<LoginForm />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/menutable" element={<MenuTable />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/about" element={<About />} />
           <Route path="/admin/*" element={<AdminRoutes />} />
-          <Route path="/adminlogin" element={<LoginAdmin />} />
+          <Route path="/login" element={<LoginAdmin />} />
           <Route path="/order/*" element={<OrderRoutes />} />
           <Route path="/category/:categoryId" element={<CategoryDetail />} />
           <Route path="/cart/page" element={<CartPage />} />

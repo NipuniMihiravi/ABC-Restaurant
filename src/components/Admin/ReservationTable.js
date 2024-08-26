@@ -2,14 +2,21 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { useNavigate } from 'react-router-dom';
 
 const ReservationTable = () => {
   const [reservations, setReservations] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showAllColumns, setShowAllColumns] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
-    // Fetch reservation data from the API
+     const isAuthenticated = !!localStorage.getItem('adminSession');
+                if (!isAuthenticated) {
+                  navigate('/login'); // Redirect to login if not authenticated
+                  return;
+                }
+
     axios.get('/reservation')
       .then(response => {
         setReservations(response.data);
@@ -17,7 +24,7 @@ const ReservationTable = () => {
       .catch(error => {
         console.error('Error fetching reservation data:', error);
       });
-  }, []);
+   }, [navigate]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value.toLowerCase());
