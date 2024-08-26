@@ -1,5 +1,6 @@
 package abc.example.abcResturant.Controller;
 
+import jakarta.servlet.http.HttpSession;
 import abc.example.abcResturant.Model.Admin;
 import abc.example.abcResturant.Model.Customer;
 import abc.example.abcResturant.Model.Staff;
@@ -119,9 +120,10 @@ public class UserController {
 
     // Authentication endpoints
     @PostMapping("/login/admin")
-    public ResponseEntity<?> loginAdmin(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<?> loginAdmin(@RequestParam String username, @RequestParam String password, HttpSession session) {
         Optional<Admin> admin = userService.authenticateAdmin(username, password);
         if (admin.isPresent()) {
+            session.setAttribute("user", admin.get());
             return ResponseEntity.ok(admin.get());
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
@@ -129,9 +131,10 @@ public class UserController {
     }
 
     @PostMapping("/login/staff")
-    public ResponseEntity<?> loginStaff(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<?> loginStaff(@RequestParam String username, @RequestParam String password, HttpSession session) {
         Optional<Staff> staff = userService.authenticateStaff(username, password);
         if (staff.isPresent()) {
+            session.setAttribute("user", staff.get());
             return ResponseEntity.ok(staff.get());
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
@@ -139,18 +142,50 @@ public class UserController {
     }
 
     @PostMapping("/login/customer")
-    public ResponseEntity<?> loginCustomer(@RequestParam String username, @RequestParam String password) {
+    public ResponseEntity<?> loginCustomer(@RequestParam String username, @RequestParam String password, HttpSession session) {
         Optional<Customer> customer = userService.authenticateCustomer(username, password);
         if (customer.isPresent()) {
+            session.setAttribute("user", customer.get());
             return ResponseEntity.ok(customer.get());
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
     }
-    @GetMapping("customer/validate-username/{username}")
+
+    @GetMapping("/logout")
+    public ResponseEntity<?> logout(HttpSession session) {
+        session.invalidate(); // Invalidate the session
+        return ResponseEntity.ok("Logged out successfully");
+    }
+
+    @GetMapping("/customer/validate-username/{username}")
     public ResponseEntity<Boolean> validateUsername(@PathVariable String username) {
         boolean exists = userService.existsByUsername(username);
         return ResponseEntity.ok(exists);
     }
-}
 
+
+
+// Inner class for login requests
+public static class LoginRequest {
+    private String username;
+    private String password;
+
+    // Getters and setters
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+}
+}
