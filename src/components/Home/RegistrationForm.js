@@ -1,28 +1,95 @@
-
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import './App.css'; // Assuming your CSS file
 
 const RegistrationForm = () => {
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [fullName, setFullName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [error, setError] = useState('');
+    const [errors, setErrors] = useState({});
+    const [successMessage, setSuccessMessage] = useState(''); // Add state for success message
 
-    const handleSubmit = (e) => {
+    const navigate = useNavigate(); // Initialize useNavigate
+
+    const validateForm = () => {
+        const newErrors = {};
+
+        // Email validation
+        if (!username) {
+            newErrors.username = 'Email is required';
+        } else if (!/\S+@\S+\.\S+/.test(username)) {
+            newErrors.username = 'Email must be in a valid format (e.g., user@example.com)';
+        }
+
+        // Password validation
+        if (!password) {
+            newErrors.password = 'Password is required';
+        } else if (password.length < 6) {
+            newErrors.password = 'Password must be at least 6 characters long';
+        }
+
+        // Confirm Password validation
+        if (password !== confirmPassword) {
+            newErrors.confirmPassword = 'Passwords do not match';
+        }
+
+        // Full Name validation
+        if (!fullName.trim()) {
+            newErrors.fullName = 'Full name is required';
+        } else if (/[^a-zA-Z\s]/.test(fullName)) {
+            newErrors.fullName = 'Full name can only contain letters and spaces';
+        }
+
+        // Phone Number validation
+        if (!phoneNumber) {
+            newErrors.phoneNumber = 'Phone number is required';
+        } else if (!/^\d{10}$/.test(phoneNumber)) {
+            newErrors.phoneNumber = 'Phone number must be 10 digits';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const checkUsernameExists = async () => {
+        try {
+            const response = await axios.get(`/user/customer/validate-username/${username}`);
+            return response.data.exists;
+        } catch (error) {
+            console.error('Error checking username:', error);
+            return false;
+        }
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.post('/user/customer', { email, password, fullName, phoneNumber })
-            .then(response => {
-                // Handle successful registration
-                console.log('Registration successful:', response.data);
-                // Redirect or update state here
-            })
-            .catch(error => {
-                // Handle errors
-                setError('Registration failed');
-                console.error('Registration error:', error);
-            });
+
+        if (!validateForm()) {
+            return;
+        }
+
+        const usernameExists = await checkUsernameExists();
+        if (usernameExists) {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                username: 'Email is already registered'
+            }));
+            return;
+        }
+
+        try {
+            const response = await axios.post('/user/customer', { username, password, fullName, phoneNumber });
+            setSuccessMessage('Registration successful! Redirecting to login Page...'); // Set success message
+            setTimeout(() => {
+                navigate('/homelogin'); // Redirect to home page after a delay
+            }, 2000); // Adjust delay as needed
+        } catch (error) {
+            setErrors({ form: 'Registration failed. Please try again later.' });
+            console.error('Registration error:', error);
+        }
     };
 
     return (
@@ -32,11 +99,12 @@ const RegistrationForm = () => {
                 <div>
                     <label>Email:</label>
                     <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         required
                     />
+                    {errors.username && <p className="error">{errors.username}</p>}
                 </div>
                 <div>
                     <label>Password:</label>
@@ -46,17 +114,19 @@ const RegistrationForm = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
+                    {errors.password && <p className="error">{errors.password}</p>}
                 </div>
                 <div>
-                 <div>
-                     <label>Confirm Password:</label>
-                      <input
-                      type="password"
-                      value={password}
-                       onChange={(e) => setPassword(e.target.value)}
-                       required
-                                    />
-                                </div>
+                    <label>Confirm Password:</label>
+                    <input
+                        type="password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                    />
+                    {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
+                </div>
+                <div>
                     <label>Full Name:</label>
                     <input
                         type="text"
@@ -64,6 +134,7 @@ const RegistrationForm = () => {
                         onChange={(e) => setFullName(e.target.value)}
                         required
                     />
+                    {errors.fullName && <p className="error">{errors.fullName}</p>}
                 </div>
                 <div>
                     <label>Phone Number:</label>
@@ -73,9 +144,11 @@ const RegistrationForm = () => {
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         required
                     />
+                    {errors.phoneNumber && <p className="error">{errors.phoneNumber}</p>}
                 </div>
                 <button type="submit">Register</button>
-                {error && <p>{error}</p>}
+                {errors.form && <p className="error">{errors.form}</p>}
+                {successMessage && <p className="success">{successMessage}</p>} {/* Display success message */}
             </form>
         </div>
     );
