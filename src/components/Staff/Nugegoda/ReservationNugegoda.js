@@ -32,7 +32,7 @@ const ReservationNugegoda = () => {
     const fetchReservations = () => {
         axios.get('/reservation')
             .then(response => {
-                const filteredReservations = response.data.filter(reservation => reservation.outlet === 'Nugegoda');
+                const filteredReservations = response.data.filter(reservation => reservation.outlet === 'nugegoda');
                 const sortedReservations = filteredReservations.sort((a, b) => new Date(b.date) - new Date(a.date));
                 setReservations(sortedReservations);
             })

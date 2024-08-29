@@ -32,7 +32,7 @@ const ReservationMaharagama = () => {
     const fetchReservations = () => {
         axios.get('/reservation')
             .then(response => {
-                const filteredReservations = response.data.filter(reservation => reservation.outlet === 'Maharagama');
+                const filteredReservations = response.data.filter(reservation => reservation.outlet === 'maharagama');
                 const sortedReservations = filteredReservations.sort((a, b) => new Date(b.date) - new Date(a.date));
                 setReservations(sortedReservations);
             })

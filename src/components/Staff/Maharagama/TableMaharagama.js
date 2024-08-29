@@ -24,7 +24,7 @@ const TableMaharagama = () => {
     const fetchTables = () => {
         axios.get('/table')
             .then(response => {
-                const filteredTables = response.data.filter(table => table.outlet === 'Maharagama');
+                const filteredTables = response.data.filter(table => table.outlet === 'maharagama');
                 const sortedTables = filteredTables.sort((a, b) => new Date(b.date) - new Date(a.date));
                 setTables(sortedTables);
             })
@@ -160,8 +160,9 @@ const TableMaharagama = () => {
                                     <td>{table.tableNo}</td>
                                     <td>{table.status}</td>
                                     <td>
-                                        <button onClick={() => handleEdit(table)}>Edit</button>
-                                        <button onClick={() => handleDelete(table.id)}>Delete</button>
+                                          <button onClick={() => handleEdit(table)} className="btn-edit">Edit</button>
+                                          <button onClick={() => handleDelete(table.id)} className="btn-delete">Delete</button>
+
                                     </td>
                                 </>
                             )}
