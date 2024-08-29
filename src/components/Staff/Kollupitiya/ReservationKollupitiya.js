@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import StaffPanel from './StaffPanel';
 
 const ReservationKollupitiya = () => {
     const [reservations, setReservations] = useState([]);
@@ -8,9 +7,9 @@ const ReservationKollupitiya = () => {
     const [editingReservationData, setEditingReservationData] = useState({
         name: '',
         contactNo: '',
-        email: '', // Added email field
+        username: '', // Changed from email to username
         date: '',
-        time: '',
+        time: '', // Ensure this is a time string in 'HH:mm' format
         guests: '',
         outlet: '',
         specialNote: '',
@@ -18,15 +17,15 @@ const ReservationKollupitiya = () => {
     });
     const [searchQuery, setSearchQuery] = useState(''); // State for search query
 
-    // Assuming you have a method to get the logged-in user's email
-    const [userEmail, setUserEmail] = useState('');
+    // Assuming you have a method to get the logged-in user's username
+    const [userUsername, setUserUsername] = useState('');
 
     useEffect(() => {
         fetchReservations();
-        // Assuming you have a method to get the logged-in user's email
+        // Assuming you have a method to get the logged-in user's username
         // This should be replaced with actual login logic
-        const loggedInUserEmail = 'user@example.com'; // Replace this with actual email fetching logic
-        setUserEmail(loggedInUserEmail);
+        const loggedInUserUsername = 'user@example.com'; // Replace this with actual username fetching logic
+        setUserUsername(loggedInUserUsername);
     }, []);
 
     const fetchReservations = () => {
@@ -44,9 +43,9 @@ const ReservationKollupitiya = () => {
         setEditingReservationData({
             name: reservation.name,
             contactNo: reservation.contactNo,
-            email: reservation.email || userEmail, // Set email to user's email if not already set
+            username: reservation.username || userUsername, // Set username to user's username if not already set
             date: reservation.date,
-            time: reservation.time,
+            time: reservation.time ? formatTimeForInput(reservation.time) : '', // Ensure time is formatted correctly
             guests: reservation.guests,
             outlet: reservation.outlet,
             specialNote: reservation.specialNote,
@@ -85,10 +84,16 @@ const ReservationKollupitiya = () => {
         return date.toLocaleDateString(undefined, options);
     };
 
-    const formatTime = (dateString) => {
-        const options = { hour: '2-digit', minute: '2-digit' };
-        const date = new Date(dateString);
-        return date.toLocaleTimeString(undefined, options);
+    const formatTime = (timeString) => {
+        // Format timeString (assuming it's in 'HH:mm' format)
+        const [hours, minutes] = timeString.split(':');
+        return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+    };
+
+    const formatTimeForInput = (timeString) => {
+        // Ensure the time is in 'HH:mm' format for the input field
+        const [hours, minutes] = timeString.split(':');
+        return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
     };
 
     const filteredReservations = reservations.filter(reservation =>
@@ -116,7 +121,7 @@ const ReservationKollupitiya = () => {
                     <tr>
                         <th>Customer Name</th>
                         <th>Contact No</th>
-                        <th>Email</th> {/* Added Email Header */}
+                        <th>Username</th> {/* Changed from Email Header to Username */}
                         <th>Date</th>
                         <th>Time</th>
                         <th>No of Guest</th>
@@ -133,21 +138,27 @@ const ReservationKollupitiya = () => {
                                 <>
                                     <td><input type="text" value={editingReservationData.name} onChange={(e) => setEditingReservationData({ ...editingReservationData, name: e.target.value })} /></td>
                                     <td><input type="text" value={editingReservationData.contactNo} onChange={(e) => setEditingReservationData({ ...editingReservationData, contactNo: e.target.value })} /></td>
-                                    <td><input type="email" value={editingReservationData.email} onChange={(e) => setEditingReservationData({ ...editingReservationData, email: e.target.value })} /></td>
+                                    <td><input type="email" value={editingReservationData.username} onChange={(e) => setEditingReservationData({ ...editingReservationData, username: e.target.value })} /></td>
                                     <td><input type="date" value={editingReservationData.date} onChange={(e) => setEditingReservationData({ ...editingReservationData, date: e.target.value })} /></td>
                                     <td><input type="time" value={editingReservationData.time} onChange={(e) => setEditingReservationData({ ...editingReservationData, time: e.target.value })} /></td>
                                     <td><input type="number" value={editingReservationData.guests} onChange={(e) => setEditingReservationData({ ...editingReservationData, guests: e.target.value })} /></td>
                                     <td><input type="text" value={editingReservationData.outlet} onChange={(e) => setEditingReservationData({ ...editingReservationData, outlet: e.target.value })} /></td>
                                     <td><input type="text" value={editingReservationData.specialNote} onChange={(e) => setEditingReservationData({ ...editingReservationData, specialNote: e.target.value })} /></td>
-                                    <td><input type="text" value={editingReservationData.status} onChange={(e) => setEditingReservationData({ ...editingReservationData, status: e.target.value })} /></td>
+                                     <td>
+                                                                            <select value={editingReservationData.status} onChange={(e) => setEditingReservationData({ ...editingReservationData, status: e.target.value })}>
+                                                                                <option value="Pending">Pending</option>
+                                                                                <option value="Confirmed">Confirmed</option>
+                                                                                <option value="Reject">Reject</option>
+                                                                            </select>
+                                                                        </td>
                                 </>
                             ) : (
                                 <>
                                     <td>{reservation.name}</td>
                                     <td>{reservation.contactNo}</td>
-                                    <td>{reservation.username}</td> {/* Added Email Data */}
+                                    <td>{reservation.username || 'N/A'}</td> {/* Ensure username is displayed correctly */}
                                     <td>{formatDate(reservation.date)}</td>
-                                    <td>{formatTime(reservation.date)}</td>
+                                    <td>{formatTime(reservation.time)}</td>
                                     <td>{reservation.guests}</td>
                                     <td>{reservation.outlet}</td>
                                     <td>{reservation.specialNote}</td>

@@ -157,9 +157,8 @@ const OrdersKollupitiya = () => {
                                     </td>
                                     <td>{cart.status}</td>
                                     <td>
-                                        <button onClick={() => handleEdit(cart)}>Edit</button>
-                                        <button onClick={() => handleDelete(cart.id)}>Delete</button>
-                                    </td>
+                                         <button onClick={() => handleEdit(cart)} className="btn-edit">Edit</button>
+                                         <button onClick={() => handleDelete(cart.id)} className="btn-delete">Delete</button>                                    </td>
                                 </>
                             )}
                         </tr>

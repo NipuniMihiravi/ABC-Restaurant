@@ -112,9 +112,9 @@ const FacilityList = () => {
     };
 
     return (
-        <div className="table-container">
-            <h1>Facilities</h1>
-            <button onClick={() => setIsAddModalOpen(true)} className="btn-add">Add New Facility</button>
+        <div className="facility-table-container">
+            <h1>Manage Facilities</h1>
+            <button onClick={() => setIsAddModalOpen(true)} className="btn btn-primary">Add New Facility</button>
 
             <table>
                 <thead>
@@ -135,13 +135,13 @@ const FacilityList = () => {
                                     <img
                                         src={`data:image/jpeg;base64,${facility.image}`}
                                         alt={facility.heading}
-                                        className="cover-image"
+                                        className="facility-cover-image"
                                     />
                                 )}
                             </td>
                             <td>
-                                <button onClick={() => handleEdit(facility.id)} className="btn-edit">Edit</button>
-                                <button onClick={() => handleDelete(facility.id)} className="btn-delete">Delete</button>
+                                <button onClick={() => handleEdit(facility.id)} className="btn-edit-item">Edit</button>
+                                <button onClick={() => handleDelete(facility.id)} className="btn-delete-item">Delete</button>
                             </td>
                         </tr>
                     ))}

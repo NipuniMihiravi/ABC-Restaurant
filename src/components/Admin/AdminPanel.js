@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './AdminApp.css';
+import { NavLink } from 'react-router-dom';
 
 const AdminPanel = ({ children }) => {
   const navigate = useNavigate();
@@ -23,12 +24,13 @@ const AdminPanel = ({ children }) => {
             <Link to="adminhome">
               <img src="/images/logo.png" alt="Logo" className="logo" />
             </Link>
+            <h1 className="admin-panel-title">~Admin Panel~</h1>
           </div>
 
           <div className="nav-links-container">
             <ul className="nav-links">
-              <li><Link to="usermanage">User Management</Link></li>
-              <li><Link to="manageweb">Manage Website</Link></li>
+              <li><NavLink to="usermanage">User Management</NavLink></li>
+              <li><NavLink to="manageweb">Manage Website</NavLink></li>
               <li className="dropdown">
                 <Link to="#">Category</Link>
                 <ul className="dropdown-content">

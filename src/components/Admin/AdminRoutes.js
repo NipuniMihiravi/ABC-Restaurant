@@ -17,6 +17,7 @@ import ReservationOrder from './ReservationOrder';
 import CartTable from './CartTable';
 import ReservationTable from './ReservationTable';
 import TableTable from './TableTable';
+import AdminFooter from './AdminFooter';
 
 
 const AdminRoutes = () => {
@@ -39,6 +40,7 @@ const AdminRoutes = () => {
         <Route path="tabletable" element={<TableTable />} />
         <Route path="gallery" element={<GalleryForm />} />
         <Route path="adminhome" element={<AdminHome />} />
+        <Route path="adminfooter" element={<AdminFooter />} />
       </Routes>
     </AdminPanel>
   );

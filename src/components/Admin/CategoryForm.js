@@ -192,9 +192,9 @@ const CategoryForm = () => {
     };
 
     return (
-        <div className="table-container">
-            <h1>Categories</h1>
-            <button onClick={() => setIsAddCategoryModalOpen(true)} className="btn-add">Add New Category</button>
+        <div className="cater-table-container">
+            <h1>Manage Manu Categories & Items</h1>
+            <button onClick={() => setIsAddCategoryModalOpen(true)} className="btn btn-primary">Add New Category</button>
 
             <table>
                 <thead>
@@ -213,10 +213,10 @@ const CategoryForm = () => {
                                 <ul>
                                     {category.items && category.items.length > 0 ? (
                                         category.items.map(item => (
-                                            <li key={item.id} className="form-container">
-                                                <div className="form-details">
-                                                    <span className="form-name-price">{item.name} - Rs.{item.price}</span>
-                                                    <div className="form-buttons">
+                                            <li key={item.id} className="cater-form-container">
+                                                <div className="cater-form-details">
+                                                    <span className="cater-form-name-price">{item.name} - Rs.{item.price}</span>
+                                                    <div className="cater-form-buttons">
                                                         <button onClick={() => handleEditItem(category.id, item.id)} className="btn-edit-item">Edit</button>
                                                         <button onClick={() => handleDeleteItem(category.id, item.id)} className="btn-delete-item">Delete</button>
                                                     </div>
@@ -229,8 +229,8 @@ const CategoryForm = () => {
                                 </ul>
                             </td>
                             <td>
-                                <button onClick={() => handleEditCategory(category.id)} className="btn-edit">Edit</button>
-                                <button onClick={() => handleDeleteCategory(category.id)} className="btn-delete">Delete</button>
+                                <button onClick={() => handleEditCategory(category.id)} className="btn-edit-item">Edit</button>
+                                <button onClick={() => handleDeleteCategory(category.id)} className="btn-delete-item">Delete</button>
                             </td>
                         </tr>
                     ))}
@@ -268,6 +268,14 @@ const CategoryForm = () => {
             {/* Add Item Modal */}
             <Modal isOpen={isAddItemModalOpen} onRequestClose={() => setIsAddItemModalOpen(false)}>
                 <h2>Add Item</h2>
+                 <input
+                                    type="text"
+                                    name="number"
+                                    value={newItem.id}
+                                    onChange={handleNewItemChange}
+                                    placeholder="Item id"
+                                />
+
                 <input
                     type="text"
                     name="name"

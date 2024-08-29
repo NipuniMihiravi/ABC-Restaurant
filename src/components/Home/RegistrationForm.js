@@ -82,7 +82,7 @@ const RegistrationForm = () => {
 
         try {
             const response = await axios.post('/user/customer', { username, password, fullName, phoneNumber });
-            setSuccessMessage('Registration successful! Redirecting to login Page...'); // Set success message
+            setSuccessMessage('Registration successful! Redirecting to login Pagenpm start...'); // Set success message
             setTimeout(() => {
                 navigate('/homelogin'); // Redirect to home page after a delay
             }, 2000); // Adjust delay as needed

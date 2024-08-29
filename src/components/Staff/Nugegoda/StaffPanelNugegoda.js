@@ -17,7 +17,7 @@ const StaffPanelNugegoda = ({ children }) => {
         <button onClick={() => navigate('reservationnuge')}>View Party Reservation</button>
         <button onClick={() => navigate('tablenuge')}>View Table Reservation</button>
         <button onClick={() => navigate('ordersnuge')}>View Online Orders</button>
-        <button onClick={() => navigate('tablenuge')}>Make Party and Dable reservation</button>
+        <button onClick={() => navigate('tablenuge')}>Make Party and Table reservation</button>
 
 
       </div>

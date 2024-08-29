@@ -210,8 +210,8 @@ const GalleryForm = () => {
                                 onClick={() => handleSelectItem(item)}
                             />
                             <div className="item-actions">
-                                <button onClick={() => handleSelectItem(item)} className="btn btn-warning">Edit</button>
-                                <button onClick={() => handleDeleteItem(item.id)} className="btn btn-danger">Delete</button>
+                                <button onClick={() => handleSelectItem(item)} className="btn-edit-item">Edit</button>
+                                <button onClick={() => handleDeleteItem(item.id)} className="btn-delete-item">Delete</button>
                             </div>
                         </li>
                     ))}

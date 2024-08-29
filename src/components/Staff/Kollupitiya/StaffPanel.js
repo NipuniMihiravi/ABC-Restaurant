@@ -17,10 +17,10 @@ const StaffPanel = ({ children }) => {
         <button onClick={() => navigate('reservationkollu')}>View Party Reservation</button>
         <button onClick={() => navigate('tablekollu')}>View Table Reservation</button>
         <button onClick={() => navigate('orderskollu')}>View Online Orders</button>
-        <button onClick={() => navigate('tablekollu')}>Make Party and Dable reservation</button>
-
+        <button onClick={() => navigate('tablekollu')}>Make Party and Table reservation</button>
 
       </div>
+
 
       <main className="container mt-4">
         {children}

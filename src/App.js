@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Routes, Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import './components/Home/App.css';
 import './components/Admin/AdminApp.css';
@@ -59,11 +60,11 @@ const App = () => {
             </div>
             <div className="nav-links-container">
               <ul className="nav-links">
-                <li><Link to="/home" className={({ isActive }) => isActive ? 'active' : ''}>Home</Link></li>
-                <li><Link to="/about" className={({ isActive }) => isActive ? 'active' : ''}>About</Link></li>
-                <li><Link to="/menu" className={({ isActive }) => isActive ? 'active' : ''}>Menu</Link></li>
-                <li><Link to="/galleries" className={({ isActive }) => isActive ? 'active' : ''}>Gallery</Link></li>
-                <li><Link to="/contactpage" className={({ isActive }) => isActive ? 'active' : ''}>Contact</Link></li>
+                <li><NavLink to="/home" className={({ isActive }) => isActive ? 'active' : ''}>Home</NavLink></li>
+                <li><NavLink to="/about" className={({ isActive }) => isActive ? 'active' : ''}>About</NavLink></li>
+                <li><NavLink to="/menu" className={({ isActive }) => isActive ? 'active' : ''}>Menu</NavLink></li>
+                <li><NavLink to="/galleries" className={({ isActive }) => isActive ? 'active' : ''}>Gallery</NavLink></li>
+                <li><NavLink to="/contactpage" className={({ isActive }) => isActive ? 'active' : ''}>Contact</NavLink></li>
               </ul>
               <div className="nav-buttons">
                 <button className="nav-button" onClick={() => navigate('/cart/orderhome')}>ORDER ONLINE</button>

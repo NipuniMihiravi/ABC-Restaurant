@@ -90,7 +90,7 @@ const CustomerDetails = () => {
     return (
         <div className="table-container">
             <h1>Customer Management</h1>
-            <button onClick={() => setIsAddModalOpen(true)} className="btn-add">Add New Customer</button>
+            <button onClick={() => setIsAddModalOpen(true)} className="btn btn-primary">Add New Customer</button>
 
             <table>
                 <thead>
@@ -108,8 +108,8 @@ const CustomerDetails = () => {
                             <td>{customer.fullName}</td>
                             <td>{customer.phoneNumber}</td>
                             <td>
-                                <button onClick={() => handleEdit(customer.id)} className="btn-edit">Edit</button>
-                                <button onClick={() => handleDelete(customer.id)} className="btn-delete">Delete</button>
+                                <button onClick={() => handleEdit(customer.id)} className="btn-edit-item">Edit</button>
+                                <button onClick={() => handleDelete(customer.id)} className="btn-delete-item">Delete</button>
                             </td>
                         </tr>
                     ))}

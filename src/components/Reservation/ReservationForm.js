@@ -51,10 +51,10 @@ const ReservationForm = () => {
     setSubmitHandler(() => async () => {
       try {
         await axios.post('/reservation', reservationData);
-        alert('Party reservation submitted successfully!');
+        alert('Party reservation submitted successfully! : Reservation Confirmation inform you in email');
         window.location.reload();
       } catch (error) {
-        console.error('Error submitting party reservation: Reservation Confirmation inform you in email', error);
+        console.error('Error submitting party reservation', error);
       }
     });
     setShowDialog(true);
@@ -98,6 +98,7 @@ const ReservationForm = () => {
     { value: 'maharagama', label: 'Maharagama' },
     { value: 'nugegoda', label: 'Nugegoda' },
   ];
+
 
   return (
     <div className="full-reservation-container">

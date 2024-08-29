@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
+import Footer from './Footer';
 
 const Gallery = () => {
   const [activeForm, setActiveForm] = useState('Food');
@@ -76,6 +77,7 @@ const Gallery = () => {
         </div>
       </div>
     </div>
+    <Footer />
     </div>
   );
 };

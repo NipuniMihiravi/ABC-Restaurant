@@ -160,8 +160,8 @@ const TableKollupitiya = () => {
                                     <td>{table.tableNo}</td>
                                     <td>{table.status}</td>
                                     <td>
-                                        <button onClick={() => handleEdit(table)}>Edit</button>
-                                        <button onClick={() => handleDelete(table.id)}>Delete</button>
+                                         <button onClick={() => handleEdit(table)} className="btn-edit">Edit</button>
+                                         <button onClick={() => handleDelete(table.id)} className="btn-delete">Delete</button>
                                     </td>
                                 </>
                             )}

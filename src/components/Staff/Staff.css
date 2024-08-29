@@ -76,6 +76,12 @@
   color:white;
 }
 
+.staff-button-row button.active {
+  background-color: #B8860B; /* Background color for the active page button */
+  color: white; /* Text color for the active page button */
+  border: 2px solid #B8860B; /* Optional: Add a border for emphasis */
+}
+
 /*table*/
 .staff-table-container {
   max-width: 1600px;

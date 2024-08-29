@@ -91,9 +91,9 @@ const StaffDetails = () => {
     return (
         <div className="staff-table-containerr">
             <h1>Staff Management</h1>
-            <button onClick={() => setIsAddModalOpen(true)} className="btn-add">Add New Staff</button>
+            <button onClick={() => setIsAddModalOpen(true)} className="btn btn-primary">Add New Staff</button>
 
-            <table>
+            <table className="staff-table">
                 <thead>
                     <tr>
                         <th>Username</th>
@@ -113,8 +113,8 @@ const StaffDetails = () => {
                             <td>{s.designation}</td>
                             <td>{s.branch}</td>
                             <td>
-                                <button onClick={() => handleEdit(s.id)} className="btn-edit">Edit</button>
-                                <button onClick={() => handleDelete(s.id)} className="btn-delete">Delete</button>
+                                <button onClick={() => handleEdit(s.id)} className="btn-edit-item">Edit</button>
+                                <button onClick={() => handleDelete(s.id)} className="btn-delete-item">Delete</button>
                             </td>
                         </tr>
                     ))}

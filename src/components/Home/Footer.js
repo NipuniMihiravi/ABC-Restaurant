@@ -39,13 +39,23 @@ const Footer = () => {
           </ul>
         </div>
         <div className="footer__col">
-          <h4>Cocoloco Gardens</h4>
+          <h4>ABC Restaurant</h4>
           <p className="section__description1">
-            202/54, Galle Road <br />
+            123, Main Street <br />
             Colombo 03, Sri Lanka<br /><br />
-            <strong>Phone:</strong> +94 77 782 8629<br />
-            <strong>Email:</strong> abc@gmail.com<br />
+            <strong>Phone:</strong> +94 11 123 4567<br />
           </p>
+          <p className="section__description1">
+                      456 Second Avenue <br />
+                      Maharagama, Sri Lanka<br /><br />
+                      <strong>Phone:</strong> +94 11 765 4321<br />
+                    </p>
+                    <p className="section__description1">
+                                789 Third Road, <br />
+                                Nugegoda, Sri Lanka<br /><br />
+                                <strong>Phone:</strong> +94 11 987 6543<br />
+                                <strong>Email:</strong> abc@gmail.com<br />
+                              </p>
 
         </div>
       </div>

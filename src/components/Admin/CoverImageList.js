@@ -97,8 +97,8 @@ const CoverImageList = () => {
 
     return (
         <div className="table-container">
-            <h1>Covers</h1>
-            <button onClick={() => setIsAddModalOpen(true)} className="btn-add">Add New Cover</button>
+            <h1>Manage Cover Image</h1>
+            <button onClick={() => setIsAddModalOpen(true)} className="btn btn-primary">Add New Cover</button>
 
             <table>
                 <thead>
@@ -124,8 +124,8 @@ const CoverImageList = () => {
                                 )}
                             </td>
                             <td>
-                                <button onClick={() => handleEdit(cover.id)} className="btn-edit">Edit</button>
-                                <button onClick={() => handleDelete(cover.id)} className="btn-delete">Delete</button>
+                                <button onClick={() => handleEdit(cover.id)} className="btn-edit-item">Edit</button>
+                                <button onClick={() => handleDelete(cover.id)} className="btn-delete-item">Delete</button>
                             </td>
                         </tr>
                     ))}
