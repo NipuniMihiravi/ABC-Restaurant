@@ -12,11 +12,10 @@ const TableList = () => {
 
   useEffect(() => {
     const isAuthenticated = !!localStorage.getItem('adminSession');
-            if (!isAuthenticated) {
-              navigate('/login'); // Redirect to login if not authenticated
-              return;
-            }
-
+    if (!isAuthenticated) {
+      navigate('/login'); // Redirect to login if not authenticated
+      return;
+    }
 
     axios.get('/table')
       .then(response => {
@@ -31,10 +30,15 @@ const TableList = () => {
     setSearchTerm(e.target.value.toLowerCase());
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   const filteredTables = tables.filter(table =>
     table.name.toLowerCase().includes(searchTerm) ||
     table.username.toLowerCase().includes(searchTerm) ||
-    table.date.toLowerCase().includes(searchTerm) ||
+    formatDate(table.date).toLowerCase().includes(searchTerm) ||
     table.outlet.toLowerCase().includes(searchTerm) ||
     table.status.toLowerCase().includes(searchTerm)
   );
@@ -53,7 +57,7 @@ const TableList = () => {
         table.name,
         table.contactNo,
         table.username,
-        table.date,
+        formatDate(table.date),
         ...(showAllColumns ? [table.time, table.guests, table.outlet, table.tableNo, table.status] : [])
       ];
       tableRows.push(tableData);
@@ -64,11 +68,24 @@ const TableList = () => {
     doc.save(`table_reservations_report_${new Date().toISOString().slice(0, 10)}.pdf`);
   };
 
+
+
+  const handleDelete = (tableId) => {
+    if (window.confirm('Are you sure you want to delete this reservation?')) {
+      axios.delete(`/table/${tableId}`)
+        .then(() => {
+          setTables(tables.filter(tab => tab.id !== tableId));
+        })
+        .catch(error => {
+          console.error('Error deleting reservation:', error);
+        });
+    }
+  };
+
   return (
     <div className="table-container">
-      <h1>Table Reservations</h1>
+      <h1>Customer Table Reservations</h1>
 
-      {/* Search Input */}
       <input
         type="text"
         placeholder="Search by Name, Username, Date, Outlet, Status"
@@ -77,10 +94,17 @@ const TableList = () => {
         style={{ marginBottom: '20px', padding: '10px', width: '100%' }}
       />
 
+      <button onClick={() => setShowAllColumns(!showAllColumns)} style={{ marginTop: '20px', padding: '10px' }}>
+                    {showAllColumns ? 'Show Less' : 'Show More'}
+                  </button>
+
+                  <button onClick={generatePDF} style={{ marginTop: '20px', padding: '10px' }}>
+                    Generate PDF
+                  </button>
+
       <table>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Contact No</th>
             <th>Username</th>
@@ -94,16 +118,16 @@ const TableList = () => {
                 <th>Status</th>
               </>
             )}
+            <th>Actions</th> {/* Added Actions column header */}
           </tr>
         </thead>
         <tbody>
           {filteredTables.map(table => (
             <tr key={table.id}>
-              <td>{table.id}</td>
               <td>{table.name}</td>
               <td>{table.contactNo}</td>
               <td>{table.username}</td>
-              <td>{table.date}</td>
+              <td>{formatDate(table.date)}</td>
               {showAllColumns && (
                 <>
                   <td>{table.time}</td>
@@ -113,20 +137,14 @@ const TableList = () => {
                   <td>{table.status}</td>
                 </>
               )}
+              <td>
+                
+                <button onClick={() => handleDelete(table.id)} className="btn-delete-item">Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      {/* Toggle Columns Button */}
-      <button onClick={() => setShowAllColumns(!showAllColumns)} style={{ marginTop: '20px', padding: '10px' }}>
-        {showAllColumns ? 'Show Less' : 'Show More'}
-      </button>
-
-      {/* Generate PDF Button */}
-      <button onClick={generatePDF} style={{ marginTop: '20px', padding: '10px' }}>
-        Generate PDF
-      </button>
     </div>
   );
 };

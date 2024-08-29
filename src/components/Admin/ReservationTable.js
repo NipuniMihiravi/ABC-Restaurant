@@ -3,19 +3,20 @@ import axios from 'axios';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { useNavigate } from 'react-router-dom';
+import './AdminApp.css'; // Import the CSS file
 
 const ReservationTable = () => {
   const [reservations, setReservations] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showAllColumns, setShowAllColumns] = useState(false);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   useEffect(() => {
-     const isAuthenticated = !!localStorage.getItem('adminSession');
-                if (!isAuthenticated) {
-                  navigate('/login'); // Redirect to login if not authenticated
-                  return;
-                }
+    const isAuthenticated = !!localStorage.getItem('adminSession');
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
 
     axios.get('/reservation')
       .then(response => {
@@ -24,19 +25,24 @@ const ReservationTable = () => {
       .catch(error => {
         console.error('Error fetching reservation data:', error);
       });
-   }, [navigate]);
+  }, [navigate]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value.toLowerCase());
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   const filteredReservations = reservations.filter(reservation => {
-    const terms = searchTerm.split(' ').filter(term => term); // Split the searchTerm by spaces and remove empty terms
+    const terms = searchTerm.split(' ').filter(term => term);
 
     return terms.every(term =>
       reservation.username.toLowerCase().includes(term) ||
       reservation.contactNo.toLowerCase().includes(term) ||
-      reservation.date.toLowerCase().includes(term) ||
+      formatDate(reservation.date).toLowerCase().includes(term) ||
       reservation.outlet.toLowerCase().includes(term) ||
       reservation.status.toLowerCase().includes(term)
     );
@@ -56,7 +62,7 @@ const ReservationTable = () => {
         reservation.name,
         reservation.contactNo,
         reservation.username,
-        reservation.date,
+        formatDate(reservation.date),
         ...(showAllColumns ? [reservation.time, reservation.guests, reservation.outlet, reservation.specialNote, reservation.status] : [])
       ];
       tableRows.push(reservationData);
@@ -67,11 +73,24 @@ const ReservationTable = () => {
     doc.save(`reservation_report_${new Date().toISOString().slice(0, 10)}.pdf`);
   };
 
+
+
+  const handleDelete = (reservationId) => {
+    if (window.confirm('Are you sure you want to delete this reservation?')) {
+      axios.delete(`/reservation/${reservationId}`)
+        .then(() => {
+          setReservations(reservations.filter(res => res.id !== reservationId));
+        })
+        .catch(error => {
+          console.error('Error deleting reservation:', error);
+        });
+    }
+  };
+
   return (
     <div className="table-container">
-      <h1>Reservations</h1>
+      <h1>Customer Party Room Reservations</h1>
 
-      {/* Search Input */}
       <input
         type="text"
         placeholder="Search by Username, Contact No, Date, Outlet, Status"
@@ -80,10 +99,17 @@ const ReservationTable = () => {
         style={{ marginBottom: '20px', padding: '10px', width: '100%' }}
       />
 
+      <button onClick={() => setShowAllColumns(!showAllColumns)} style={{ marginTop: '20px', padding: '10px' }}>
+              {showAllColumns ? 'Show Less' : 'Show More'}
+            </button>
+
+            <button onClick={generatePDF} style={{ marginTop: '20px', padding: '10px' }}>
+              Generate PDF
+            </button>
+
       <table>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Name</th>
             <th>Contact No</th>
             <th>Username</th>
@@ -97,16 +123,16 @@ const ReservationTable = () => {
                 <th>Status</th>
               </>
             )}
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {filteredReservations.map(reservation => (
             <tr key={reservation.id}>
-              <td>{reservation.id}</td>
               <td>{reservation.name}</td>
               <td>{reservation.contactNo}</td>
               <td>{reservation.username}</td>
-              <td>{reservation.date}</td>
+              <td>{formatDate(reservation.date)}</td>
               {showAllColumns && (
                 <>
                   <td>{reservation.time}</td>
@@ -116,20 +142,14 @@ const ReservationTable = () => {
                   <td>{reservation.status}</td>
                 </>
               )}
+              <td>
+
+                <button onClick={() => handleDelete(reservation.id)} className="btn-delete-item">Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      {/* Toggle Columns Button */}
-      <button onClick={() => setShowAllColumns(!showAllColumns)} style={{ marginTop: '20px', padding: '10px' }}>
-        {showAllColumns ? 'Show Less' : 'Show More'}
-      </button>
-
-      {/* Generate PDF Button */}
-      <button onClick={generatePDF} style={{ marginTop: '20px', padding: '10px' }}>
-        Generate PDF
-      </button>
     </div>
   );
 };

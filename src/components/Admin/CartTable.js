@@ -78,9 +78,21 @@ const CartTable = () => {
     doc.save(`cart_report_${new Date().toISOString().slice(0, 10)}.pdf`);
   };
 
+    const handleDelete = (cartId) => {
+      if (window.confirm('Are you sure you want to delete this reservation?')) {
+        axios.delete(`/cart/${cartId}`)
+          .then(() => {
+            setCarts(carts.filter(car => car.id !== cartId));
+          })
+          .catch(error => {
+            console.error('Error deleting reservation:', error);
+          });
+      }
+    };
+
   return (
     <div className="order-table-container">
-      <h1>Cart Data</h1>
+      <h1>Customer Online orders</h1>
 
       {/* Search Input */}
       <input
@@ -90,6 +102,15 @@ const CartTable = () => {
         onChange={handleSearch}
         style={{ marginBottom: '20px', padding: '10px', width: '100%' }}
       />
+
+       <button onClick={() => setShowAllColumns(!showAllColumns)}>
+              {showAllColumns ? 'Show Less' : 'Show More'}
+            </button>
+
+            {/* Generate PDF Button */}
+            <button onClick={generatePDF} style={{ marginTop: '20px', padding: '10px' }}>
+              Generate PDF
+            </button>
 
       <table>
         <thead>
@@ -109,6 +130,8 @@ const CartTable = () => {
                 <th>Total</th>
               </>
             )}
+            <th>Actions</th> {/* Added Actions column header */}
+
           </tr>
         </thead>
         <tbody>
@@ -130,20 +153,15 @@ const CartTable = () => {
                     <td>${item.total}</td>
                   </>
                 )}
+
+                 <button onClick={() => handleDelete(cart.id)} className="btn-delete-item">Delete</button>
               </tr>
             ))
           ))}
         </tbody>
       </table>
 
-      <button onClick={() => setShowAllColumns(!showAllColumns)}>
-        {showAllColumns ? 'Show Less' : 'Show More'}
-      </button>
 
-      {/* Generate PDF Button */}
-      <button onClick={generatePDF} style={{ marginTop: '20px', padding: '10px' }}>
-        Generate PDF
-      </button>
     </div>
   );
 };
