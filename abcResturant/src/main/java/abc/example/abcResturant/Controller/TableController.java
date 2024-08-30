@@ -69,7 +69,7 @@ public class TableController {
                         emailBody
                 );
 
-            } else if ("Rejected".equalsIgnoreCase(status)) {
+            } else if ("Reject".equalsIgnoreCase(status)) {
                 // Construct the email body for rejected status
                 String emailBody = String.format(
                         "Dear %s,\n\n" +

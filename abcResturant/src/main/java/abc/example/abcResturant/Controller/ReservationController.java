@@ -58,7 +58,6 @@ public class ReservationController {
                                 "Your reservation is confirmed.\n\n" +
                                 "Reservation Date: %s\n\n" +
                                 "Time: %s\n\n" +
-                                "Table Number: %s.\n\n" +
                                 "Any clarification please call ABC Restaurant Front Desk.\n\n" +
                                 "ABC RESTAURANT - %s\n" +
                                 "Telephone No: 0112744588",
@@ -71,11 +70,11 @@ public class ReservationController {
                 // Send the email for confirmed reservation
                 emailService.sendEmail(
                         reservation.getUsername(),
-                        "Table Reservation Confirmed",
+                        "Party Reservation Confirmed",
                         emailBody
                 );
 
-            } else if ("Rejected".equalsIgnoreCase(status)) {
+            } else if ("Reject".equalsIgnoreCase(status)) {
                 // Construct the email body for rejected status
                 String emailBody = String.format(
                         "Dear %s,\n\n" +
@@ -92,7 +91,7 @@ public class ReservationController {
                 // Send the email for rejected reservation
                 emailService.sendEmail(
                         reservation.getUsername(),
-                        "Table Reservation Rejected",
+                        "Party Reservation Rejected",
                         emailBody
                 );
             }
