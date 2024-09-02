@@ -10,7 +10,9 @@ const OrderPanel = ({ children }) => {
       <nav className="order-navbar">
           <div className="order-navbar-container">
               <div className="order-logo-container">
-                  <img src="/images/logo.png" alt="Logo" className="logo" />
+                 <Link to="home">
+                               <img src="/images/logo.png" alt="Logo" className="logo" />
+                             </Link>
               </div>
 
               <div className="order-nav-links-container">

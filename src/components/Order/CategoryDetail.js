@@ -15,6 +15,12 @@ const CategoryDetail = () => {
         fetchCategoryDetail();
     }, [categoryId]);
 
+    useEffect(() => {
+        // Load cart from localStorage when component mounts
+        const savedCart = JSON.parse(localStorage.getItem('cart')) || {};
+        setCart(savedCart);
+    }, []);
+
     const fetchCategoryDetail = () => {
         axios.get(`/category/${categoryId}`)
             .then(response => {
@@ -24,40 +30,27 @@ const CategoryDetail = () => {
     };
 
     const addItemToCart = (item) => {
-        setCart(prevCart => ({
-            ...prevCart,
+        const updatedCart = {
+            ...cart,
             [item.id || item.number]: {
                 ...item,
-                quantity: (prevCart[item.id || item.number]?.quantity || 0) + 1
+                quantity: (cart[item.id || item.number]?.quantity || 0) + 1
             }
-        }));
+        };
+        setCart(updatedCart);
+        localStorage.setItem('cart', JSON.stringify(updatedCart)); // Save cart to localStorage
         setIsCartVisible(true); // Ensure the cart is visible
     };
 
     const removeItemFromCart = (item) => {
-        setCart(prevCart => {
-            const updatedCart = { ...prevCart };
-            if (updatedCart[item.id || item.number]?.quantity > 1) {
-                updatedCart[item.id || item.number].quantity -= 1;
-            } else {
-                delete updatedCart[item.id || item.number];
-            }
-            return updatedCart;
-        });
-    };
-
-    const addItemToCartAndSubmit = (item) => {
-        setCart(prevCart => {
-            const updatedCart = {
-                ...prevCart,
-                [item.id || item.number]: {
-                    ...item,
-                    quantity: (prevCart[item.id || item.number]?.quantity || 0) + 1
-                }
-            };
-            return updatedCart;
-        });
-        setIsCartVisible(true); // Ensure the cart is visible
+        const updatedCart = { ...cart };
+        if (updatedCart[item.id || item.number]?.quantity > 1) {
+            updatedCart[item.id || item.number].quantity -= 1;
+        } else {
+            delete updatedCart[item.id || item.number];
+        }
+        setCart(updatedCart);
+        localStorage.setItem('cart', JSON.stringify(updatedCart)); // Save cart to localStorage
     };
 
     const closeCartPopup = () => {
@@ -82,7 +75,7 @@ const CategoryDetail = () => {
                             />
                         )}
                         <div className="item-info">
-                            <div className="item-name">
+                            <div className="item-name1">
                                 <h2>{item.name}</h2>
                             </div>
                             <div className="item-description">
@@ -97,7 +90,6 @@ const CategoryDetail = () => {
                             <span>{cart[item.id || item.number]?.quantity || 0}</span>
                             <button onClick={() => addItemToCart(item)}>+</button>
                         </div>
-
                     </div>
                 ))}
             </div>

@@ -49,35 +49,34 @@ const CartTable = () => {
   });
 
   const generatePDF = () => {
-    const doc = new jsPDF();
+      const doc = new jsPDF();
 
-    const tableColumn = ["Order ID", "User Name", "Phone Number", "Address", "Option", "Outlet", "Status", "Item Name", "Quantity", "Price", "Total"];
-    const tableRows = [];
+      const tableColumn = ["Order ID", "User Name", "Phone Number", "Address", "Option", "Outlet", "Status", "Item Name", "Quantity", "Price", "Total"];
+      const tableRows = [];
 
-    filteredCarts.forEach(cart => {
-      cart.items.forEach(item => {
-        const cartData = [
-          cart.orderId,
-          cart.userName,
-          cart.phoneNumber,
-          cart.address,
-          cart.option || '',
-          cart.outlet || '',
-          cart.status || '',
-          item.name,
-          item.quantity,
-          `$${item.price}`,
-          `$${item.total}`
-        ];
-        tableRows.push(cartData);
+      filteredCarts.forEach(cart => {
+        cart.items.forEach(item => {
+          const cartData = [
+            cart.orderId,
+            cart.userName,
+            cart.phoneNumber,
+            cart.address,
+            cart.option || '',
+            cart.outlet || '',
+            cart.status || '',
+            item.name,
+            item.quantity,
+            `Rs. ${item.price}`,
+            `Rs. ${item.total}`
+          ];
+          tableRows.push(cartData);
+        });
       });
-    });
 
-    doc.autoTable(tableColumn, tableRows, { startY: 20 });
-    doc.text("Filtered Cart Report", 14, 15);
-    doc.save(`cart_report_${new Date().toISOString().slice(0, 10)}.pdf`);
+      doc.autoTable(tableColumn, tableRows, { startY: 20 });
+      doc.text("Filtered Cart Report", 14, 15);
+      doc.save(`cart_report_${new Date().toISOString().slice(0, 10)}.pdf`);
   };
-
     const handleDelete = (cartId) => {
       if (window.confirm('Are you sure you want to delete this reservation?')) {
         axios.delete(`/cart/${cartId}`)
@@ -149,8 +148,8 @@ const CartTable = () => {
                     <td>{cart.status}</td>
                     <td>{item.name}</td>
                     <td>{item.quantity}</td>
-                    <td>${item.price}</td>
-                    <td>${item.total}</td>
+                    <td>Rs.{item.price}</td>
+                    <td>Rs.{item.total}</td>
                   </>
                 )}
 

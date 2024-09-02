@@ -6,7 +6,7 @@ import CategoryDetail from './CategoryDetail';
 import CategoryList from './CategoryList';
 import OrderHome from './OrderHome';
 import CartPage from './CartPage';
-import TempCartSummary from './TempCartSummary';
+
 
 
 
@@ -27,7 +27,7 @@ const OrderRoutes = () => {
         <Route path="/cater" element={<CategoryList />} />
         <Route path="/category/:categoryId" element={<CategoryDetail cart={cart} updateCart={setCart} />} />
         <Route path="/cart/page" component={CartPage} />
-        <Route path="/cart/temp" component={TempCartSummary} />
+
 
 
       </Routes>

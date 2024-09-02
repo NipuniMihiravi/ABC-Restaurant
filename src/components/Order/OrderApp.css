@@ -273,9 +273,11 @@ background-color:white;
 .item-info {
     padding: 10px 0;
 }
-.item-name {
+.item-name1 {
     margin-top:-20px;
+    margin-bottom:30px;
     height:60px;
+    font-size:10px;
 }
 
 .item-description p {
