@@ -19,6 +19,7 @@ const UserManagement = () => {
         <button onClick={() => navigate('/admin/customerdetails')}>Customer Details</button>
         <button onClick={() => navigate('/admin/staffdetails')}>Staff Details</button>
         <button onClick={() => navigate('/admin/reservationorder')}>Reservations & Orders</button>
+        <button onClick={() => navigate('/admin/querytable')}>Query Management</button>
       </div>
 
       <AdminFooter /> {/* Moved inside the return statement */}

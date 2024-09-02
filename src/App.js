@@ -17,6 +17,7 @@ import Contact from './components/Home/Contact';
 import LoginForm from './components/Home/LoginForm';
 import RegistrationForm from './components/Home/RegistrationForm';
 import MenuTable from './components/Home/MenuTable';
+import Offer from './components/Home/Offer';
 import AdminRoutes from './components/Admin/AdminRoutes';
 import OrderRoutes from './components/Order/OrderRoutes';
 import LoginAdmin from './components/Admin/LoginAdmin';
@@ -25,7 +26,7 @@ import CartPage from './components/Order/CartPage';
 import OrderPanel from './components/Order/OrderPanel';
 import CoverImageFive from './components/Order/CoverImageFive';
 import OrderHome from './components/Order/OrderHome';
-import TempCartSummary from './components/Order/TempCartSummary';
+
 import ReservationPage from './components/Reservation/ReservationPage';
 import StaffRoutes from './components/Staff/Kollupitiya/StaffRoutes';
 import StaffRoutesMaharagama from './components/Staff/Maharagama/StaffRoutesMaharagama';
@@ -56,7 +57,9 @@ const App = () => {
         <nav className="navbar">
           <div className="navbar-container">
             <div className="logo-container">
-              <img src="/images/logo.png" alt="Logo" className="logo" />
+              <Link to="home">
+                                             <img src="/images/logo.png" alt="Logo" className="logo" />
+                                           </Link>
             </div>
             <div className="nav-links-container">
               <ul className="nav-links">
@@ -68,7 +71,7 @@ const App = () => {
               </ul>
               <div className="nav-buttons">
                 <button className="nav-button" onClick={() => navigate('/cart/orderhome')}>ORDER ONLINE</button>
-                <button className="nav-button" onClick={() => navigate('/homelogin')}>RESERVATION</button>
+                <button className="nav-button" onClick={() => navigate('/reservation/page')}>RESERVATION</button>
               </div>
             </div>
           </div>
@@ -86,6 +89,7 @@ const App = () => {
           <Route path="/homelogin" element={<LoginForm />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/menutable" element={<MenuTable />} />
+          <Route path="/offer" element={<Offer />} />
           <Route path="/menu" element={<Menu />} />
           <Route path="/about" element={<About />} />
           <Route path="/admin/*" element={<AdminRoutes />} />

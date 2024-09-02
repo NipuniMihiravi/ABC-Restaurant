@@ -6,6 +6,11 @@ table {
   min-width: 1000px; /* Sets a minimum width to force horizontal scrolling */
   border-collapse: collapse;
 }
+.table-wrapper {
+    overflow-x: auto; /* Enables horizontal scrolling */
+    width: 100%; /* Ensures the wrapper takes the full width of its container */
+    -webkit-overflow-scrolling: touch; /* Optional: Enables smooth scrolling on iOS */
+}
 
 table th, table td {
     padding: 12px;
@@ -636,6 +641,7 @@ h3 {
     border-radius: 10px;
     margin-top:100px;
     background-color:#B0C4DE;
+    z-index: 1000;
 }
 
 h1 {

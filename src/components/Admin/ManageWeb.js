@@ -14,9 +14,9 @@ const ManageWeb = () => {
 
     return (
         <div className="button-row">
-            <button onClick={() => navigate('/admin/addimage')}>Add Cover Image</button>
-            <button onClick={() => navigate('/admin/facility')}>Add Facility</button>
-            <button onClick={() => navigate('/admin/gallery')}>Add Gallery</button>
+            <button onClick={() => navigate('/admin/addimage')}>Manage Cover Image</button>
+            <button onClick={() => navigate('/admin/facility')}>Manage Facility</button>
+            <button onClick={() => navigate('/admin/gallery')}>Manage Gallery</button>
 
         </div>
     );

@@ -29,7 +29,7 @@ const LoginAdmin = () => {
 
     return (
         <div className="login-form-container">
-            <h2>ABC RESTAURANT MANAGEMENT</h2>
+            <h2>ABC RESTAURANT ADMIN PANEL</h2>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>User Name *</label><br/>
