@@ -49,9 +49,9 @@ public class Category {
         private String number;
         private double price;
         private String description;
-        private byte[] image;
+        private String image;
 
-        public Item(String id, String name, String number, double price, String description, byte[] image) {
+        public Item(String id, String name, String number, double price, String description, String image) {
             this.id = id;
             this.name = name;
             this.number = number;
@@ -100,11 +100,11 @@ public class Category {
             this.description = description;
         }
 
-        public byte[] getImage() {
+        public String getImage() {
             return image;
         }
 
-        public void setImage(byte[] image) {
+        public void setImage(String image) {
             this.image = image;
         }
     }

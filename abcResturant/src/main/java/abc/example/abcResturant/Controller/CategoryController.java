@@ -5,6 +5,7 @@ import abc.example.abcResturant.Service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,6 +27,10 @@ public class CategoryController {
 
     @PostMapping
     public Category addCategory(@RequestBody Category category) {
+        // Ensure the items list is initialized
+        if (category.getItems() == null) {
+            category.setItems(new ArrayList<>());
+        }
         return categoryService.addCategory(category);
     }
 
@@ -41,6 +46,7 @@ public class CategoryController {
 
     @PostMapping("/{id}/item")
     public Category addItemToCategory(@PathVariable String id, @RequestBody Category.Item item) {
+        // Ensure the category exists and items list is initialized
         return categoryService.addItemToCategory(id, item);
     }
 
@@ -53,5 +59,11 @@ public class CategoryController {
     public void deleteItemFromCategory(@PathVariable String id, @PathVariable String itemId) {
         categoryService.deleteItemFromCategory(id, itemId);
     }
+
+    @GetMapping("/{id}/items/search")
+    public List<Category.Item> searchItemsByName(@PathVariable String id, @RequestParam String name) {
+        return categoryService.searchItemsByName(id, name);
+    }
+
 }
 

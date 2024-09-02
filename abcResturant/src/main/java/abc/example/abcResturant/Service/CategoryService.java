@@ -2,6 +2,7 @@ package abc.example.abcResturant.Service;
 
 import abc.example.abcResturant.Model.Category;
 import abc.example.abcResturant.Repository.CategoryRepository;
+import org.eclipse.angus.mail.imap.protocol.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ public class CategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
 
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
@@ -28,11 +30,11 @@ public class CategoryService {
     }
 
     public Category updateCategory(String id, Category category) {
-        if (!categoryRepository.existsById(id)) {
-            throw new RuntimeException("Category not found");
+        if (categoryRepository.existsById(id)) {
+            category.setId(id);
+            return categoryRepository.save(category);
         }
-        category.setId(id);
-        return categoryRepository.save(category);
+        return null;
     }
 
     public void deleteCategory(String id) {
@@ -40,24 +42,24 @@ public class CategoryService {
     }
 
     public Category addItemToCategory(String id, Category.Item item) {
-        Category category = getCategoryById(id).orElseThrow(() -> new RuntimeException("Category not found"));
-        category.getItems().add(item);
-        return categoryRepository.save(category);
+        Optional<Category> categoryOptional = categoryRepository.findById(id);
+        if (categoryOptional.isPresent()) {
+            Category category = categoryOptional.get();
+            category.getItems().add(item);
+            return categoryRepository.save(category);
+        }
+        return null;
     }
 
     public Category updateItemInCategory(String id, String itemId, Category.Item updatedItem) {
-        Category category = getCategoryById(id).orElseThrow(() -> new RuntimeException("Category not found"));
-        for (Category.Item item : category.getItems()) {
-            if (item.getId().equals(itemId)) {
-                item.setName(updatedItem.getName());
-                item.setNumber(updatedItem.getNumber());
-                item.setPrice(updatedItem.getPrice());
-                item.setDescription(updatedItem.getDescription());
-                item.setImage(updatedItem.getImage());
-                return categoryRepository.save(category);
-            }
+        Optional<Category> categoryOptional = categoryRepository.findById(id);
+        if (categoryOptional.isPresent()) {
+            Category category = categoryOptional.get();
+            category.getItems().removeIf(item -> item.getId().equals(itemId));
+            category.getItems().add(updatedItem);
+            return categoryRepository.save(category);
         }
-        throw new RuntimeException("Item not found");
+        throw new RuntimeException("Category not found");
     }
 
     public void deleteItemFromCategory(String id, String itemId) {
@@ -68,5 +70,17 @@ public class CategoryService {
 
         categoryRepository.save(category);
     }
+
+    public List<Category.Item> searchItemsByName(String categoryId, String itemName) {
+        Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
+        if (categoryOptional.isPresent()) {
+            Category category = categoryOptional.get();
+            return category.getItems().stream()
+                    .filter(item -> item.getName().toLowerCase().contains(itemName.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+        throw new RuntimeException("Category not found");
+    }
+
 }
 
