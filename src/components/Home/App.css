@@ -1281,6 +1281,86 @@ margin-top:100px;
     text-align: center;
 }
 
+/* Offer Container */
+.offer-container {
+    text-align: center;
+    padding: 20px;
+
+}
+
+/* Offer Heading */
+.offer-heading h1 {
+    margin-bottom: 20px;
+    font-size:40px;
+    font-family: "Georgia", sans-serif;
+}
+
+/* Offer Items Row */
+.offer-items-row {
+    display: flex;
+    justify-content: center;
+    gap: 40px; /* Space between items */
+}
+
+/* Individual Offer Item */
+.offer-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size:50px;
+
+}
+
+/* Offer Item Image */
+.offer-item-image {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* Offer Item Name */
+.offer-item-name {
+    font-size: 20px;
+    font-weight: bold;
+    color:orange;
+
+}
+
+/*Serach Items*/
+.search-container {
+    margin: 20px 0;
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+    width: 100%; /* Ensure the container spans the full width */
+
+}
+
+.search-input {
+    padding: 10px;
+    margin-right: 10px;
+    margin-left: 1000px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 150px; /* Adjusted width for better appearance */
+}
+
+.search-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #87680d;
+    color: #fff;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #8B4000;
+}
+
+
 
 
 
