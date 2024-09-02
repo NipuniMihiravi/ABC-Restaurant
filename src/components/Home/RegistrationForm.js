@@ -1,154 +1,151 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
-import './App.css'; // Assuming your CSS file
+import { useNavigate } from 'react-router-dom';
+import * as yup from 'yup';
+import { useFormik } from 'formik';
+import './App.css';
 
 const RegistrationForm = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [fullName, setFullName] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [errors, setErrors] = useState({});
-    const [successMessage, setSuccessMessage] = useState(''); // Add state for success message
+    const navigate = useNavigate();
+    const [successMessage, setSuccessMessage] = useState('');
 
-    const navigate = useNavigate(); // Initialize useNavigate
-
-    const validateForm = () => {
-        const newErrors = {};
-
-        // Email validation
-        if (!username) {
-            newErrors.username = 'Email is required';
-        } else if (!/\S+@\S+\.\S+/.test(username)) {
-            newErrors.username = 'Email must be in a valid format (e.g., user@example.com)';
-        }
-
-        // Password validation
-        if (!password) {
-            newErrors.password = 'Password is required';
-        } else if (password.length < 6) {
-            newErrors.password = 'Password must be at least 6 characters long';
-        }
-
-        // Confirm Password validation
-        if (password !== confirmPassword) {
-            newErrors.confirmPassword = 'Passwords do not match';
-        }
-
-        // Full Name validation
-        if (!fullName.trim()) {
-            newErrors.fullName = 'Full name is required';
-        } else if (/[^a-zA-Z\s]/.test(fullName)) {
-            newErrors.fullName = 'Full name can only contain letters and spaces';
-        }
-
-        // Phone Number validation
-        if (!phoneNumber) {
-            newErrors.phoneNumber = 'Phone number is required';
-        } else if (!/^\d{10}$/.test(phoneNumber)) {
-            newErrors.phoneNumber = 'Phone number must be 10 digits';
-        }
-
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-    };
-
-    const checkUsernameExists = async () => {
+    // Custom async validation function for checking if the username exists
+    const validateUsername = async (username) => {
         try {
-            const response = await axios.get(`/user/customer/validate-username/${username}`);
-            return response.data.exists;
+            const response = await axios.get(`/user/customer/validate-username/${encodeURIComponent(username)}`);
+            return response.data; // Return true if username exists, false otherwise
         } catch (error) {
-            console.error('Error checking username:', error);
+            console.error('Error validating username:', error);
             return false;
         }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    // Yup validation schema
+    const validationSchema = yup.object().shape({
+        username: yup
+            .string()
+            .email('Invalid email format')
+            .required('Email is required')
+            .test('username-exists', 'Email is already registered', async (value) => {
+                if (!value) return false;
+                return !(await validateUsername(value));
+            }),
+        password: yup
+            .string()
+            .min(6, 'Password must be at least 6 characters long')
+            .required('Password is required'),
+        confirmPassword: yup
+            .string()
+            .oneOf([yup.ref('password'), null], 'Passwords do not match')
+            .required('Confirm Password is required'),
+        fullName: yup
+            .string()
+            .matches(/^[A-Za-z\s]+$/, 'Full name can only contain letters and spaces')
+            .required('Full name is required'),
+        phoneNumber: yup
+            .string()
+            .matches(/^\d{10}$/, 'Phone number must be 10 digits')
+            .required('Phone number is required'),
+    });
 
-        if (!validateForm()) {
-            return;
-        }
-
-        const usernameExists = await checkUsernameExists();
-        if (usernameExists) {
-            setErrors(prevErrors => ({
-                ...prevErrors,
-                username: 'Email is already registered'
-            }));
-            return;
-        }
-
-        try {
-            const response = await axios.post('/user/customer', { username, password, fullName, phoneNumber });
-            setSuccessMessage('Registration successful! Redirecting to login Pagenpm start...'); // Set success message
-            setTimeout(() => {
-                navigate('/homelogin'); // Redirect to home page after a delay
-            }, 2000); // Adjust delay as needed
-        } catch (error) {
-            setErrors({ form: 'Registration failed. Please try again later.' });
-            console.error('Registration error:', error);
-        }
-    };
+    // Initialize formik
+    const formik = useFormik({
+        initialValues: {
+            username: '',
+            password: '',
+            confirmPassword: '',
+            fullName: '',
+            phoneNumber: '',
+        },
+        validationSchema,
+        onSubmit: async (values, { setSubmitting, setErrors }) => {
+            try {
+                await axios.post('/user/customer', values);
+                setSuccessMessage('Registration successful! Redirecting to login page...');
+                setTimeout(() => {
+                    navigate('/homelogin');
+                }, 2000);
+            } catch (error) {
+                setErrors({ form: 'Registration failed. Please try again later.' });
+                console.error('Registration error:', error);
+            } finally {
+                setSubmitting(false);
+            }
+        },
+    });
 
     return (
         <div className="login-form-container1">
             <h2>Register</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={formik.handleSubmit}>
                 <div>
                     <label>Email:</label>
                     <input
                         type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
+                        name="username"
+                        value={formik.values.username}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                     />
-                    {errors.username && <p className="error">{errors.username}</p>}
+                    {formik.touched.username && formik.errors.username && (
+                        <p className="error">{formik.errors.username}</p>
+                    )}
                 </div>
                 <div>
                     <label>Password:</label>
                     <input
                         type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
+                        name="password"
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                     />
-                    {errors.password && <p className="error">{errors.password}</p>}
+                    {formik.touched.password && formik.errors.password && (
+                        <p className="error">{formik.errors.password}</p>
+                    )}
                 </div>
                 <div>
                     <label>Confirm Password:</label>
                     <input
                         type="password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
+                        name="confirmPassword"
+                        value={formik.values.confirmPassword}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                     />
-                    {errors.confirmPassword && <p className="error">{errors.confirmPassword}</p>}
+                    {formik.touched.confirmPassword && formik.errors.confirmPassword && (
+                        <p className="error">{formik.errors.confirmPassword}</p>
+                    )}
                 </div>
                 <div>
                     <label>Full Name:</label>
                     <input
                         type="text"
-                        value={fullName}
-                        onChange={(e) => setFullName(e.target.value)}
-                        required
+                        name="fullName"
+                        value={formik.values.fullName}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                     />
-                    {errors.fullName && <p className="error">{errors.fullName}</p>}
+                    {formik.touched.fullName && formik.errors.fullName && (
+                        <p className="error">{formik.errors.fullName}</p>
+                    )}
                 </div>
                 <div>
                     <label>Phone Number:</label>
                     <input
                         type="text"
-                        value={phoneNumber}
-                        onChange={(e) => setPhoneNumber(e.target.value)}
-                        required
+                        name="phoneNumber"
+                        value={formik.values.phoneNumber}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                     />
-                    {errors.phoneNumber && <p className="error">{errors.phoneNumber}</p>}
+                    {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+                        <p className="error">{formik.errors.phoneNumber}</p>
+                    )}
                 </div>
-                <button type="submit">Register</button>
-                {errors.form && <p className="error">{errors.form}</p>}
-                {successMessage && <p className="success">{successMessage}</p>} {/* Display success message */}
+                <button type="submit" disabled={formik.isSubmitting}>Register</button>
+                {formik.errors.form && <p className="error">{formik.errors.form}</p>}
+                {successMessage && <p className="success">{successMessage}</p>}
             </form>
         </div>
     );

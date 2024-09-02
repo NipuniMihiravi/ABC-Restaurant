@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { reservationSchema, tableSchema } from './Validation/validationSchemas';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Reservation.css';
 import ConfirmationDialog from './ConfirmationDialog'; // Import the confirmation dialog
 
@@ -11,6 +12,9 @@ const ReservationForm = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [submitHandler, setSubmitHandler] = useState(() => () => {});
   const [dialogMessage, setDialogMessage] = useState('');
+  const navigate = useNavigate();
+
+
 
   const validateUsername = async (username) => {
     try {

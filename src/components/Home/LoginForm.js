@@ -11,12 +11,13 @@ const LoginForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setError('');
 
         axios.post('/user/login/customer', null, {
             params: { username, password }
         })
         .then(response => {
-            console.log('Login successful:', response.data);
+           localStorage.setItem('customerSession', response.data.token); // Save token/session
             navigate('/reservation/page'); // Redirect to home page after successful login
         })
         .catch(error => {

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Reservation.css'; // Ensure this CSS file has necessary styles
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const CoverImageSeven = () => {
   const [cover, setCover] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCovers();
@@ -35,8 +37,10 @@ const CoverImageSeven = () => {
             <div className="image-seven-text reveal">
 
                 <p>{cover.description}</p>
+                <button className="register-button" onClick={() => navigate('/register')}>Register Here</button>
             </div>
         </div>
+
     )}
 </div>
 

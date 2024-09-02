@@ -14,7 +14,7 @@ const validateUsername = async (username) => {
 
 const usernameValidation = yup
   .string()
-  .required('Username is required')
+  .required('Username is required,enter your registered email')
   .test('username-exists', 'Username does not exist', async (value) => {
     if (!value) return false;
     return await validateUsername(value);

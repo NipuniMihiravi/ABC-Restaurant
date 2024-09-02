@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CoverImageSix from './CoverImageSix';
 import CoverImageSeven from './CoverImageSeven';
 import ReservationForm from './ReservationForm';
@@ -7,6 +8,10 @@ import './Reservation.css';
 
 
 const ReservationPage = () => {
+
+
+
+
     return (
         <div>
                 <ReservationPanel />

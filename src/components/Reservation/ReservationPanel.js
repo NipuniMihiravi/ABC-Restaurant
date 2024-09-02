@@ -1,9 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Reservation.css';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const ReservationPanel = ({ children }) => {
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+    // Clear the authentication token or session from localStorage
+    localStorage.removeItem('cutomerSession');
+
+    // Optionally, you could also clear other user-related data here
+
+    // Redirect to the login page
+    navigate('/homelogin');
+  };
   return (
     <div >
 
@@ -18,7 +29,7 @@ const ReservationPanel = ({ children }) => {
 
                              </ul>
 
-            <button className="logout-button">Logout</button>
+            <button className="nav-button" onClick={handleLogout}>Logout</button>
           </div>
         </div>
       </nav>
