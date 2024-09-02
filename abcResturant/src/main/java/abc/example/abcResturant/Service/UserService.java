@@ -24,6 +24,14 @@ public class UserService {
     @Autowired
     private CustomerRepository customerRepository;
 
+
+
+    public boolean existsByUsername(String username) {
+        // Debugging output to ensure the correct username is being used
+        System.out.println("Checking existence for username: " + username);
+        return customerRepository.findByUsername(username).isPresent();
+    }
+
     // Admin methods
     public List<Admin> getAllAdmins() {
         return adminRepository.findAll();
@@ -126,7 +134,5 @@ public class UserService {
     public Optional<Customer> authenticateCustomer(String username, String password) {
         return customerRepository.findByUsername(username).filter(customer -> customer.getPassword().equals(password));
     }
-    public boolean existsByUsername(String username) {
-        return customerRepository.existsByUsername(username);
-    }
+
 }

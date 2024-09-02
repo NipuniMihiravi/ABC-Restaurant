@@ -19,6 +19,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
+
     // Admin endpoints
     @GetMapping("/admin")
     public ResponseEntity<?> getAllAdmins() {
@@ -134,10 +136,40 @@ public class UserController {
     public ResponseEntity<?> loginStaff(@RequestParam String username, @RequestParam String password, HttpSession session) {
         Optional<Staff> staff = userService.authenticateStaff(username, password);
         if (staff.isPresent()) {
-            session.setAttribute("user", staff.get());
-            return ResponseEntity.ok(staff.get());
+            Staff staffMember = staff.get();
+            session.setAttribute("user", staffMember);
+
+            // Create a response wrapper with additional information
+            LoginResponse response = new LoginResponse();
+            response.setToken("dummy-token"); // Replace with actual token logic if necessary
+            response.setFullName(staffMember.getFullName());
+
+            return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
+    }
+
+    // Inner class for login responses
+    public static class LoginResponse {
+        private String token;
+        private String fullName;
+
+        // Getters and setters
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
+        }
+
+        public String getFullName() {
+            return fullName;
+        }
+
+        public void setFullName(String fullName) {
+            this.fullName = fullName;
         }
     }
 
@@ -161,6 +193,7 @@ public class UserController {
     @GetMapping("/customer/validate-username/{username}")
     public ResponseEntity<Boolean> validateUsername(@PathVariable String username) {
         boolean exists = userService.existsByUsername(username);
+        System.out.println("Username: " + username + ", Exists: " + exists); // Log the check
         return ResponseEntity.ok(exists);
     }
 
