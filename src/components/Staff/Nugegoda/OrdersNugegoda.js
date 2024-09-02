@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+
 
 const OrdersNugegoda= () => {
     const [carts, setCarts] = useState([]);
     const [editingCartId, setEditingCartId] = useState(null);
     const [editingCartData, setEditingCartData] = useState({ status: '' });
     const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
 
 
     useEffect(() => {
+    const isAuthenticated = !!localStorage.getItem('staffSession');
+                if (!isAuthenticated) {
+                    navigate('/loginstaff'); // Redirect to login if not authenticated
+                    return;
+                }
         fetchCarts();
-    }, []);
+    }, [navigate]); // Add navigate to dependencies
 
     const fetchCarts = () => {
         axios.get('/cart')

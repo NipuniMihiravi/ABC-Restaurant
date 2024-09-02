@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import StaffPanel from './StaffPanelMaharagama';
+import { useNavigate } from 'react-router-dom'; // Ensure this import is present
+
 
 const ReservationMaharagama = () => {
     const [reservations, setReservations] = useState([]);
@@ -16,18 +17,24 @@ const ReservationMaharagama = () => {
         specialNote: '',
         status: ''
     });
-    const [searchQuery, setSearchQuery] = useState(''); // State for search query
+    const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
 
     // Assuming you have a method to get the logged-in user's email
     const [userEmail, setUserEmail] = useState('');
 
     useEffect(() => {
+    const isAuthenticated = !!localStorage.getItem('staffSession');
+            if (!isAuthenticated) {
+                navigate('/loginstaff'); // Redirect to login if not authenticated
+                return;
+            }
         fetchReservations();
         // Assuming you have a method to get the logged-in user's email
         // This should be replaced with actual login logic
         const loggedInUserEmail = 'user@example.com'; // Replace this with actual email fetching logic
         setUserEmail(loggedInUserEmail);
-    }, []);
+    }, [navigate]);
 
     const fetchReservations = () => {
         axios.get('/reservation')

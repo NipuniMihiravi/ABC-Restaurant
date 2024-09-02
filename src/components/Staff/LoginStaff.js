@@ -8,42 +8,38 @@ const LoginStaff = () => {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError(''); // Reset error state before making the request
 
-        axios.post('/user/login/staff', null, {
-            params: { username, password }
-        })
-        .then(response => {
-            const { token, staff } = response.data;
+        try {
+            const response = await axios.post('/user/login/staff', null, {
+                params: { username, password }
+            });
+
+            const { token, fullName } = response.data;
+
             localStorage.setItem('staffSession', token); // Save token/session
 
-            // Navigate based on staff's fullName
-            switch (staff.fullName) {
-                case 'Staff 1':
-                    navigate('/staff');
-                    break;
-                case 'Staff 2':
-                    navigate('/maharagama');
-                    break;
-                case 'Staff 3':
-                    navigate('/nugegoda');
-                    break;
-                default:
-                    navigate('/stafflogin'); // Fallback route
-                    break;
+            // Navigate based on the fullName
+            if (fullName === 'Staff 1') {
+                navigate('/staff/');
+            } else if (fullName === 'Staff 2') {
+                navigate('/maharagama/');
+            } else if (fullName === 'Staff 3') {
+                navigate('/nugegoda/');
+            } else {
+                setError('Invalid credentials');
             }
-        })
-        .catch(error => {
+        } catch (error) {
             setError('Invalid credentials');
-            console.error('Login error:', error);
-        });
+            console.error('Login error:', error.response ? error.response.data : error.message);
+        }
     };
 
     return (
         <div className="login-form-container">
-            <h2>ABC Restaurant Management</h2>
+            <h2>ABC Restaurant Staff Management</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="username">User Name *</label><br/>
@@ -53,7 +49,7 @@ const LoginStaff = () => {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
-                        placeholder="Enter Admin Email"
+                        placeholder="Enter Your Email"
                     />
                 </div>
                 <div className="form-group">
@@ -64,7 +60,7 @@ const LoginStaff = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        placeholder="Enter Your Registered Password"
+                        placeholder="Enter Your Password"
                     />
                 </div>
                 <button type="submit" className="login-button">Login</button>

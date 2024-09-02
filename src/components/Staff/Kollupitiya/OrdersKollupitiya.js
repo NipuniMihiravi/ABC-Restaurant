@@ -1,26 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const OrdersKollupitiya = () => {
     const [carts, setCarts] = useState([]);
     const [editingCartId, setEditingCartId] = useState(null);
     const [editingCartData, setEditingCartData] = useState({ status: '' });
     const [searchQuery, setSearchQuery] = useState('');
-
+    const navigate = useNavigate();
 
     useEffect(() => {
-        fetchCarts();
-    }, []);
+        const isAuthenticated = !!localStorage.getItem('staffSession');
+        if (!isAuthenticated) {
+            navigate('/loginstaff'); // Redirect to login if not authenticated
+            return;
+        }
 
-    const fetchCarts = () => {
-        axios.get('/cart')
-            .then(response => {
-               const filteredCarts = response.data.filter(cart => cart.outlet === 'Kollupitiya');
-                               const sortedCarts = filteredCarts.sort((a, b) => new Date(b.date) - new Date(a.date));
-                               setCarts(sortedCarts);
-            })
-            .catch(error => console.error('There was an error fetching the cart data!', error));
-    };
+        const fetchCarts = () => {
+            axios.get('/cart')
+                .then(response => {
+                    const filteredCarts = response.data.filter(cart => cart.outlet === 'Kollupitiya');
+                    const sortedCarts = filteredCarts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    setCarts(sortedCarts);
+                })
+                .catch(error => console.error('There was an error fetching the cart data!', error));
+        };
+
+        fetchCarts(); // Fetch carts when component mounts
+    }, [navigate]); // Add navigate to dependencies
 
     const handleEdit = (cart) => {
         setEditingCartId(cart.id);
@@ -54,17 +61,17 @@ const OrdersKollupitiya = () => {
         }
     };
 
-    const filteredCart = carts.filter(cart =>
-            cart.phoneNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            cart.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            cart.outlet.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            cart.status.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+    const filteredCarts = carts.filter(cart =>
+        cart.phoneNumber.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        cart.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        cart.outlet.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        cart.status.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     return (
         <div className="staff-table-container">
             <h1>Online Order - Kollupitiya Outlet</h1>
-        <input
+            <input
                 type="text"
                 placeholder="Search by email, contact no, option or status"
                 value={searchQuery}
@@ -82,12 +89,11 @@ const OrdersKollupitiya = () => {
                         <th>Total</th>
                         <th>Items</th>
                         <th>Status</th>
-
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {carts.map(cart => (
+                    {filteredCarts.map(cart => (
                         <tr key={cart.id}>
                             {editingCartId === cart.id ? (
                                 <>
@@ -119,7 +125,7 @@ const OrdersKollupitiya = () => {
                                             value={editingCartData.status}
                                             onChange={(e) => setEditingCartData({ ...editingCartData, status: e.target.value })}
                                         >
-                                            <option value="Pending">Proceed</option>
+                                            <option value="Pending">Pending</option>
                                             <option value="Proceed">Proceed</option>
                                             <option value="Ready">Ready</option>
                                             <option value="Done">Done</option>
@@ -157,8 +163,9 @@ const OrdersKollupitiya = () => {
                                     </td>
                                     <td>{cart.status}</td>
                                     <td>
-                                         <button onClick={() => handleEdit(cart)} className="btn-edit">Edit</button>
-                                         <button onClick={() => handleDelete(cart.id)} className="btn-delete">Delete</button>                                    </td>
+                                        <button onClick={() => handleEdit(cart)} className="btn-edit">Edit</button>
+                                        <button onClick={() => handleDelete(cart.id)} className="btn-delete">Delete</button>
+                                    </td>
                                 </>
                             )}
                         </tr>

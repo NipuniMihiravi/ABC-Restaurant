@@ -5,11 +5,21 @@ import '../Staff.css';
 const StaffPanelMaharagama = ({ children }) => {
   const navigate = useNavigate(); // Get navigate function
 
+  const handleLogout = () => {
+        // Clear the authentication token or session from localStorage
+        localStorage.removeItem('staffSession');
+
+        // Optionally, you could also clear other user-related data here
+
+        // Redirect to the login page
+        navigate('/loginstaff');
+      };
+
   return (
     <div className="staff-container">
       <img src="/images/logo.png" alt="Logo" className="logo" />
       <h1 className="staff-heading">ABC RESTAURANT MANAGEMENT SYSTEM - MAHARAGAMA BRANCH</h1>
-      <button className="staff-logout-button">Logout</button>
+      <button className="staff-logout-button"onClick={handleLogout}>Logout</button>
 
       <hr className="staff-separator" />
 

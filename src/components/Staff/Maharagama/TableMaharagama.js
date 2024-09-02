@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const TableMaharagama = () => {
     const [tables, setTables] = useState([]);
@@ -16,10 +17,16 @@ const TableMaharagama = () => {
         status: ''
     });
     const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
+    const isAuthenticated = !!localStorage.getItem('staffSession');
+               if (!isAuthenticated) {
+                   navigate('/loginstaff'); // Redirect to login if not authenticated
+                   return;
+               }
         fetchTables();
-    }, []);
+    }, [navigate]);
 
     const fetchTables = () => {
         axios.get('/table')

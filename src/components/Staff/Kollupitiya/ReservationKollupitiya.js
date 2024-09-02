@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Ensure this import is present
 
 const ReservationKollupitiya = () => {
     const [reservations, setReservations] = useState([]);
@@ -16,17 +17,20 @@ const ReservationKollupitiya = () => {
         status: ''
     });
     const [searchQuery, setSearchQuery] = useState(''); // State for search query
-
-    // Assuming you have a method to get the logged-in user's username
     const [userUsername, setUserUsername] = useState('');
+    const navigate = useNavigate(); // Initialize navigate
 
     useEffect(() => {
+        const isAuthenticated = !!localStorage.getItem('staffSession');
+        if (!isAuthenticated) {
+            navigate('/loginstaff'); // Redirect to login if not authenticated
+            return;
+        }
         fetchReservations();
         // Assuming you have a method to get the logged-in user's username
-        // This should be replaced with actual login logic
         const loggedInUserUsername = 'user@example.com'; // Replace this with actual username fetching logic
         setUserUsername(loggedInUserUsername);
-    }, []);
+    }, [navigate]);
 
     const fetchReservations = () => {
         axios.get('/reservation')

@@ -3,13 +3,23 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 import '../Staff.css';
 
 const StaffPanel = ({ children }) => {
-  const navigate = useNavigate(); // Get navigate function
+   const navigate = useNavigate();
+
+    const handleLogout = () => {
+      // Clear the authentication token or session from localStorage
+      localStorage.removeItem('staffSession');
+
+      // Optionally, you could also clear other user-related data here
+
+      // Redirect to the login page
+      navigate('/loginstaff');
+    };
 
   return (
     <div className="staff-container">
       <img src="/images/logo.png" alt="Logo" className="logo" />
       <h1 className="staff-heading">ABC RESTAURANT MANAGEMENT SYSTEM - KOLLUPITIYA BRANCH</h1>
-      <button className="staff-logout-button">Logout</button>
+      <button className="staff-logout-button"onClick={handleLogout}>Logout</button>
 
       <hr className="staff-separator" />
 
