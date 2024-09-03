@@ -30,7 +30,7 @@ const CategoryTable = () => {
 
     return (
         <div className="table-container">
-            <h1>Categories</h1>
+            <h1>All Menu Details</h1>
 
             <div className="toggle-buttons">
                 <button onClick={() => setShowItemNumber(!showItemNumber)}>
