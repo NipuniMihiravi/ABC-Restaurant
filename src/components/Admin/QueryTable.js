@@ -85,7 +85,7 @@ const QueryTable = () => {
 
     return (
         <div className="table-container">
-            <h1>Customer Query</h1>
+            <h1>Customer Query Management</h1>
 
             <input
                 type="text"
