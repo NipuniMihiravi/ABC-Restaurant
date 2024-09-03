@@ -19,7 +19,7 @@ const ReservationOrder = () => {
       <div className="staff-button-row">
         <button onClick={() => navigate('/admin/reservationtable')}>View Party Reservation</button>
         <button onClick={() => navigate('/admin/tabletable')}>View Table Reservation</button>
-        <button onClick={() => navigate('/admin/carttable')}>View Online Orders</button>
+        <button onClick={() => navigate('/admin/carttable')}>View Online Food Orders</button>
 
       </div>
     </div>
