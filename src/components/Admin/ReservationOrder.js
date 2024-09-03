@@ -15,7 +15,7 @@ const ReservationOrder = () => {
   return (
     <div className="reservation-container">
       <hr className="reservation-separator" />
-
+/*these are the links want to be navigate*/
       <div className="staff-button-row">
         <button onClick={() => navigate('/admin/reservationtable')}>View Party Reservation</button>
         <button onClick={() => navigate('/admin/tabletable')}>View Table Reservation</button>
