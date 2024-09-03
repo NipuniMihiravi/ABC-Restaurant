@@ -29,7 +29,7 @@ const ReservationPanel = ({ children }) => {
 
                              </ul>
 
-            <button className="nav-button" onClick={handleLogout}>Logout</button>
+
           </div>
         </div>
       </nav>
