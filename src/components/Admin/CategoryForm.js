@@ -198,7 +198,7 @@ const CategoryForm = () => {
 
     return (
         <div className="cater-table-container">
-            <h1>Manage Menu Categories & Items</h1>
+            <h1>Manage Menu Categories & Items Details</h1>
             <button onClick={() => setIsAddCategoryModalOpen(true)} className="btn btn-primary">Add New Category</button>
 
             <table>
