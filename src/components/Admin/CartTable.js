@@ -90,7 +90,7 @@ const CartTable = () => {
     };
 
   return (
-    <div className="order-table-container">
+    <div className="table-container">
       <h1>Customer Online orders</h1>
 
       {/* Search Input */}

@@ -112,7 +112,7 @@ const FacilityList = () => {
     };
 
     return (
-        <div className="facility-table-container">
+        <div className="table-container">
             <h1>Manage Facilities</h1>
             <button onClick={() => setIsAddModalOpen(true)} className="btn btn-primary">Add New Facility</button>
 

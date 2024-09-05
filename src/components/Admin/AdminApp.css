@@ -1,11 +1,9 @@
-/*table*/
-
-
 table {
   width: 100%; /* Ensures the table takes the full width of the container */
   min-width: 1000px; /* Sets a minimum width to force horizontal scrolling */
   border-collapse: collapse;
 }
+
 .table-wrapper {
     overflow-x: auto; /* Enables horizontal scrolling */
     width: 100%; /* Ensures the wrapper takes the full width of its container */
@@ -14,8 +12,11 @@ table {
 
 table th, table td {
     padding: 12px;
-    text-align: left;
+    text-align: center; /* Centers heading and data text */
     border-bottom: 1px solid #ddd;
+    white-space: nowrap; /* Prevents text from breaking into the next column */
+    overflow: hidden; /* Ensures no content spills out of the column */
+    text-overflow: ellipsis; /* Adds ellipsis (...) if content is too large */
 }
 
 table th {
@@ -103,7 +104,7 @@ button:hover {
 }
 
 .table-container {
-  max-width: 1600px;
+  max-width: 1400px;
   margin: 120px auto;
   padding: 20px;
   background-color: #B0C4DE;
@@ -147,24 +148,7 @@ color: #808000;
     backgroundColor: 'rgba(0, 0, 0, 0.5)';
     z-index: 1000;
 }
-.staff-table-containerr {
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: #B0C4DE;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    margin-top: 150px;
-    overflow-x: auto; /* Allow horizontal scrolling if needed */
-}
 
-.staff-table-containerr table {
-    width: 100%;
-    border-collapse: collapse;
-}
-.staff-table-containerr th {
-    width:100%
-}
 
 
 
@@ -844,5 +828,7 @@ button:hover {
   margin-top: 200px;
   font-size: 0.875rem;
 }
+
+
 
 
