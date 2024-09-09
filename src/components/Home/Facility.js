@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css';
+import { useNavigate } from 'react-router-dom';
 
 const Facility = () => {
     const [facilities, setFacilities] = useState([]);
+      const navigate = useNavigate();
+
+            const handleMenuNavigation = () => {
+                navigate('/galleries'); // Adjust the path to your menu route
+            };
 
     useEffect(() => {
         fetchFacilities();
@@ -38,7 +44,7 @@ const Facility = () => {
                                     <div className="facility-info">
                                         <h2>{facility.heading}</h2>
                                         <p>{facility.description}</p>
-                                        <button className="facility-button">View More...</button>
+                                        <button className="facility-button" onClick={handleMenuNavigation}>View More..</button>
                                     </div>
                                 </div>
                             </div>

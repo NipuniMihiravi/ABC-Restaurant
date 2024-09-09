@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css'; // Assuming your CSS file
+import { useNavigate } from 'react-router-dom';
 
 const MenuTable = () => {
     const [items, setItems] = useState([]);
+    const navigate = useNavigate();
+
+        const handleMenuNavigation = () => {
+            navigate('/menu'); // Adjust the path to your menu route
+        };
 
     useEffect(() => {
         fetchMenuData();
@@ -44,7 +50,7 @@ const MenuTable = () => {
                     </div>
                 ))}
             </div>
-<button className="menu-button">Check Full Menu</button>
+<button className="menu-button" onClick={handleMenuNavigation}>Check Full Menu</button>
         </div>
     );
 };

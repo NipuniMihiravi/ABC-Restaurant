@@ -108,9 +108,9 @@ const ContactPage = () => {
                                 required
                             ></textarea>
                         </div>
-                        <div className="button-container">
+
                             <button type="submit">Submit</button>
-                        </div>
+
                     </form>
                     {statusMessage && <p className="status-message">{statusMessage}</p>}
                 </div>

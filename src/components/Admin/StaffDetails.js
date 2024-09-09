@@ -12,20 +12,19 @@ const StaffDetails = () => {
     const [editStaff, setEditStaff] = useState(null);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [showPhoneNumber, setShowPhoneNumber] = useState(true); // Add state for toggling phone number visibility
     const navigate = useNavigate(); // Initialize useNavigate
 
     useEffect(() => {
-
-    const isAuthenticated = !!localStorage.getItem('adminSession');
-            if (!isAuthenticated) {
-              navigate('/login'); // Redirect to login if not authenticated
-              return;
-            }
+        const isAuthenticated = !!localStorage.getItem('adminSession');
+        if (!isAuthenticated) {
+            navigate('/login'); // Redirect to login if not authenticated
+            return;
+        }
         fetchStaff();
-     }, [navigate]);
+    }, [navigate]);
 
     const fetchStaff = () => {
-
         axios.get('/user/staff')
             .then(response => {
                 setStaff(response.data);
@@ -89,16 +88,21 @@ const StaffDetails = () => {
     };
 
     return (
-        <div className="staff-table-containerr">
+        <div className="table-container">
             <h1>Staff Management</h1>
+            <div className="toggle-buttons">
+                <button onClick={() => setShowPhoneNumber(!showPhoneNumber)}>
+                    Toggle Phone Number
+                </button>
+            </div>
             <button onClick={() => setIsAddModalOpen(true)} className="btn btn-primary">Add New Staff</button>
 
-            <table className="staff-table">
+            <table>
                 <thead>
                     <tr>
                         <th>Username</th>
                         <th>Full Name</th>
-                        <th>Phone Number</th>
+                        {showPhoneNumber && <th>Phone Number</th>} {/* Conditional rendering for phone number */}
                         <th>Designation</th>
                         <th>Branch</th>
                         <th>Action</th>
@@ -109,7 +113,7 @@ const StaffDetails = () => {
                         <tr key={s.id}>
                             <td>{s.username}</td>
                             <td>{s.fullName}</td>
-                            <td>{s.phoneNumber}</td>
+                            {showPhoneNumber && <td>{s.phoneNumber}</td>} {/* Conditional rendering */}
                             <td>{s.designation}</td>
                             <td>{s.branch}</td>
                             <td>

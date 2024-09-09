@@ -2,7 +2,9 @@ import React from 'react';
 import './App.css'; // Adjust the path according to your project structure
 
 
+
 const Footer = () => {
+
   return (
     <footer className="footer" id="contact">
       <div className="section__container footer__container">
@@ -15,26 +17,26 @@ const Footer = () => {
             Delicious Food, Mouthwatering Chines Food you can enjoy
           </p>
           <button className="btn nav___btn">
-            <a href="#">Order Online</a>
+            <a href="/cart/orderhome">Order Online</a>
           </button>
         </div>
         <div className="footer__col">
           <h4>Quick Links</h4>
           <ul className="footer__links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Facility</a></li>
-            <li><a href="#">Menu</a></li>
-            <li><a href="#">Gallery</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="/home">Home</a></li>
+            <li><a href="/about">Facility</a></li>
+            <li><a href="/menu">Menu</a></li>
+            <li><a href="/gallaries">Gallery</a></li>
+            <li><a href="/contactpage">Contact</a></li>
 
           </ul>
         </div>
         <div className="footer__col">
           <h4>Our Services</h4>
           <ul className="footer__links">
-            <li><a href="#">Online Order</a></li>
-            <li><a href="#">Party Reservation</a></li>
-            <li><a href="#">Table Reservation</a></li>
+            <li><a href="/cart/orderhome">Online Order</a></li>
+            <li><a href="/reservation/page">Party Reservation</a></li>
+            <li><a href="/reservation/page">Table Reservation</a></li>
 
           </ul>
         </div>
