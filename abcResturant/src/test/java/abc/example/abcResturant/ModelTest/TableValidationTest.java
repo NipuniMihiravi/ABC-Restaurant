@@ -1,3 +1,4 @@
+package abc.example.abcResturant.ModelTest;
 
 import abc.example.abcResturant.Model.Table;
 import abc.example.abcResturant.Validation.TableValidation;

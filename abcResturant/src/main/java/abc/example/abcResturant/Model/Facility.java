@@ -51,5 +51,3 @@ public class Facility {
         this.image = image;
     }
 }
-
-

@@ -1,3 +1,5 @@
+package abc.example.abcResturant.ModelTest;
+
 import abc.example.abcResturant.Validation.CustomerValidation;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

@@ -30,7 +30,7 @@ public class Reservation {
         this.specialNote = specialNote;
         this.status = status;
 
-}
+    }
 
     public String getId() {
         return id;
@@ -112,5 +112,3 @@ public class Reservation {
         this.status = status;
     }
 }
-
-

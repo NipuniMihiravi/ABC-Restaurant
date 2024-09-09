@@ -38,8 +38,3 @@ public class CoverService {
         coverRepository.deleteById(id);
     }
 }
-
-
-
-
-

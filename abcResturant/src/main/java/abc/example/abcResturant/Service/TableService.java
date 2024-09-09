@@ -1,9 +1,7 @@
 package abc.example.abcResturant.Service;
 
-import abc.example.abcResturant.Model.Reservation;
 import abc.example.abcResturant.Model.Table;
 import abc.example.abcResturant.Repository.TableRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

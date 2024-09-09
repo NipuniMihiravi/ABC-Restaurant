@@ -7,5 +7,3 @@ public interface CartRepository extends MongoRepository<Cart, String> {
     Cart findByUserName(String userName);
     // You can add custom query methods here if needed
 }
-
-

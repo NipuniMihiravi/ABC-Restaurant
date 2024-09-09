@@ -1,3 +1,5 @@
+package abc.example.abcResturant.ModelTest;
+
 import abc.example.abcResturant.Model.Staff;
 import org.junit.jupiter.api.Test;
 import abc.example.abcResturant.Validation.StaffValidation;

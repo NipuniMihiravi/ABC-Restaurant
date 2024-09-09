@@ -11,7 +11,3 @@ import org.springframework.stereotype.Repository;
 public interface TableRepository extends MongoRepository<Table, String> {
 
 }
-
-
-
-

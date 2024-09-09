@@ -38,5 +38,3 @@ public class FacilityService {
         facilityRepository.deleteById(id);
     }
 }
-
-
